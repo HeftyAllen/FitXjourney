@@ -1,0 +1,285 @@
+/* ==========================================================================
+   Global Variables & Keyframes
+   ========================================================================== */
+   :root {
+    --primary: #6A1B9A;       /* Deeper Purple */
+    --accent:  #FF6F00;       /* Vibrant Amber */
+    --dark-bg: #1C1C1C;       /* Dark Background for content */
+    --darker-bg: #121212;     /* Even Darker Background */
+    --text-color: #e0e0e0;
+    --light-text: #b0b0b0;
+    --glow: rgba(106, 27, 154, 0.4);
+    --transition-speed: 0.3s;
+  }
+  
+  body.light-mode {
+    --dark-bg: #f2f2f2;
+    --darker-bg: #ffffff;
+    --text-color: #212121;
+    --light-text: #515C6F;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* ==========================================================================
+     Header, Navbar & Footer (Using Provided Styles)
+     ========================================================================== */
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .header-left .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .header-left .logo img {
+    height: 40px;
+    margin-right: 0.75rem;
+  }
+  
+  .top-nav {
+    flex: 1;
+    margin: 0 1rem;
+  }
+  
+  .top-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .top-nav ul li {
+    position: relative;
+    margin-right: 1rem;
+  }
+  
+  .top-nav ul li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  }
+  
+  .top-nav ul li a:hover,
+  .top-nav ul li a.active {
+    background-color: rgba(106, 27, 154, 0.15);
+    color: var(--accent);
+  }
+  
+  /* Dropdown Menu */
+  .top-nav li.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px var(--glow);
+    padding: 0.5rem 0;
+    z-index: 1000;
+  }
+  
+  .top-nav li.dropdown.active .dropdown-menu {
+    display: block;
+  }
+  
+  .top-nav .dropdown-menu li a {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    white-space: nowrap;
+    transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+  }
+  
+  .top-nav .dropdown-menu li a:hover {
+    background: rgba(106, 27, 154, 0.15);
+    color: var(--accent);
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-right .notifications,
+  .header-right .user-profile {
+    margin-left: 1rem;
+    cursor: pointer;
+  }
+  
+  .header-right .user-profile img {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+  
+  /* Footer (Using Provided Styles, Adjusted for Clarity) */
+  .dashboard-footer,
+  .footer-container {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
+    color: var(--text-color);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 -2px 8px var(--glow);
+    /* Removed extra text-shadow for a cleaner look */
+  }
+  
+  .footer-container p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .footer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .footer-nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color var(--transition-speed) ease;
+  }
+  
+  .footer-nav ul li a:hover {
+    color: var(--accent);
+  }
+  
+  /* ==========================================================================
+     About Page Content Area (Custom Styling)
+     ========================================================================== */
+  .about-content {
+    padding: 3rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--dark-bg);
+    color: var(--text-color);
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    padding: 6rem 1rem;
+    text-align: center;
+    color: var(--darker-bg);
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  /* General Section Styling */
+  .section {
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: var(--darker-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--glow);
+  }
+  
+  .section h2 {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 0.5rem;
+  }
+  
+  .section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  /* Team Section */
+  .team-members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  
+  .member-card {
+    background: var(--dark-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 2px 8px var(--glow);
+    transition: transform var(--transition-speed) ease;
+  }
+  
+  .member-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .member-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  /* Testimonials Section */
+  .testimonial-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .testimonial-card {
+    background: var(--darker-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--glow);
+    font-style: italic;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .about-content {
+      padding: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    .section {
+      padding: 1.5rem;
+    }
+  }
+  

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FitJourney Nutrition - Track your nutrition, discover recipes, and plan your meals." />
+  <title>Nutrition Dashboard - FitJourney</title>
+  
+  <!-- Main Stylesheets -->
+  <link rel="stylesheet" href="css/nutri-main.css" />
+  <link rel="stylesheet" href="css/components/nutrition-tracker.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  
+  <!-- Google Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- HEADER: Branding and Navigation -->
+  <header class="header">
+    <div class="container">
+      <div class="header-left">
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="material-icons">menu</i>
+        </button>
+        <a href="index.html" class="logo">
+          <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+          <span>FitJourney</span>
+        </a>
+      </div>
+      
+      <nav class="nav desktop-nav">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="workout-session.html">Workouts</a></li>
+          <li><a href="nutrition.html" class="active">Nutrition</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-right">
+        <div class="theme-toggle">
+          <button id="theme-toggle-btn">
+            <i class="material-icons">dark_mode</i>
+          </button>
+        </div>
+        <div class="user-profile" id="userProfile">
+          <div class="avatar">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23FF6F00'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='30' font-weight='bold'%3EJD%3C/text%3E%3C/svg%3E" alt="User Profile" />
+          </div>
+          <span class="user-name">John Doe</span>
+          <i class="material-icons dropdown-arrow">keyboard_arrow_down</i>
+          
+          <!-- User Dropdown -->
+          <div class="user-dropdown" id="userDropdown">
+            <a href="profile.html" class="dropdown-item">
+              <i class="material-icons">person</i>
+              <span>My Profile</span>
+            </a>
+            <a href="profile.html" class="dropdown-item">
+              <i class="material-icons">settings</i>
+              <span>Settings</span>
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="material-icons">favorite</i>
+              <span>Favorites</span>
+            </a>
+            <a href="about.html" class="dropdown-item">
+              <i class="material-icons">help</i>
+              <span>Help & Support</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item logout">
+              <i class="material-icons">logout</i>
+              <span>Sign Out</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Navigation</div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a href="#dashboard" class="sidebar-nav-link active" data-section="dashboard">
+              <i class="material-icons">dashboard</i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#food-log" class="sidebar-nav-link" data-section="food-log">
+              <i class="material-icons">restaurant</i>
+              <span>Food Log</span>
+              <span class="sidebar-nav-badge" id="foodLogBadge">0</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#meal-planner" class="sidebar-nav-link" data-section="meal-planner">
+              <i class="material-icons">calendar_today</i>
+              <span>Meal Planner</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#recipes" class="sidebar-nav-link" data-section="recipes">
+              <i class="material-icons">menu_book</i>
+              <span>Recipe Explorer</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#nutrition-goals" class="sidebar-nav-link" data-section="nutrition-goals">
+              <i class="material-icons">track_changes</i>
+              <span>Nutrition Goals</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#food-database" class="sidebar-nav-link" data-section="food-database">
+              <i class="material-icons">search</i>
+              <span>Food Database</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-title">Quick Actions</div>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link" id="quickAddFood">
+              <i class="material-icons">add_circle</i>
+              <span>Quick Add Food</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link" id="scanBarcode">
+              <i class="material-icons">qr_code_scanner</i>
+              <span>Scan Barcode</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link" id="waterTracker">
+              <i class="material-icons">local_drink</i>
+              <span>Log Water</span>
+              <span class="sidebar-nav-badge water-badge" id="waterBadge">0</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link" id="weightTracker">
+              <i class="material-icons">monitor_weight</i>
+              <span>Log Weight</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="main-wrapper" id="mainWrapper">
+    <div class="main-content">
+      <!-- Dashboard Section -->
+      <section class="content-section active" id="dashboard-section">
+        <div class="section-header">
+          <h1>Nutrition Dashboard</h1>
+          <div class="date-selector">
+            <button class="btn-icon" id="prevDay"><i class="material-icons">chevron_left</i></button>
+            <span id="current-date">Today, December 6, 2024</span>
+            <button class="btn-icon" id="nextDay"><i class="material-icons">chevron_right</i></button>
+          </div>
+        </div>
+        <p class="section-description">Track your nutrition, discover recipes, and plan your meals with precision.</p>
+        
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">local_fire_department</i></div>
+            <div class="stat-content">
+              <h3>Calories</h3>
+              <div class="stat-value">
+                <span id="calories-consumed">0</span>
+                <span class="divider">/</span>
+                <span id="calories-goal">2000</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">fitness_center</i></div>
+            <div class="stat-content">
+              <h3>Protein</h3>
+              <div class="stat-value">
+                <span id="protein-consumed">0</span>
+                <span>g</span>
+                <span class="divider">/</span>
+                <span id="protein-goal">150</span>
+                <span>g</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">grain</i></div>
+            <div class="stat-content">
+              <h3>Carbs</h3>
+              <div class="stat-value">
+                <span id="carbs-consumed">0</span>
+                <span>g</span>
+                <span class="divider">/</span>
+                <span id="carbs-goal">200</span>
+                <span>g</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">opacity</i></div>
+            <div class="stat-content">
+              <h3>Fat</h3>
+              <div class="stat-value">
+                <span id="fat-consumed">0</span>
+                <span>g</span>
+                <span class="divider">/</span>
+                <span id="fat-goal">67</span>
+                <span>g</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">local_drink</i></div>
+            <div class="stat-content">
+              <h3>Water</h3>
+              <div class="stat-value">
+                <span id="water-consumed">0</span>
+                <span>ml</span>
+                <span class="divider">/</span>
+                <span>2000</span>
+                <span>ml</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-column">
+          <!-- Left Column -->
+          <div class="column">
+            <section class="nutrition-section" id="daily-progress">
+              <div class="section-header">
+                <h2>Daily Progress</h2>
+              </div>
+              
+              <div class="progress-wheel-container">
+                <div class="progress-wheel" id="calorie-progress-wheel">
+                  <div class="progress-inner">
+                    <span class="progress-percentage" id="progress-percentage">0%</span>
+                    <span class="progress-label">of daily goal</span>
+                  </div>
+                </div>
+                <div class="progress-stats">
+                  <div class="stat">
+                    <span class="label">Consumed:</span>
+                    <span class="value" id="total-calories">0 kcal</span>
+                  </div>
+                  <div class="stat">
+                    <span class="label">Remaining:</span>
+                    <span class="value" id="remaining-calories">2000 kcal</span>
+                  </div>
+                  <div class="stat">
+                    <span class="label">Burned:</span>
+                    <span class="value" id="burned-calories">0 kcal</span>
+                  </div>
+                </div>
+                
+                <div class="meal-buttons">
+                  <button class="meal-btn" data-meal="breakfast">
+                    <i class="material-icons">free_breakfast</i>
+                    <span>Breakfast</span>
+                  </button>
+                  <button class="meal-btn" data-meal="lunch">
+                    <i class="material-icons">lunch_dining</i>
+                    <span>Lunch</span>
+                  </button>
+                  <button class="meal-btn" data-meal="dinner">
+                    <i class="material-icons">dinner_dining</i>
+                    <span>Dinner</span>
+                  </button>
+                  <button class="meal-btn" data-meal="snack">
+                    <i class="material-icons">restaurant</i>
+                    <span>Snack</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+          
+          <!-- Right Column -->
+          <div class="column">
+            <section class="nutrition-section" id="recent-activity">
+              <div class="section-header">
+                <h2>Recent Activity</h2>
+                <button class="btn-icon" id="view-all-activity">
+                  <i class="material-icons">more_horiz</i>
+                </button>
+              </div>
+              
+              <div class="food-log-entries" id="recent-food-entries">
+                <div class="empty-state">
+                  <i class="material-icons">restaurant</i>
+                  <h3>No meals logged yet</h3>
+                  <p>Start tracking your nutrition by adding your first meal!</p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- Food Log Section -->
+      <section class="content-section" id="food-log-section">
+        <div class="section-header">
+          <h1>Food Log</h1>
+          <div class="section-actions">
+            <button class="btn-secondary" id="import-meals">
+              <i class="material-icons">file_upload</i>
+              Import
+            </button>
+            <button class="btn-primary" id="add-food-btn">
+              <i class="material-icons">add</i>
+              Add Food
+            </button>
+          </div>
+        </div>
+        <p class="section-description">Track everything you eat and drink throughout the day.</p>
+        
+        <div class="nutrition-section" id="food-log">
+          <div class="food-log-container">
+            <div class="food-log-form" id="food-log-form-container">
+              <div class="form-header">
+                <h3 id="current-meal">Add Food to Log</h3>
+                <div class="search-container">
+                  <input type="text" id="food-search" placeholder="Search for a food..." />
+                  <button class="btn-icon" id="search-food-btn">
+                    <i class="material-icons">search</i>
+                  </button>
+                </div>
+              </div>
+              
+              <form id="food-log-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="food-item">Food Item</label>
+                    <input type="text" id="food-item" placeholder="Enter food name" />
+                  </div>
+                  <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <div class="quantity-input">
+                      <input type="number" id="quantity" placeholder="Amount" value="1" min="0.1" step="0.1" />
+                      <select id="unit">
+                        <option value="g">g</option>
+                        <option value="ml">ml</option>
+                        <option value="cup">cup</option>
+                        <option value="serving">serving</option>
+                        <option value="piece">piece</option>
+                        <option value="tbsp">tbsp</option>
+                        <option value="tsp">tsp</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="meal-type">Meal</label>
+                    <select id="meal-type">
+                      <option value="breakfast">Breakfast</option>
+                      <option value="lunch">Lunch</option>
+                      <option value="dinner">Dinner</option>
+                      <option value="snack">Snack</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="brand">Brand (Optional)</label>
+                    <input type="text" id="brand" placeholder="Enter brand name" />
+                  </div>
+                </div>
+                
+                <div class="nutrition-preview">
+                  <div class="preview-item">
+                    <span class="value" id="preview-calories">0</span>
+                    <span class="label">Calories</span>
+                  </div>
+                  <div class="preview-item">
+                    <span class="value" id="preview-protein">0g</span>
+                    <span class="label">Protein</span>
+                  </div>
+                  <div class="preview-item">
+                    <span class="value" id="preview-carbs">0g</span>
+                    <span class="label">Carbs</span>
+                  </div>
+                  <div class="preview-item">
+                    <span class="value" id="preview-fats">0g</span>
+                    <span class="label">Fat</span>
+                  </div>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn-secondary" id="reset-food-btn">Reset</button>
+                  <button type="submit" class="btn" id="submit-food-btn">Add Food</button>
+                </div>
+              </form>
+            </div>
+            
+            <div class="food-log-entries" id="food-log-entries">
+              <!-- Food log entries will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meal Planner Section -->
+      <section class="content-section" id="meal-planner-section">
+        <div class="section-header">
+          <h1>Meal Planner</h1>
+          <div class="section-actions">
+            <button class="btn-secondary" id="save-meal-plan">
+              <i class="material-icons">save</i>
+              Save Plan
+            </button>
+            <button class="btn-primary" id="generate-meal-plan">
+              <i class="material-icons">auto_awesome</i>
+              Generate Plan
+            </button>
+          </div>
+        </div>
+        <p class="section-description">Plan your meals for the week and stay on track with your nutrition goals.</p>
+        
+        <div class="nutrition-section meal-plan-section" id="meal-planner">
+          <div class="meal-plan-container" id="meal-plan-container">
+            <div class="empty-state">
+              <i class="material-icons">restaurant_menu</i>
+              <h3>No Meal Plan Generated</h3>
+              <p>Click the "Generate Plan" button to create a personalized meal plan based on your nutrition goals.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recipe Explorer Section -->
+      <section class="content-section" id="recipes-section">
+        <div class="section-header">
+          <h1>Recipe Explorer</h1>
+          <div class="section-tabs">
+            <button class="section-tab active" data-tab="discover">Discover</button>
+            <button class="section-tab" data-tab="favorites">My Favorites</button>
+            <button class="section-tab" data-tab="meal-plans">Meal Plans</button>
+          </div>
+        </div>
+        <p class="section-description">Discover healthy recipes that fit your nutrition goals and dietary preferences.</p>
+        
+        <div class="nutrition-section recipe-section" id="recipes">
+          <div class="recipe-actions">
+            <div class="search-container">
+              <input type="text" id="recipe-search" placeholder="Search recipes..." />
+              <button class="btn-icon" id="search-recipe-btn">
+                <i class="material-icons">search</i>
+              </button>
+            </div>
+            <div>
+              <button class="btn-secondary btn-random-recipe">
+                <i class="material-icons">shuffle</i> Random Recipe
+              </button>
+            </div>
+          </div>
+          
+          <div class="recipe-cards-grid" id="recipe-cards">
+            <!-- Recipe cards will be dynamically added here -->
+            <div class="loading-spinner" id="recipe-loader">
+              <div class="spinner"></div>
+              <p>Loading recipes...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Nutrition Goals Section -->
+      <section class="content-section" id="nutrition-goals-section">
+        <div class="section-header">
+          <h1>Nutrition Goals</h1>
+          <button class="btn-icon" id="edit-goals-btn">
+            <i class="material-icons">edit</i>
+          </button>
+        </div>
+        <p class="section-description">Set and track your personalized nutrition targets based on your lifestyle and goals.</p>
+        
+        <div class="nutrition-section" id="nutrition-goals">
+          <div class="goals-form" id="goals-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Years" min="12" max="100" />
+              </div>
+              <div class="form-group">
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" placeholder="cm" min="100" max="250" />
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="weight">Weight (kg)</label>
+                <input type="number" id="weight" placeholder="kg" min="30" max="300" />
+              </div>
+              <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender">
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="activity">Activity Level</label>
+                <select id="activity">
+                  <option value="">Select Activity Level</option>
+                  <option value="sedentary">Sedentary</option>
+                  <option value="light">Lightly Active</option>
+                  <option value="moderate">Moderately Active</option>
+                  <option value="active">Active</option>
+                  <option value="very-active">Very Active</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="goal">Weekly Goal</label>
+                <select id="goal">
+                  <option value="">Select Goal</option>
+                  <option value="maintain">Maintain Weight</option>
+                  <option value="lose-0.5">Lose 0.5 kg/week</option>
+                  <option value="lose-1">Lose 1 kg/week</option>
+                  <option value="gain-0.5">Gain 0.5 kg/week</option>
+                  <option value="gain-1">Gain 1 kg/week</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="diet-type">Diet Type (Optional)</label>
+                <select id="diet-type">
+                  <option value="">No Specific Diet</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="paleo">Paleo</option>
+                  <option value="keto">Ketogenic</option>
+                  <option value="gluten-free">Gluten Free</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exclude">Exclude Ingredients (Optional)</label>
+                <input type="text" id="exclude" placeholder="e.g., peanuts, shellfish" />
+              </div>
+            </div>
+            
+            <button type="button" class="btn" id="calculate-btn">Calculate Nutrition Goals</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Food Database Section -->
+      <section class="content-section" id="food-database-section">
+        <div class="section-header">
+          <h1>Food Database</h1>
+        </div>
+        <p class="section-description">Search our comprehensive database of foods and their nutritional information.</p>
+        
+        <div class="nutrition-section" id="product-search">
+          <div class="product-search-container">
+            <div class="product-autocomplete">
+              <input type="text" id="product-search-input" class="product-autocomplete-input" placeholder="Search for food products..." />
+              <div class="product-autocomplete-suggestions" id="product-autocomplete-suggestions">
+                <!-- Autocomplete suggestions will be dynamically added here -->
+              </div>
+            </div>
+            
+            <button class="btn btn-search" id="product-search-btn">
+              <i class="material-icons">search</i> Search
+            </button>
+            
+            <div class="product-details" id="product-details" style="display: none;">
+              <!-- Product details will be dynamically added here -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="dashboard-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>&copy; 2024 FitJourney. All rights reserved.</p>
+      </div>
+      <div class="footer-right">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Help Center</a>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Recipe Modal -->
+  <div class="modal" id="recipe-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Recipe Details</h2>
+        <button class="close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="recipe-details">
+          <!-- Recipe details will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- AI Nutrition Assistant Chatbot -->
+  <button class="chat-toggle" id="chat-toggle">
+    <i class="material-icons">chat</i>
+  </button>
+  
+  <div class="ai-chatbot" id="ai-chatbot">
+    <div class="chat-header">
+      <h3><i class="material-icons">smart_toy</i> Nutrition Assistant</h3>
+      <button id="close-chat"><i class="material-icons">close</i></button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-message bot">
+        Hello! I'm your nutrition assistant. Ask me anything about nutrition, recipes, or meal planning.
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Type a message..." />
+      <button id="send-chat"><i class="material-icons">send</i></button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script type="module" src="js/modules/nutrition-api.js"></script>
+  <script type="module" src="js/modules/nutrition.js"></script>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Profile - FitJourney. Manage your account, view your workout stats, and track your progress." />
+  <meta name="keywords" content="Profile, FitJourney, Fitness, Account, Dashboard" />
+  <title>Profile - FitJourney</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Material Icons for UI Elements -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/components/profile-main.css" />
+
+  <link rel="stylesheet" href="css/components/profile.css" />
+</head>
+<body>
+  <!-- HEADER: Branding and Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-circle">FJ</div>
+        <span>FitJourney</span>
+      </a>
+      <nav class="nav">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="workout-session.html">Workouts</a></li>
+          <li><a href="nutrition.html">Nutrition</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="profile.html" class="active">Profile</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-right">
+        <div class="theme-toggle">
+          <button id="theme-toggle-btn">
+            <i class="material-icons">dark_mode</i>
+          </button>
+        </div>
+        <div class="user-profile-dropdown">
+          <div class="user-profile">
+            <div class="avatar">
+              <img src="images/profile-placeholder.jpg" alt="User Profile" id="header-avatar">
+            </div>
+            <span id="header-username">User</span>
+            <i class="material-icons">arrow_drop_down</i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="profile.html"><i class="material-icons">person</i> Profile</a>
+            <a href="settings.html"><i class="material-icons">settings</i> Settings</a>
+            <a href="#" id="header-logout-btn"><i class="material-icons">logout</i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- MAIN CONTENT AREA -->
+  <main class="main container">
+    <!-- Guest User View -->
+    <div id="guest-profile" class="auth-section" style="display: none;">
+      <div class="text-center" style="padding: 3rem 1rem;">
+        <img src="images/profile-placeholder.svg" alt="User Profile" class="guest-avatar">
+        <h2>Welcome, Guest!</h2>
+        <p style="margin-bottom: 2rem;">Please log in or register to access your profile and personalized features.</p>
+        <div class="auth-buttons">
+          <a href="auth.html" class="btn btn-primary">Login</a>
+          <a href="auth.html?tab=register" class="btn btn-secondary">Register</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Authenticated User View -->
+    <div id="user-profile" class="profile-container">
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <div class="profile-header">
+          <div class="profile-avatar-container">
+            <div class="profile-avatar">
+              <img id="profile-image" src="images/profile-placeholder.svg" alt="Profile Image">
+            </div>
+            <div class="avatar-upload" id="avatar-upload-btn">
+              <i class="material-icons">photo_camera</i>
+            </div>
+          </div>
+          <h2 class="profile-name" id="profile-name">Loading...</h2>
+          <p class="profile-email" id="profile-email">loading@example.com</p>
+          <span class="profile-status">Active</span>
+        </div>
+        
+        <ul class="profile-nav">
+          <li class="profile-nav-item">
+            <a href="#overview" class="profile-nav-link active" data-tab="overview">
+              <i class="material-icons">dashboard</i>
+              Overview
+            </a>
+          </li>
+          <li class="profile-nav-item">
+            <a href="#activity" class="profile-nav-link" data-tab="activity">
+              <i class="material-icons">fitness_center</i>
+              Activity
+            </a>
+          </li>
+          <li class="profile-nav-item">
+            <a href="#achievements" class="profile-nav-link" data-tab="achievements">
+              <i class="material-icons">emoji_events</i>
+              Achievements
+            </a>
+          </li>
+          <li class="profile-nav-item">
+            <a href="#goals" class="profile-nav-link" data-tab="goals">
+              <i class="material-icons">track_changes</i>
+              Goals
+            </a>
+          </li>
+          <li class="profile-nav-item">
+            <a href="#settings" class="profile-nav-link" data-tab="settings">
+              <i class="material-icons">settings</i>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </aside>
+      
+      <!-- Main Content -->
+      <div class="profile-content">
+        <!-- Message Container -->
+        <div id="profile-message" class="message hidden"></div>
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="profile-tab-content active">
+          <h2 class="profile-section-title">Your Dashboard</h2>
+          
+          <div class="stats-cards">
+            <div class="stat-card">
+              <i class="material-icons stat-icon">directions_run</i>
+              <div class="stat-value" id="workout-count">0</div>
+              <div class="stat-label">Workouts</div>
+            </div>
+            <div class="stat-card">
+              <i class="material-icons stat-icon">timer</i>
+              <div class="stat-value" id="total-time">0h</div>
+              <div class="stat-label">Total Time</div>
+            </div>
+            <div class="stat-card">
+              <i class="material-icons stat-icon">local_fire_department</i>
+              <div class="stat-value" id="calories-burned">0</div>
+              <div class="stat-label">Calories</div>
+            </div>
+            <div class="stat-card">
+              <i class="material-icons stat-icon">trending_up</i>
+              <div class="stat-value" id="current-streak">0</div>
+              <div class="stat-label">Day Streak</div>
+            </div>
+          </div>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Fitness Profile</h3>
+            <div class="fitness-profile-container">
+              <div id="fitness-profile-data">Loading fitness profile data...</div>
+            </div>
+          </div>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Recent Activity</h3>
+            <div class="recent-activity-container">
+              <div id="recent-activity-data">No recent activity found. Start a workout to see your activity here!</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Activity Tab -->
+        <div id="activity" class="profile-tab-content">
+          <h2 class="profile-section-title">Your Activity</h2>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Workout History</h3>
+            <div id="workout-history-container">
+              <table class="workout-history-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Workout</th>
+                    <th>Duration</th>
+                    <th>Calories</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="workout-history">
+                  <tr>
+                    <td colspan="5" class="text-center">No workout history found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Activity Calendar</h3>
+            <div id="activity-calendar" class="activity-calendar">
+              <div class="calendar-loading">
+                <i class="material-icons loading">refresh</i>
+                <p>Loading activity calendar...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Achievements Tab -->
+        <div id="achievements" class="profile-tab-content">
+          <h2 class="profile-section-title">Your Achievements</h2>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Badges</h3>
+            <div id="badges-container" class="badges-grid">
+              <div class="badge-placeholder">
+                <div class="badge-icon">
+                  <i class="material-icons">fitness_center</i>
+                </div>
+                <p>First Workout</p>
+                <span class="badge-locked">Locked</span>
+              </div>
+              <div class="badge-placeholder">
+                <div class="badge-icon">
+                  <i class="material-icons">local_fire_department</i>
+                </div>
+                <p>Calorie Crusher</p>
+                <span class="badge-locked">Locked</span>
+              </div>
+              <div class="badge-placeholder">
+                <div class="badge-icon">
+                  <i class="material-icons">timer</i>
+                </div>
+                <p>Endurance Master</p>
+                <span class="badge-locked">Locked</span>
+              </div>
+              <div class="badge-placeholder">
+                <div class="badge-icon">
+                  <i class="material-icons">trending_up</i>
+                </div>
+                <p>Consistency King</p>
+                <span class="badge-locked">Locked</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Progress Milestones</h3>
+            <div id="milestones-container" class="milestones-container">
+              <div class="milestone-timeline">
+                <div class="milestone">
+                  <div class="milestone-icon">
+                    <i class="material-icons">flag</i>
+                  </div>
+                  <div class="milestone-content">
+                    <h4>Join FitJourney</h4>
+                    <p>Create your account and start your fitness journey</p>
+                    <span class="milestone-date">Completed</span>
+                  </div>
+                </div>
+                <div class="milestone locked">
+                  <div class="milestone-icon">
+                    <i class="material-icons">fitness_center</i>
+                  </div>
+                  <div class="milestone-content">
+                    <h4>First Workout</h4>
+                    <p>Complete your first workout session</p>
+                    <span class="milestone-date">Not completed</span>
+                  </div>
+                </div>
+                <div class="milestone locked">
+                  <div class="milestone-icon">
+                    <i class="material-icons">trending_up</i>
+                  </div>
+                  <div class="milestone-content">
+                    <h4>7-Day Streak</h4>
+                    <p>Work out for 7 consecutive days</p>
+                    <span class="milestone-date">Not completed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Goals Tab -->
+        <div id="goals" class="profile-tab-content">
+          <h2 class="profile-section-title">Your Goals</h2>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Current Goals</h3>
+            <div id="current-goals-container" class="goals-container">
+              <p class="text-center">You haven't set any goals yet.</p>
+              <div class="text-center" style="margin-top: 1rem;">
+                <button id="add-goal-btn" class="btn btn-primary">
+                  <i class="material-icons">add</i>
+                  Add New Goal
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-section">
+            <h3 class="profile-section-title">Completed Goals</h3>
+            <div id="completed-goals-container" class="goals-container">
+              <p class="text-center">No completed goals yet. Keep going!</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div id="settings" class="profile-tab-content">
+          <h2 class="profile-section-title">Account Settings</h2>
+          
+          <!-- Personal Information Form -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Personal Information</h3>
+            <form id="personal-info-form" class="settings-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="settings-name">Full Name</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">person</i>
+                    <input type="text" id="settings-name" name="fullName" placeholder="Your full name" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="settings-email">Email Address</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">email</i>
+                    <input type="email" id="settings-email" name="email" placeholder="Your email address" required>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="settings-dob">Date of Birth</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">cake</i>
+                    <input type="date" id="settings-dob" name="dob">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="settings-gender">Gender</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">wc</i>
+                    <select id="settings-gender" name="gender">
+                      <option value="">Select your gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                      <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="settings-weight">Weight (kg)</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">monitor_weight</i>
+                    <input type="number" id="settings-weight" name="weight" step="0.1" placeholder="Your weight in kg">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="settings-height">Height (cm)</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">height</i>
+                    <input type="number" id="settings-height" name="height" step="0.1" placeholder="Your height in cm">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                  <i class="material-icons">save</i>
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Change Password Form -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Change Password</h3>
+            <form id="change-password-form" class="settings-form">
+              <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <div class="input-with-icon password-wrapper">
+                  <i class="material-icons">lock</i>
+                  <input type="password" id="current-password" name="currentPassword" placeholder="Enter your current password" required>
+                  <i class="material-icons toggle-password" data-for="current-password">visibility_off</i>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="new-password">New Password</label>
+                  <div class="input-with-icon password-wrapper">
+                    <i class="material-icons">lock</i>
+                    <input type="password" id="new-password" name="newPassword" placeholder="Enter your new password" required>
+                    <i class="material-icons toggle-password" data-for="new-password">visibility_off</i>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="confirm-new-password">Confirm New Password</label>
+                  <div class="input-with-icon password-wrapper">
+                    <i class="material-icons">lock</i>
+                    <input type="password" id="confirm-new-password" name="confirmNewPassword" placeholder="Confirm your new password" required>
+                    <i class="material-icons toggle-password" data-for="confirm-new-password">visibility_off</i>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                  <i class="material-icons">lock</i>
+                  Update Password
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Notification Settings -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Notification Preferences</h3>
+            <form id="notification-settings-form" class="settings-form">
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="email-notifications" name="emailNotifications">
+                <label for="email-notifications">Email Notifications</label>
+              </div>
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="push-notifications" name="pushNotifications">
+                <label for="push-notifications">Push Notifications</label>
+              </div>
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="workout-reminders" name="workoutReminders">
+                <label for="workout-reminders">Workout Reminders</label>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                  <i class="material-icons">notifications</i>
+                  Save Preferences
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Account Actions -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Account Actions</h3>
+            <div class="account-actions">
+              <button id="logout-btn" class="btn btn-secondary">
+                <i class="material-icons">logout</i>
+                Logout
+              </button>
+              <button id="delete-account-btn" class="btn btn-danger">
+                <i class="material-icons">delete_forever</i>
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Add Goal Modal -->
+  <div id="goal-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add New Goal</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="add-goal-form" class="settings-form">
+          <div class="form-group">
+            <label for="goal-type">Goal Type</label>
+            <div class="input-with-icon">
+              <i class="material-icons">category</i>
+              <select id="goal-type" name="goalType" required>
+                <option value="">Select goal type</option>
+                <option value="workout-frequency">Workout Frequency</option>
+                <option value="weight-loss">Weight Loss</option>
+                <option value="weight-gain">Weight Gain</option>
+                <option value="strength">Strength</option>
+                <option value="endurance">Endurance</option>
+                <option value="custom">Custom Goal</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="goal-name">Goal Name</label>
+            <div class="input-with-icon">
+              <i class="material-icons">title</i>
+              <input type="text" id="goal-name" name="goalName" placeholder="Give your goal a name" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="goal-target">Target Value</label>
+            <div class="input-with-icon">
+              <i class="material-icons">track_changes</i>
+              <input type="number" id="goal-target" name="goalTarget" placeholder="Target value (e.g. 5 workouts, 10kg)" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="goal-deadline">Deadline</label>
+            <div class="input-with-icon">
+              <i class="material-icons">event</i>
+              <input type="date" id="goal-deadline" name="goalDeadline" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="goal-description">Description</label>
+            <div class="textarea-wrapper">
+              <i class="material-icons">description</i>
+              <textarea id="goal-description" name="goalDescription" placeholder="Describe your goal" rows="3"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close">Cancel</button>
+        <button id="save-goal-btn" class="btn btn-primary">Save Goal</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Delete Account Confirmation Modal -->
+  <div id="delete-account-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Delete Account</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.</p>
+        <form id="delete-account-form" class="settings-form">
+          <div class="form-group">
+            <label for="delete-password">Enter your password to confirm</label>
+            <div class="input-with-icon password-wrapper">
+              <i class="material-icons">lock</i>
+              <input type="password" id="delete-password" name="deletePassword" placeholder="Enter your password" required>
+              <i class="material-icons toggle-password" data-for="delete-password">visibility_off</i>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close">Cancel</button>
+        <button id="confirm-delete-btn" class="btn btn-danger">Delete Account</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- AI Chatbot Integration -->
+  <div id="ai-chatbot" class="ai-chatbot hidden">
+    <div class="chat-header">
+      <h3><i class="material-icons">smart_toy</i> FitJourney Assistant</h3>
+      <button id="close-chat" aria-label="Close Chat">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-message bot">Hello! How can I help with your fitness journey today?</div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Type your question..." aria-label="Chat input" />
+      <button id="send-chat" aria-label="Send Message"><i class="material-icons">send</i></button>
+    </div>
+  </div>
+  
+  <!-- Chat Toggle Button -->
+  <button id="chat-toggle" aria-label="Chat with our AI Assistant">
+    <i class="material-icons">chat</i>
+  </button>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <div class="logo-circle">FJ</div>
+            <span>FitJourney</span>
+          </div>
+          <p>Transform your fitness journey with personalized workouts and nutrition plans.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/library">Exercise Library</a></li>
+            <li><a href="/nutrition">Nutrition</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="/help">Help Center</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="material-icons">facebook</i></a>
+            <a href="#"><i class="material-icons">twitter</i></a>
+            <a href="#"><i class="material-icons">instagram</i></a>
+            <a href="#"><i class="material-icons">youtube_searched_for</i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 FitJourney. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Include the profile script as a module -->
+  <script type="module" src="js/modules/profile.js"></script>
+</body>
+</html>

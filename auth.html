@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitJourney - Login & Register</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/components/auth-main.css">
+  <link rel="stylesheet" href="css/components/auth.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="logo">
+        <div class="logo-circle">FJ</div>
+        <span>FitJourney</span>
+      </a>
+      <nav class="nav">
+        <ul>
+          <li><a href="library.html">Exercise Library</a></li>
+          <li><a href="workout-planner.html">Workout Planner</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="nutrition.html">Nutrition</a></li>
+          <li><a href="progress.html">Progress Photos</a></li>
+          <li><a href="/auth" class="active">Login</a></li>
+        </ul>
+      </nav>
+      <div class="mobile-menu-toggle">
+        <i class="material-icons">menu</i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <div id="auth-container">
+        <!-- Auth Message -->
+        <div id="auth-message" class="auth-message hidden"></div>
+        
+        <!-- Auth Tabs -->
+        <div class="auth-tabs">
+          <button class="tab active" data-tab="login">
+            <i class="material-icons">login</i>
+            Login
+          </button>
+          <button class="tab" data-tab="register">
+            <i class="material-icons">person_add</i>
+            Register
+          </button>
+        </div>
+
+        <!-- Login Section -->
+        <div id="login" class="auth-section active">
+          <div class="auth-header">
+            <h2>Welcome Back!</h2>
+            <p class="auth-subtitle">Sign in to continue your fitness journey</p>
+          </div>
+
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="login-email">Email Address</label>
+              <div class="input-with-icon">
+                <i class="material-icons">email</i>
+                <input type="email" id="login-email" name="email" required placeholder="Enter your email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <div class="input-with-icon password-wrapper">
+                <i class="material-icons">lock</i>
+                <input type="password" id="login-password" name="password" required placeholder="Enter your password">
+                <i class="material-icons toggle-password" onclick="togglePassword('login-password')">visibility</i>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-group">
+                <input type="checkbox" id="remember-me" name="remember">
+                <label for="remember-me">Remember me</label>
+              </div>
+              <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <div class="form-buttons">
+              <button type="submit" class="btn btn-primary">
+                <i class="material-icons">login</i>
+                Sign In
+              </button>
+            </div>
+          </form>
+
+          <div class="social-login">
+            <div class="divider">
+              <span>or continue with</span>
+            </div>
+            <div class="social-buttons">
+              <button class="social-btn" onclick="socialLogin('google')">
+                <i class="material-icons">account_circle</i>
+                Google
+              </button>
+              <button class="social-btn" onclick="socialLogin('facebook')">
+                <i class="material-icons">facebook</i>
+                Facebook
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Register Section -->
+        <div id="register" class="auth-section">
+          <div class="auth-header">
+            <h2>Join FitJourney</h2>
+            <p class="auth-subtitle">Create your account and start your fitness transformation</p>
+          </div>
+
+          <form id="register-form" class="auth-form">
+            <!-- Step 1: Basic Information -->
+            <div id="step-1" class="form-step active">
+              <h3 class="step-title">
+                <i class="material-icons">person</i>
+                Basic Information
+              </h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="full-name">Full Name</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">person</i>
+                    <input type="text" id="full-name" name="full_name" required placeholder="Enter your full name">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-email">Email Address</label>
+                <div class="input-with-icon">
+                  <i class="material-icons">email</i>
+                  <input type="email" id="reg-email" name="email" required placeholder="Enter your email">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="reg-password">Password</label>
+                  <div class="input-with-icon password-wrapper">
+                    <i class="material-icons">lock</i>
+                    <input type="password" id="reg-password" name="password" required placeholder="Create a password">
+                    <i class="material-icons toggle-password" onclick="togglePassword('reg-password')">visibility</i>
+                  </div>
+                  <div class="password-strength">
+                    <div class="strength-meter">
+                      <div class="strength-segment"></div>
+                      <div class="strength-segment"></div>
+                      <div class="strength-segment"></div>
+                      <div class="strength-segment"></div>
+                    </div>
+                    <span class="strength-text">Password strength</span>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="confirm-password">Confirm Password</label>
+                  <div class="input-with-icon password-wrapper">
+                    <i class="material-icons">lock</i>
+                    <input type="password" id="confirm-password" name="confirm_password" required placeholder="Confirm your password">
+                    <i class="material-icons toggle-password" onclick="togglePassword('confirm-password')">visibility</i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-buttons">
+                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                  Continue
+                  <i class="material-icons">arrow_forward</i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Personal Details -->
+            <div id="step-2" class="form-step">
+              <h3 class="step-title">
+                <i class="material-icons">info</i>
+                Personal Details
+              </h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="dob">Date of Birth</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">cake</i>
+                    <input type="date" id="dob" name="date_of_birth">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="gender">Gender</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">wc</i>
+                    <select id="gender" name="gender">
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                      <option value="prefer_not_to_say">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="weight">Weight (kg)</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">monitor_weight</i>
+                    <input type="number" id="weight" name="weight" min="30" max="300" step="0.1" placeholder="Your weight">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="height">Height (cm)</label>
+                  <div class="input-with-icon">
+                    <i class="material-icons">height</i>
+                    <input type="number" id="height" name="height" min="100" max="250" placeholder="Your height">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-buttons">
+                <button type="button" class="btn btn-outline" onclick="prevStep()">
+                  <i class="material-icons">arrow_back</i>
+                  Back
+                </button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                  Continue
+                  <i class="material-icons">arrow_forward</i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Fitness Profile -->
+            <div id="step-3" class="form-step">
+              <h3 class="step-title">
+                <i class="material-icons">fitness_center</i>
+                Fitness Profile
+              </h3>
+              
+              <div class="form-group">
+                <label for="fitness-level">Fitness Level</label>
+                <div class="input-with-icon">
+                  <i class="material-icons">trending_up</i>
+                  <select id="fitness-level" name="fitness_level">
+                    <option value="">Select your fitness level</option>
+                    <option value="beginner">Beginner - Just starting out</option>
+                    <option value="intermediate">Intermediate - Some experience</option>
+                    <option value="advanced">Advanced - Very experienced</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="activity-level">Activity Level</label>
+                <div class="input-with-icon">
+                  <i class="material-icons">directions_run</i>
+                  <select id="activity-level" name="activity_level">
+                    <option value="">Select your activity level</option>
+                    <option value="sedentary">Sedentary - Little to no exercise</option>
+                    <option value="lightly_active">Lightly Active - Light exercise 1-3 days/week</option>
+                    <option value="moderately_active">Moderately Active - Moderate exercise 3-5 days/week</option>
+                    <option value="very_active">Very Active - Heavy exercise 6-7 days/week</option>
+                    <option value="extremely_active">Extremely Active - Very heavy exercise or physical job</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fitness-goals">Fitness Goals</label>
+                <div class="textarea-wrapper">
+                  <i class="material-icons">flag</i>
+                  <textarea id="fitness-goals" name="fitness_goals" rows="4" placeholder="Tell us about your fitness goals and what you want to achieve..."></textarea>
+                </div>
+              </div>
+
+              <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                  I agree to the <a href="#" target="_blank">Terms of Service</a> and 
+                  <a href="#" target="_blank">Privacy Policy</a>
+                </label>
+              </div>
+
+              <div class="form-buttons">
+                <button type="button" class="btn btn-outline" onclick="prevStep()">
+                  <i class="material-icons">arrow_back</i>
+                  Back
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="material-icons">person_add</i>
+                  Create Account
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Progress Steps -->
+          <div class="progress-steps">
+            <div class="step active" data-step="1">
+              <div class="step-number">1</div>
+              <span>Basic Info</span>
+            </div>
+            <div class="step" data-step="2">
+              <div class="step-number">2</div>
+              <span>Personal</span>
+            </div>
+            <div class="step" data-step="3">
+              <div class="step-number">3</div>
+              <span>Fitness</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <div class="logo-circle">FJ</div>
+            <span>FitJourney</span>
+          </div>
+          <p>Transform your fitness journey with personalized workouts and nutrition plans.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/library">Exercise Library</a></li>
+            <li><a href="/nutrition">Nutrition</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="/help">Help Center</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#"><i class="material-icons">facebook</i></a>
+            <a href="#"><i class="material-icons">twitter</i></a>
+            <a href="#"><i class="material-icons">instagram</i></a>
+            <a href="#"><i class="material-icons">youtube_searched_for</i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 FitJourney. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script type="module" src="js/modules/user-auth.js"></script>
+  <script src="js/auth-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FitJourney Workout Session - Track and complete your personalized workout with timers, exercise guidance, and progress tracking." />
+  <meta name="keywords" content="Workout, Exercise, Session, Timer, Sets, Reps, Fitness, FitJourney" />
+  <meta name="author" content="FitJourney Team" />
+  <title>Workout Session - FitJourney</title>
+  
+  <!-- Main CSS Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components/workout-session.css" />
+  
+  <!-- Material Icons and Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Animation Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<body>
+  <!-- HEADER: Branding and Navigation -->
+  <header class="workout-header">
+    <div class="container">
+      <a href="index.html" class="logo" aria-label="FitJourney Home">
+        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <span>FitJourney</span>
+      </a>
+      <nav class="workout-nav" aria-label="Primary Navigation">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="library.html">Exercise Library</a></li>
+          <li><a href="workout-planner.html">Workout Planner</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="workout-session.html" class="active">Workout Session</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <button id="theme-toggle-btn">
+          <i class="material-icons">dark_mode</i>
+        </button>
+        <div class="user-profile">
+          <img src="images/profile-placeholder.jpg" alt="User Profile" />
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- MAIN CONTENT AREA -->
+  <main class="workout-main container">
+    <div class="workout-session-layout">
+      <!-- Left Column: Current Exercise and Controls -->
+      <div class="session-main-content">
+        <!-- Workout Header with Timer and Progress -->
+        <section class="workout-header-section">
+          <div class="workout-title">
+            <h1 id="workout-name">Current Workout</h1>
+            <div class="workout-meta">
+              <span><i class="material-icons">fitness_center</i> <span id="total-exercises">0</span> Exercises</span>
+              <span><i class="material-icons">speed</i> <span id="difficulty-level">Intermediate</span></span>
+            </div>
+          </div>
+          
+          <div class="workout-timers">
+            <div class="total-timer">
+              <div class="timer-label">Total Time</div>
+              <div class="timer-display" id="total-timer">00:00:00</div>
+            </div>
+            <div class="exercise-timer">
+              <div class="timer-label">Exercise Time</div>
+              <div class="timer-display" id="exercise-timer"><span id="timer-minutes">00</span>:<span id="timer-seconds">00</span></div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Progress Bar -->
+        <section class="progress-section" aria-label="Workout Progress">
+          <div class="progress-info">
+            <span class="progress-label">Progress</span>
+            <span class="progress-percentage" id="progress-percentage">0%</span>
+          </div>
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </section>
+        
+        <!-- Current Exercise Display -->
+        <section class="current-exercise-section">
+          <div class="section-header">
+            <h2>Current Exercise</h2>
+            <div class="exercise-actions">
+              <button class="btn-icon" id="btn-bookmark" title="Bookmark Exercise">
+                <i class="material-icons">bookmark_border</i>
+              </button>
+              <button class="btn-icon" id="btn-share" title="Share Exercise">
+                <i class="material-icons">share</i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="exercise-card">
+            <div class="exercise-media">
+              <img src="/placeholder.svg?height=300&width=400" alt="Exercise demonstration" id="exercise-media" />
+              <video id="exercise-video" class="hidden" controls>
+                <source src="" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <button class="btn btn-video-toggle" id="btn-video-toggle">
+                <i class="material-icons">play_circle</i> Watch Video
+              </button>
+            </div>
+            
+            <div class="exercise-details">
+              <h3 id="exercise-title">Loading exercise...</h3>
+              <div class="exercise-tags">
+                <span class="tag" id="exercise-target"><i class="material-icons">accessibility</i> Target</span>
+                <span class="tag" id="exercise-equipment"><i class="material-icons">fitness_center</i> Equipment</span>
+              </div>
+              
+              <p id="exercise-description" class="exercise-description">
+                Exercise instructions will appear here. Follow the demonstration and maintain proper form.
+              </p>
+              
+              <div class="exercise-stats">
+                <div class="stat-item">
+                  <div class="stat-label">Sets</div>
+                  <div class="stat-value" id="exercise-sets">3</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Reps</div>
+                  <div class="stat-value" id="exercise-reps">12</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-label">Rest</div>
+                  <div class="stat-value" id="exercise-rest">60s</div>
+                </div>
+              </div>
+              
+              <div class="set-tracking">
+                <h4>Track Your Sets</h4>
+                <div class="set-controls">
+                  <div class="set-counter">
+                    <button class="btn-counter" id="btn-decrease-sets">
+                      <i class="material-icons">remove</i>
+                    </button>
+                    <input type="number" id="custom-sets" value="0" min="0" max="10" aria-label="Sets completed" />
+                    <button class="btn-counter" id="btn-increase-sets">
+                      <i class="material-icons">add</i>
+                    </button>
+                  </div>
+                  <button class="btn btn-primary" id="btn-record-set">
+                    <i class="material-icons">check</i> Record Set
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Timer Controls -->
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="btn-start">
+              <i class="material-icons">play_arrow</i> Start
+            </button>
+            <button class="btn btn-secondary" id="btn-pause">
+              <i class="material-icons">pause</i> Pause
+            </button>
+            <button class="btn btn-secondary" id="btn-reset">
+              <i class="material-icons">replay</i> Reset
+            </button>
+            <button class="btn btn-secondary" id="btn-rest">
+              <i class="material-icons">timer</i> Start Rest
+            </button>
+            <button class="btn btn-secondary" id="btn-settings">
+              <i class="material-icons">settings</i> Settings
+            </button>
+          </div>
+          
+          <!-- Exercise Navigation -->
+          <div class="exercise-navigation">
+            <button class="btn btn-nav" id="btn-prev" disabled>
+              <i class="material-icons">navigate_before</i> Previous
+            </button>
+            <button class="btn btn-nav" id="btn-skip">
+              <i class="material-icons">skip_next</i> Skip
+            </button>
+            <button class="btn btn-nav" id="btn-finish">
+              <i class="material-icons">done_all</i> Finish Workout
+            </button>
+            <button class="btn btn-nav" id="btn-next">
+              Next <i class="material-icons">navigate_next</i>
+            </button>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Right Column: Sidebar with Additional Info -->
+      <div class="session-sidebar">
+        <!-- Voice Assistance -->
+        <section class="sidebar-section voice-assistance">
+          <h3><i class="material-icons">record_voice_over</i> Voice Assistance</h3>
+          <p id="voice-status">Ready to guide you through your workout</p>
+          <button class="btn btn-full" id="btn-voice">
+            <i class="material-icons">mic</i> Activate Voice Guide
+          </button>
+          
+          <div class="assistance-options">
+            <div class="toggle-option">
+              <label for="assistance-toggle">Voice Guidance</label>
+              <label class="switch">
+                <input type="checkbox" id="assistance-toggle" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            
+            <div class="volume-control">
+              <label for="voice-volume">Volume</label>
+              <input type="range" id="voice-volume" min="0" max="100" value="70" />
+            </div>
+          </div>
+        </section>
+        
+        <!-- Upcoming Exercises -->
+        <section class="sidebar-section upcoming-exercises">
+          <h3><i class="material-icons">playlist_play</i> Upcoming Exercises</h3>
+          <ul id="upcoming-exercises-list">
+            <li class="placeholder-item">Loading upcoming exercises...</li>
+          </ul>
+        </section>
+        
+        <!-- Workout Tips -->
+        <section class="sidebar-section workout-tips">
+          <h3><i class="material-icons">lightbulb</i> Workout Tips</h3>
+          <ul>
+            <li>Stay hydrated throughout your workout</li>
+            <li>Focus on proper form rather than speed</li>
+            <li>Breathe out during the exertion phase</li>
+            <li>Keep a steady pace for better results</li>
+          </ul>
+          <div class="motivational-quote">
+            "The only bad workout is the one that didn't happen."
+          </div>
+        </section>
+      </div>
+    </div>
+    
+    <!-- Workout Completion Interface (Hidden Initially) -->
+    <section id="workout-completion" class="workout-completion hidden">
+      <div class="completion-header animate__animated animate__fadeInDown">
+        <h2><i class="material-icons">emoji_events</i> Workout Complete!</h2>
+        <p>Congratulations on finishing your workout. Here's a summary of your session.</p>
+      </div>
+      
+      <div class="completion-summary animate__animated animate__fadeInUp">
+        <div class="summary-stats">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">timer</i></div>
+            <div class="stat-value" id="final-total-timer">00:00:00</div>
+            <div class="stat-label">Total Time</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">fitness_center</i></div>
+            <div class="stat-value" id="exercises-completed">0</div>
+            <div class="stat-label">Exercises</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">repeat</i></div>
+            <div class="stat-value" id="total-sets">0</div>
+            <div class="stat-label">Sets</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">timer_off</i></div>
+            <div class="stat-value" id="avg-rest-time">0s</div>
+            <div class="stat-label">Avg Rest</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">whatshot</i></div>
+            <div class="stat-value" id="calories-burned">0</div>
+            <div class="stat-label">Calories</div>
+          </div>
+        </div>
+        
+        <div class="exercise-details-summary">
+          <h3>Exercise Details</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Exercise</th>
+                  <th>Sets</th>
+                  <th>Reps</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="exercise-summary-table">
+                <!-- Will be populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="completion-feedback animate__animated animate__fadeInUp">
+        <div class="feedback-section">
+          <h3>How was your workout?</h3>
+          <div class="rating-container">
+            <button class="rating-btn" data-rating="1"><i class="material-icons">sentiment_very_dissatisfied</i></button>
+            <button class="rating-btn" data-rating="2"><i class="material-icons">sentiment_dissatisfied</i></button>
+            <button class="rating-btn" data-rating="3"><i class="material-icons">sentiment_neutral</i></button>
+            <button class="rating-btn" data-rating="4"><i class="material-icons">sentiment_satisfied</i></button>
+            <button class="rating-btn" data-rating="5"><i class="material-icons">sentiment_very_satisfied</i></button>
+          </div>
+        </div>
+        
+        <div class="feedback-section">
+          <h3>Notes for next time</h3>
+          <textarea id="workout-feedback-text" placeholder="What would you like to improve or remember for next time?"></textarea>
+        </div>
+        
+        <div class="feedback-section">
+          <h3>Save this workout</h3>
+          <input type="text" id="workout-name-input" placeholder="Enter a name for this workout" />
+        </div>
+      </div>
+      
+      <div class="completion-actions animate__animated animate__fadeInUp">
+        <button class="btn btn-primary" id="btn-save-workout">
+          <i class="material-icons">save</i> Save Workout
+        </button>
+        <button class="btn btn-secondary" id="btn-share-workout">
+          <i class="material-icons">share</i> Share Results
+        </button>
+        <button class="btn btn-secondary" id="btn-new-workout">
+          <i class="material-icons">add</i> New Workout
+        </button>
+        <button class="btn btn-secondary" id="btn-dashboard">
+          <i class="material-icons">dashboard</i> Go to Dashboard
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Timer Settings Modal -->
+  <div id="timer-settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Timer Settings</h2>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label for="exercise-timer-input">Exercise Timer (seconds)</label>
+          <input type="number" id="exercise-timer-input" min="10" max="600" value="60" />
+        </div>
+        <div class="settings-group">
+          <label for="rest-timer-input">Rest Timer (seconds)</label>
+          <input type="number" id="rest-timer-input" min="10" max="300" value="60" />
+        </div>
+        <div class="settings-group">
+          <label for="transition-timer-input">Transition Timer (seconds)</label>
+          <input type="number" id="transition-timer-input" min="5" max="60" value="15" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-settings">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Chatbot Integration -->
+  <div id="ai-chatbot" class="ai-chatbot hidden" role="dialog" aria-label="AI Workout Assistant">
+    <div class="chat-header">
+      <h3><i class="material-icons">smart_toy</i> Workout Assistant</h3>
+      <button id="close-chat" aria-label="Close Chat">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-message bot">Hello! I'm your workout assistant. How can I help with your session today?</div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Ask me anything about your workout..." aria-label="Chat input" />
+      <button id="send-chat" aria-label="Send Message"><i class="material-icons">send</i></button>
+    </div>
+  </div>
+  
+  <!-- Chat Toggle Button -->
+  <button id="chat-toggle" class="chat-toggle" aria-label="Chat with our AI Assistant">
+    <i class="material-icons">chat</i>
+  </button>
+  
+  <!-- FOOTER -->
+  <footer class="workout-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+          <span>FitJourney</span>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+              <li><a href="#">Workout Planner</a></li>
+              <li><a href="#">Exercise Library</a></li>
+              <li><a href="#">Progress Tracking</a></li>
+              <li><a href="#">Nutrition</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="material-icons">facebook</i></a>
+          <a href="#" aria-label="Twitter"><i class="material-icons">twitter</i></a>
+          <a href="#" aria-label="Instagram"><i class="material-icons">instagram</i></a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 FitJourney. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- SweetAlert2 for enhanced alerts -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <!-- Include our workout session JS module -->
+  <script type="module" src="js/modules/workout-session.js"></script>
+</body>
+</html>

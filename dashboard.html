@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FitJourney Dashboard - A comprehensive platform to plan, track, and analyze your workouts and progress." />
+  <meta name="keywords" content="FitJourney, workout dashboard, fitness, workout planner, progress tracking, nutrition log, hydration, challenges, AI coaching, workout library" />
+  <meta name="author" content="FitJourney Team" />
+  <title>FitJourney Dashboard - Workout Planning & Tracking</title>
+
+  <!-- Main Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components/dashboard.css" />
+    <link rel="stylesheet" href="css/components/notifications.css" />  
+  <!-- Material Icons for UI elements -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Header -->
+  <header class="dashboard-header">
+    <div class="header-container">
+      <!-- Left: Logo -->
+      <div class="header-left">
+        <a href="index.html" class="logo">
+          <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+          <span>FitJourney</span>
+        </a>
+      </div>
+      <!-- Center: Top Navigation with Dropdowns -->
+      <nav class="top-nav">
+        <ul>
+          <li><a href="#" class="active">Dashboard</a></li>
+          <li class="dropdown">
+            <a href="#">Workouts <i class="material-icons">arrow_drop_down</i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#my-workouts">My Workouts</a></li>
+              <li><a href="#ai-coaching-recommendations">AI Coaching</a></li>
+              <li><a href="#workout-history">Workout History</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Analytics <i class="material-icons">arrow_drop_down</i></a>
+            <ul class="dropdown-menu">
+              <li><a href="progress.html">Progress</a></li>
+              <li><a href="nutrition.html">Nutrition</a></li>
+              <li><a href="#challenges">Challenges</a></li>
+              <li><a href="#workout-library">Library</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Account <i class="material-icons">arrow_drop_down</i></a>
+            <ul class="dropdown-menu">
+              <li><a href="settings.html">Settings</a></li>
+               <li><a href="profile.html">profile</a></li>
+              <li><a href="logout.html">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- Right: Notifications & User Profile -->
+      <div class="header-right">
+        <div class="notifications">
+          <i class="material-icons">notifications</i>
+          <span class="notification-badge">3</span>
+        </div>
+        <div class="user-profile">
+          <div class="avatar">
+            <img src="images/profile-placeholder.jpg" alt="User Profile" id="JD">
+          </div>
+          <span>John Doe</span>
+          <i class="material-icons">arrow_drop_down</i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Main Content Area -->
+    <main class="dashboard-content">
+      <!-- Quick Actions Bar -->
+      <section id="quick-actions" class="quick-actions-bar">
+        <div class="quick-action-button">
+          <i class="material-icons">add</i>
+            <a href="workout-planner.html" class="quick-action-link"><span>New Workout</span></a>
+        </div>
+        <div class="quick-action-button">
+          <i class="material-icons">fitness_center</i>
+          <span>Start Session</span>
+        </div>
+        <div class="quick-action-button">
+          <i class="material-icons">restaurant</i>
+          <span>Log Meal</span>
+        </div>
+        <div class="quick-action-button">
+          <i class="material-icons">local_drink</i>
+          <span>Log Water</span>
+        </div>
+        <div class="quick-action-button">
+          <i class="material-icons">insert_chart</i>
+          <span>View Progress</span>
+        </div>
+      </section>
+
+      <!-- 1. Dashboard Overview -->
+      <section id="overview" class="dashboard-section">
+        <div class="section-header">
+          <h1>Dashboard Overview</h1>
+          <div class="section-actions">
+            <button class="btn-icon" title="Refresh Data">
+              <i class="material-icons">refresh</i>
+            </button>
+            <button class="btn-icon" title="View Full Report">
+              <i class="material-icons">open_in_new</i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="overview-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
+            <div class="stat-content">
+              <h2>Total Workouts</h2>
+              <p class="stat-value">24</p>
+              <p class="stat-change positive">+3 from last month</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">event</i>
+            </div>
+            <div class="stat-content">
+              <h2>This Week</h2>
+              <p class="stat-value">5 Workouts</p>
+              <p class="stat-change positive">On track for goal</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">timer</i>
+            </div>
+            <div class="stat-content">
+              <h2>Total Time</h2>
+              <p class="stat-value">8 hrs 30 min</p>
+              <p class="stat-change positive">+45 min from last week</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">local_fire_department</i>
+            </div>
+            <div class="stat-content">
+              <h2>Calories Burned</h2>
+              <p class="stat-value">3,200 kcal</p>
+              <p class="stat-change positive">+320 from last week</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="overview-charts">
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Weekly Workout Activity</h3>
+              <div class="chart-controls">
+                <button class="btn-chart-period active">Week</button>
+                <button class="btn-chart-period">Month</button>
+                <button class="btn-chart-period">Year</button>
+              </div>
+            </div>
+            <div class="chart" id="weekly-workout-chart"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Progress Metrics</h3>
+              <div class="chart-controls">
+                <select id="progress-metric-selector">
+                  <option value="duration">Duration</option>
+                  <option value="calories">Calories</option>
+                  <option value="intensity">Intensity</option>
+                </select>
+              </div>
+            </div>
+            <div class="chart" id="progress-chart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. My Workouts Section -->
+      <section id="my-workouts" class="dashboard-section">
+        <div class="section-header">
+          <h1>My Workouts</h1>
+          <div class="section-actions">
+            <button class="btn-primary" id="create-workout-btn">
+              <i class="material-icons">add</i> Create Workout
+            </button>
+          </div>
+        </div>
+        
+        <div class="workout-folders">
+          <h2>Workout Folders</h2>
+          <div class="folder-container">
+            <div class="folder-card" id="create-folder">
+              <div class="folder-header">
+                <i class="material-icons">add</i>
+                <span class="folder-title">Create New Folder</span>
+              </div>
+            </div>
+            
+            <div class="folder-card">
+              <div class="folder-header">
+                <i class="material-icons">folder</i>
+                <span class="folder-title">Flexibility</span>
+                <span class="folder-count">1 workout</span>
+                <i class="material-icons folder-menu">more_vert</i>
+              </div>
+              <div class="folder-content">
+                <p>Last: 3 weeks ago</p>
+                <div class="folder-progress">
+                  <div class="progress-bar" style="width: 10%"></div>
+                </div>
+                <p>10% complete</p>
+              </div>
+            </div>
+            
+            <div class="folder-card">
+              <div class="folder-header">
+                <i class="material-icons">folder</i>
+                <span class="folder-title">HIIT</span>
+                <span class="folder-count">2 workouts</span>
+                <i class="material-icons folder-menu">more_vert</i>
+              </div>
+              <div class="folder-content">
+                <p>Last: 2 weeks ago</p>
+                <div class="folder-progress">
+                  <div class="progress-bar" style="width: 20%"></div>
+                </div>
+                <p>20% complete</p>
+              </div>
+            </div>
+            
+            <div class="folder-card">
+              <div class="folder-header">
+                <i class="material-icons">folder</i>
+                <span class="folder-title">Cardio</span>
+                <span class="folder-count">3 workouts</span>
+                <i class="material-icons folder-menu">more_vert</i>
+              </div>
+              <div class="folder-content">
+                <p>Last: 1 week ago</p>
+                <div class="folder-progress">
+                  <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <p>40% complete</p>
+              </div>
+            </div>
+            
+            <div class="folder-card">
+              <div class="folder-header">
+                <i class="material-icons">folder</i>
+                <span class="folder-title">Strength Training</span>
+                <span class="folder-count">5 workouts</span>
+                <i class="material-icons folder-menu">more_vert</i>
+              </div>
+              <div class="folder-content">
+                <p>Last: 2 days ago</p>
+                <div class="folder-progress">
+                  <div class="progress-bar" style="width: 60%"></div>
+                </div>
+                <p>60% complete</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="workout-search">
+          <div class="search-box">
+            <i class="material-icons">search</i>
+            <input type="text" placeholder="Search workouts..." id="workout-search">
+          </div>
+          <div class="filter-options">
+            <div class="filter-dropdown">
+              <button class="filter-btn">All Types <i class="material-icons">arrow_drop_down</i></button>
+            </div>
+            <div class="filter-dropdown">
+              <button class="filter-btn">All Durations <i class="material-icons">arrow_drop_down</i></button>
+            </div>
+            <button class="filter-more">
+              <i class="material-icons">filter_list</i> More Filters
+            </button>
+          </div>
+        </div>
+        
+        <div class="workouts-container">
+          <div class="workout-card">
+            <div class="workout-header">
+              <h3>Full Body Strength</h3>
+              <span class="workout-tag">Strength</span>
+            </div>
+            <div class="workout-details">
+              <div class="workout-info">
+                <i class="material-icons">timer</i>
+                <span>45 minutes</span>
+              </div>
+              <div class="workout-info">
+                <i class="material-icons">fitness_center</i>
+                <span>8 exercises</span>
+              </div>
+            </div>
+            <p class="workout-description">A comprehensive full-body workout targeting all major muscle groups.</p>
+            <div class="workout-actions">
+              <button class="btn-secondary">
+                <i class="material-icons">edit</i> Edit
+              </button>
+              <button class="btn-secondary">
+                <i class="material-icons">delete</i> Delete
+              </button>
+              <button class="btn-primary">
+                <i class="material-icons">play_arrow</i> Start
+              </button>
+            </div>
+          </div>
+          
+          <div class="workout-card">
+            <div class="workout-header">
+              <h3>HIIT Cardio</h3>
+              <span class="workout-tag">Cardio</span>
+            </div>
+            <div class="workout-details">
+              <div class="workout-info">
+                <i class="material-icons">timer</i>
+                <span>30 minutes</span>
+              </div>
+              <div class="workout-info">
+                <i class="material-icons">fitness_center</i>
+                <span>6 exercises</span>
+              </div>
+            </div>
+            <p class="workout-description">High-intensity interval training to maximize calorie burn and endurance.</p>
+            <div class="workout-actions">
+              <button class="btn-secondary">
+                <i class="material-icons">edit</i> Edit
+              </button>
+              <button class="btn-secondary">
+                <i class="material-icons">delete</i> Delete
+              </button>
+              <button class="btn-primary">
+                <i class="material-icons">play_arrow</i> Start
+              </button>
+            </div>
+          </div>
+          
+          <div class="workout-card">
+            <div class="workout-header">
+              <h3>Core Crusher</h3>
+              <span class="workout-tag">Core</span>
+            </div>
+            <div class="workout-details">
+              <div class="workout-info">
+                <i class="material-icons">timer</i>
+                <span>20 minutes</span>
+              </div>
+              <div class="workout-info">
+                <i class="material-icons">fitness_center</i>
+                <span>5 exercises</span>
+              </div>
+            </div>
+            <p class="workout-description">Focused core workout to strengthen abs, obliques and lower back muscles.</p>
+            <div class="workout-actions">
+              <button class="btn-secondary">
+                <i class="material-icons">edit</i> Edit
+              </button>
+              <button class="btn-secondary">
+                <i class="material-icons">delete</i> Delete
+              </button>
+              <button class="btn-primary">
+                <i class="material-icons">play_arrow</i> Start
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pagination">
+          <button class="pagination-btn">
+            <i class="material-icons">chevron_left</i>
+          </button>
+          <span class="pagination-info">Page 1 of 3</span>
+          <button class="pagination-btn">
+            <i class="material-icons">chevron_right</i>
+          </button>
+        </div>
+      </section>
+
+      <!-- 3. AI Coaching & Recommendations -->
+      <section id="ai-coaching-recommendations" class="dashboard-section">
+        <div class="section-header">
+          <h1>AI Coaching &amp; Recommendations</h1>
+          <div class="section-actions">
+            <button class="btn-primary">
+              <i class="material-icons">auto_awesome</i> Get Personalized Plan
+            </button>
+            <button class="btn-secondary">
+              <i class="material-icons">chat</i> Chat with Coach
+            </button>
+          </div>
+        </div>
+        
+        <div class="ai-coach-summary">
+          <div class="ai-coach-avatar">
+            <img src="images/ai-coach.png" alt="AI Coach">
+          </div>
+          <div class="ai-coach-message">
+            <h3>Hello, John! Here's your personalized fitness insight:</h3>
+            <p>Based on your recent activity patterns and goals, I've created some tailored workout recommendations. Your consistency has improved by 15% this week - great job! I've noticed you're focusing more on upper body exercises, so I've included some balanced options below.</p>
+          </div>
+        </div>
+        
+        <div class="ai-suggestions">
+          <div class="suggestion-card">
+            <div class="suggestion-header">
+              <h3>Lower Body Focus</h3>
+              <span class="ai-tag">AI Recommended</span>
+            </div>
+            <p>This workout balances your training by targeting legs and glutes.</p>
+            <div class="suggestion-details">
+              <div class="detail-item">
+                <span class="detail-label">Difficulty</span>
+                <span class="detail-value">Intermediate</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Duration</span>
+                <span class="detail-value">40 minutes</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Equipment</span>
+                <span class="detail-value">Dumbbells, Bench</span>
+              </div>
+            </div>
+            <button class="btn-primary">
+              <i class="material-icons">play_arrow</i> Start Workout
+            </button>
+          </div>
+          
+          <div class="suggestion-card">
+            <div class="suggestion-header">
+              <h3>Recovery Yoga Flow</h3>
+              <span class="ai-tag">AI Recommended</span>
+            </div>
+            <p>Your intensity has been high - this yoga session will help with recovery.</p>
+            <div class="suggestion-details">
+              <div class="detail-item">
+                <span class="detail-label">Difficulty</span>
+                <span class="detail-value">Beginner</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Duration</span>
+                <span class="detail-value">25 minutes</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Equipment</span>
+                <span class="detail-value">Yoga Mat</span>
+              </div>
+            </div>
+            <button class="btn-primary">
+              <i class="material-icons">play_arrow</i> Start Workout
+            </button>
+          </div>
+          
+          <div class="suggestion-card">
+            <div class="suggestion-header">
+              <h3>Balanced Circuit</h3>
+              <span class="ai-tag">AI Recommended</span>
+            </div>
+            <p>Full-body circuit training that optimizes your available time.</p>
+            <div class="suggestion-details">
+              <div class="detail-item">
+                <span class="detail-label">Difficulty</span>
+                <span class="detail-value">Advanced</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Duration</span>
+                <span class="detail-value">35 minutes</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Equipment</span>
+                <span class="detail-value">Full Gym</span>
+              </div>
+            </div>
+            <button class="btn-primary">
+              <i class="material-icons">play_arrow</i> Start Workout
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 4. Workout History -->
+      <section id="workout-history" class="dashboard-section">
+        <div class="section-header">
+          <h1>Workout History</h1>
+          <div class="section-actions">
+            <button class="btn-secondary">
+              <i class="material-icons">download</i> Export
+            </button>
+            <div class="date-range-picker">
+              <span>Last 30 Days</span>
+              <i class="material-icons">arrow_drop_down</i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="search-filters">
+          <div class="search-box">
+            <i class="material-icons">search</i>
+            <input type="text" placeholder="Search history..." id="history-search">
+          </div>
+          <div class="active-filters">
+            <div class="filter-tag">
+              Cardio <i class="material-icons">close</i>
+            </div>
+            <div class="filter-tag">
+              > 30 min <i class="material-icons">close</i>
+            </div>
+            <button class="clear-filters">Clear All</button>
+          </div>
+        </div>
+        
+        <div class="history-table-container">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date <i class="material-icons">arrow_downward</i></th>
+                <th>Workout</th>
+                <th>Duration</th>
+                <th>Calories</th>
+                <th>Feedback</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>5/14/2025</td>
+                <td>Full Body Strength</td>
+                <td>45:30</td>
+                <td>420 kcal</td>
+                <td>Great session</td>
+                <td>
+                  <button class="btn-icon" title="View Details">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>5/12/2025</td>
+                <td>HIIT Cardio</td>
+                <td>30:15</td>
+                <td>380 kcal</td>
+                <td>Felt challenging</td>
+                <td>
+                  <button class="btn-icon" title="View Details">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>5/9/2025</td>
+                <td>Core Crusher</td>
+                <td>20:00</td>
+                <td>200 kcal</td>
+                <td>Need to increase intensity</td>
+                <td>
+                  <button class="btn-icon" title="View Details">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>5/7/2025</td>
+                <td>Full Body Strength</td>
+                <td>42:15</td>
+                <td>400 kcal</td>
+                <td>Improved squats form</td>
+                <td>
+                  <button class="btn-icon" title="View Details">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>5/4/2025</td>
+                <td>HIIT Cardio</td>
+                <td>32:45</td>
+                <td>410 kcal</td>
+                <td>Pushed through fatigue</td>
+                <td>
+                  <button class="btn-icon" title="View Details">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="pagination">
+          <button class="pagination-btn">Previous</button>
+          <button class="pagination-btn active">1</button>
+          <button class="pagination-btn">2</button>
+          <button class="pagination-btn">3</button>
+          <button class="pagination-btn">Next</button>
+        </div>
+      </section>
+
+      <!-- 5. Detailed Progress Analytics -->
+      <section id="progress" class="dashboard-section">
+        <div class="section-header">
+          <h1>Progress Analytics</h1>
+          <div class="section-actions">
+            <button class="btn-secondary">
+              <i class="material-icons">flag</i> Set Goals
+            </button>
+            <select id="progress-time-period">
+              <option value="week">This Week</option>
+              <option value="month" selected>This Month</option>
+              <option value="year">This Year</option>
+              <option value="all">All Time</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="progress-metrics">
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="material-icons">timer</i>
+            </div>
+            <div class="metric-content">
+              <h2>Average Workout Duration</h2>
+              <p class="metric-value">42 min</p>
+              <div class="metric-progress">
+                <div class="progress-bar" style="width: 84%"></div>
+              </div>
+              <p class="metric-target">Target: 50 min</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="material-icons">calendar_today</i>
+            </div>
+            <div class="metric-content">
+              <h2>Weekly Consistency</h2>
+              <p class="metric-value">5/7 days</p>
+              <div class="metric-progress">
+                <div class="progress-bar" style="width: 71%"></div>
+              </div>
+              <p class="metric-target">Target: 7 days</p>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="material-icons">local_fire_department</i>
+            </div>
+            <div class="metric-content">
+              <h2>Total Calories Burned</h2>
+              <p class="metric-value">12,000 kcal</p>
+              <div class="metric-progress">
+                <div class="progress-bar" style="width: 80%"></div>
+              </div>
+              <p class="metric-target">Target: 15,000 kcal</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="progress-charts-container">
+          <div class="chart-tabs">
+            <button class="chart-tab active" data-chart="trend">Trend Analysis</button>
+            <button class="chart-tab" data-chart="body">Body Metrics</button>
+            <button class="chart-tab" data-chart="strength">Strength Progress</button>
+            <button class="chart-tab" data-chart="cardio">Cardio Performance</button>
+          </div>
+          
+          <div class="progress-chart-view">
+            <div id="trend-analysis-chart" class="progress-chart active"></div>
+            <div id="body-metrics-chart" class="progress-chart"></div>
+            <div id="strength-progress-chart" class="progress-chart"></div>
+            <div id="cardio-performance-chart" class="progress-chart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Challenges & Rewards -->
+  
+<section id="challenges" class="dashboard-section">
+  <div class="section-header">
+    <h1>Challenges &amp; Rewards</h1>
+    <div class="section-actions">
+      <button class="btn-secondary" id="browse-challenges-btn">
+        <i class="material-icons">explore</i> Browse Challenges
+      </button>
+    </div>
+  </div>
+  
+  <div class="challenges-rewards-container">
+    <!-- Active Challenges Card -->
+    <div class="challenges-card">
+      <div class="card-header">
+        <h2>Active Challenges</h2>
+        <span class="badge">3 Active</span>
+      </div>
+      
+      <div class="challenge-list">
+        <!-- Challenge 1 -->
+        <div class="challenge-item">
+          <div class="challenge-header" data-challenge="1">
+            <div class="challenge-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
+            <div class="challenge-info">
+              <h3>Workout 5 Days This Week</h3>
+              <p class="reward-label">Badge: Consistency</p>
+            </div>
+            <div class="challenge-progress-indicator">
+              <span>3/5</span>
+            </div>
+            <div class="challenge-toggle">
+              <i class="material-icons">expand_more</i>
+            </div>
+          </div>
+          
+          <div class="challenge-details">
+            <p>Complete at least one workout on 5 different days this week.</p>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 60%"></div>
+            </div>
+            <button class="btn-primary mark-complete-btn" data-challenge="1">
+              <i class="material-icons">check</i> Mark as Complete
+            </button>
+          </div>
+        </div>
+        
+        <!-- Challenge 2 -->
+        <div class="challenge-item">
+          <div class="challenge-header" data-challenge="2">
+            <div class="challenge-icon">
+              <i class="material-icons">directions_run</i>
+            </div>
+            <div class="challenge-info">
+              <h3>10 Chest Workouts</h3>
+              <p class="reward-label">Badge: Chest Champion</p>
+            </div>
+            <div class="challenge-progress-indicator">
+              <span>4/10</span>
+            </div>
+            <div class="challenge-toggle">
+              <i class="material-icons">expand_more</i>
+            </div>
+          </div>
+          
+          <div class="challenge-details">
+            <p>Perform at least 10 chest workouts this week. Automatically tracked from your logs.</p>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 40%"></div>
+            </div>
+            <p class="auto-tracked"><i class="material-icons">auto_awesome</i> This challenge is tracked automatically from your workout logs.</p>
+          </div>
+        </div>
+        
+        <!-- Challenge 3 -->
+        <div class="challenge-item">
+          <div class="challenge-header" data-challenge="3">
+            <div class="challenge-icon">
+              <i class="material-icons">play_circle</i>
+            </div>
+            <div class="challenge-info">
+              <h3>Start a Cardio Challenge</h3>
+              <p class="reward-label">Badge: Cardio Starter</p>
+            </div>
+            <div class="challenge-progress-indicator">
+              <span>0/30</span>
+            </div>
+            <div class="challenge-toggle">
+              <i class="material-icons">expand_more</i>
+            </div>
+          </div>
+          
+          <div class="challenge-details">
+            <p>Begin a cardio challenge by starting a timed session and track your cardio minutes.</p>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 0%"></div>
+            </div>
+            <button class="btn-primary start-challenge-btn" data-challenge="3">
+              <i class="material-icons">play_arrow</i> Start Challenge
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Rewards Card -->
+    <div class="rewards-card">
+      <div class="card-header">
+        <h2>Your Rewards</h2>
+        <span class="badge">5 Earned</span>
+      </div>
+      
+      <div class="rewards-grid">
+        <!-- Reward 1 -->
+        <div class="reward-item">
+          <div class="reward-icon">
+            <i class="material-icons">emoji_events</i>
+          </div>
+          <h4>Consistency</h4>
+          <p>Workout 5 Days This Week completed!</p>
+        </div>
+        
+        <!-- Reward 2 -->
+        <div class="reward-item">
+          <div class="reward-icon">
+            <i class="material-icons">star</i>
+          </div>
+          <h4>Chest Champion</h4>
+          <p>10 Chest Workouts a Week completed!</p>
+        </div>
+        
+        <!-- Reward 3 -->
+        <div class="reward-item">
+          <div class="reward-icon">
+            <i class="material-icons">military_tech</i>
+          </div>
+          <h4>Cardio Starter</h4>
+          <p>Start a Cardio Challenge completed!</p>
+        </div>
+        
+        <!-- Reward 4 -->
+        <div class="reward-item">
+          <div class="reward-icon">
+            <i class="material-icons">verified</i>
+          </div>
+          <h4>Zen Master</h4>
+          <p>Meditate 10 Minutes completed!</p>
+        </div>
+        
+        <!-- Reward 5 -->
+        <div class="reward-item">
+          <div class="reward-icon">
+            <i class="material-icons">workspace_premium</i>
+          </div>
+          <h4>Push-Up Pro</h4>
+          <p>10 Push-Ups Challenge completed!</p>
+        </div>
+      </div>
+      
+      <div class="view-all-rewards">
+        <button class="btn-secondary" id="view-all-rewards-btn">View All Rewards</button>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Modal for Viewing Workout Details -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <h3 id="modalTitle">Workout Details</h3>
+      <div id="modalBody">
+        <div class="workout-detail">
+          <p><strong>Date:</strong> May 14, 2025</p>
+          <p><strong>Duration:</strong> 45:30</p>
+          <p><strong>Type:</strong> Strength</p>
+          <p><strong>Calories Burned:</strong> 420 kcal</p>
+          <p><strong>Description:</strong> A comprehensive full-body workout targeting all major muscle groups.</p>
+          
+          <h4>Exercises:</h4>
+          <ul class="exercise-list">
+            <li><strong>Squats:</strong> 3 sets × 12 reps</li>
+            <li><strong>Bench Press:</strong> 3 sets × 10 reps</li>
+            <li><strong>Deadlifts:</strong> 3 sets × 8 reps</li>
+            <li><strong>Shoulder Press:</strong> 3 sets × 10 reps</li>
+            <li><strong>Pull-ups:</strong> 3 sets × 8 reps</li>
+            <li><strong>Lunges:</strong> 3 sets × 12 reps per leg</li>
+            <li><strong>Planks:</strong> 3 sets × 60 seconds</li>
+            <li><strong>Russian Twists:</strong> 3 sets × 20 reps</li>
+          </ul>
+          
+          <h4>Feedback:</h4>
+          <p>Great session! Felt strong throughout the workout. Increased weight on squats and bench press.</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="modal-edit">Edit</button>
+        <button class="btn-primary" id="modal-start">Start Workout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create New Folder Modal -->
+  <div class="modal" id="createFolderModal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h3>Create New Folder</h3>
+      <form id="create-folder-form">
+        <div class="form-group">
+          <label for="folder-name">Folder Name</label>
+          <input type="text" id="folder-name" required placeholder="Enter folder name">
+        </div>
+        <div class="form-group">
+          <label>Color</label>
+          <div class="color-options">
+            <div class="color-option active" style="background-color: #FF6F00;"></div>
+            <div class="color-option" style="background-color: #4CAF50;"></div>
+            <div class="color-option" style="background-color: #2196F3;"></div>
+            <div class="color-option" style="background-color: #9C27B0;"></div>
+            <div class="color-option" style="background-color: #E91E63;"></div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancel-folder">Cancel</button>
+          <button type="submit" class="btn-primary" id="save-folder">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Workout Modal -->
+  <div class="modal" id="createWorkoutModal">
+    <div class="modal-content wide-modal">
+      <span class="modal-close">&times;</span>
+      <h3>Create New Workout</h3>
+      <form id="create-workout-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="workout-name">Workout Name</label>
+            <input type="text" id="workout-name" required placeholder="e.g., Full Body HIIT">
+          </div>
+          <div class="form-group">
+            <label for="workout-type">Workout Type</label>
+            <select id="workout-type" required>
+              <option value="">Select Type</option>
+              <option value="strength">Strength</option>
+              <option value="cardio">Cardio</option>
+              <option value="hiit">HIIT</option>
+              <option value="flexibility">Flexibility</option>
+              <option value="balance">Balance</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="workout-duration">Duration (minutes)</label>
+            <input type="number" id="workout-duration" min="5" max="180" required placeholder="e.g., 45">
+          </div>
+          <div class="form-group">
+            <label for="workout-difficulty">Difficulty</label>
+            <select id="workout-difficulty" required>
+              <option value="">Select Difficulty</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="workout-description">Description</label>
+          <textarea id="workout-description" rows="3" placeholder="Describe your workout..."></textarea>
+        </div>
+        
+        <div class="exercise-section">
+          <h4>Exercises</h4>
+          <table id="exercise-table">
+            <thead>
+              <tr>
+                <th>Exercise Name</th>
+                <th>Sets</th>
+                <th>Reps/Time</th>
+                <th>Rest</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" placeholder="Exercise name" class="exercise-name"></td>
+                <td><input type="number" placeholder="Sets" class="exercise-sets" min="1"></td>
+                <td><input type="text" placeholder="Reps/Time" class="exercise-reps"></td>
+                <td><input type="text" placeholder="Rest time" class="exercise-rest"></td>
+                <td><button type="button" class="btn-icon remove-exercise"><i class="material-icons">delete</i></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="btn-add" id="add-exercise">
+            <i class="material-icons">add</i> Add Exercise
+          </button>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancel-workout">Cancel</button>
+          <button type="submit" class="btn-primary" id="save-workout">Save Workout</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- AI Chatbot Integration -->
+  <div id="ai-chatbot" class="ai-chatbot hidden">
+    <div class="chat-header">
+      <div class="chat-title">
+        <div class="chat-avatar">
+          <img src="images/ai-coach.png" alt="AI Coach">
+        </div>
+        <h3>FitJourney Assistant</h3>
+      </div>
+      <div class="chat-controls">
+        <button id="minimize-chat" aria-label="Minimize Chat">
+          <i class="material-icons">remove</i>
+        </button>
+        <button id="close-chat" aria-label="Close Chat">
+          <i class="material-icons">close</i>
+        </button>
+      </div>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-day-divider">Today</div>
+      <div class="chat-message bot">
+        <div class="message-avatar">
+          <img src="images/ai-coach.png" alt="AI Coach">
+        </div>
+        <div class="message-content">
+          <p>Hello, John! How can I help with your fitness journey today?</p>
+          <span class="message-time">10:00 AM</span>
+        </div>
+      </div>
+    </div>
+    <div class="chat-suggestions">
+      <button class="suggestion-chip">Recommend a workout</button>
+      <button class="suggestion-chip">Nutrition advice</button>
+      <button class="suggestion-chip">Track my progress</button>
+    </div>
+    <div class="chat-footer">
+      <div class="chat-input-container">
+        <input type="text" id="chat-input" placeholder="Type your question..." aria-label="Chat input" />
+        <button id="voice-input" aria-label="Voice Input">
+          <i class="material-icons">mic</i>
+        </button>
+      </div>
+      <button id="send-chat" aria-label="Send Message">
+        <i class="material-icons">send</i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat Toggle Button -->
+  <button id="chat-toggle" aria-label="Chat with our AI Assistant">
+    <i class="material-icons">chat</i>
+  </button>
+
+  <!-- Theme Toggle -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark/Light Mode">
+    <i class="material-icons" id="theme-icon">dark_mode</i>
+  </button>
+
+  <!-- Footer -->
+  <footer class="dashboard-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <span>FitJourney</span>
+      </div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><i class="material-icons">facebook</i></a>
+        <a href="#" aria-label="Twitter"><i class="material-icons">twitter</i></a>
+        <a href="#" aria-label="Instagram"><i class="material-icons">instagram</i></a>
+        <a href="#" aria-label="YouTube"><i class="material-icons">youtube_activity</i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 FitJourney. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JS Modules -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script type="module" src="js/modules/dashboard.js"></script>
+  <script type="module" src="js/modules/workout-planner.js"></script>
+</body>
+</html>

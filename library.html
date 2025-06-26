@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitJourney - Exercise Library</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/components/library-main.css">
+  <link rel="stylesheet" href="css/components/library.css">
+  
+</head>
+<body class="dark-theme">
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-circle">FJ</div>
+        <span>FitJourney</span>
+      </a>
+      <nav class="nav">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="workout-session.html">Workouts</a></li>
+          <li><a href="nutrition.html">Nutrition</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="library.html" class="active">Exercise Library</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-right">
+        <button id="theme-toggle-btn" class="theme-toggle">
+          <i class="material-icons">dark_mode</i>
+        </button>
+        <div class="user-profile">
+          <div class="avatar">
+            <img src="images/profile-placeholder.jpg" alt="User Profile" id="JD">
+          </div>
+          <span>John Doe</span>
+          <i class="material-icons">arrow_drop_down</i>
+        </div>
+        <button class="mobile-menu-toggle">
+          <i class="material-icons">menu</i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1>Exercise Library</h1>
+          <p>Browse through our comprehensive collection of exercises to build your perfect workout routine.</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number" id="total-exercises">1300+</span>
+              <span class="stat-label">Exercises</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">15+</span>
+              <span class="stat-label">Body Parts</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">20+</span>
+              <span class="stat-label">Equipment Types</span>
+            </div>
+          </div>
+        </div>
+        <div class="search-container">
+          <div class="search-box">
+            <i class="material-icons">search</i>
+            <input type="text" id="search-input" placeholder="Search exercises by name, muscle, or equipment...">
+            <button id="search-clear" class="search-clear">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+          <button id="filter-toggle" class="filter-toggle">
+            <i class="material-icons">tune</i>
+            <span>Filters</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Filter Panel -->
+      <section class="filter-panel" id="filter-panel">
+        <div class="filter-header">
+          <h3>Filter Exercises</h3>
+          <button id="close-filter" class="close-filter">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+        <div class="filter-body">
+          <div class="filter-group">
+            <h4>Body Part</h4>
+            <div class="filter-options muscle-group-options">
+              <label class="filter-option">
+                <input type="checkbox" value="back">
+                <span>Back</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="chest">
+                <span>Chest</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="shoulders">
+                <span>Shoulders</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="upper arms">
+                <span>Upper Arms</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="lower arms">
+                <span>Lower Arms</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="upper legs">
+                <span>Upper Legs</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="lower legs">
+                <span>Lower Legs</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="waist">
+                <span>Core</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="cardio">
+                <span>Cardio</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="neck">
+                <span>Neck</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Equipment</h4>
+            <div class="filter-options equipment-options">
+              <label class="filter-option">
+                <input type="checkbox" value="body weight">
+                <span>Body Weight</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="dumbbell">
+                <span>Dumbbell</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="barbell">
+                <span>Barbell</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="cable">
+                <span>Cable</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="machine">
+                <span>Machine</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="kettlebell">
+                <span>Kettlebell</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="resistance band">
+                <span>Resistance Band</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="medicine ball">
+                <span>Medicine Ball</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="stability ball">
+                <span>Stability Ball</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="ez barbell">
+                <span>EZ Barbell</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="olympic barbell">
+                <span>Olympic Barbell</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="trap bar">
+                <span>Trap Bar</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Difficulty Level</h4>
+            <div class="filter-options difficulty-options">
+              <label class="filter-option">
+                <input type="checkbox" value="beginner">
+                <span>Beginner</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="intermediate">
+                <span>Intermediate</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="advanced">
+                <span>Advanced</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-footer">
+          <button id="reset-filters" class="reset-filters">Reset Filters</button>
+          <button id="apply-filters" class="apply-filters">Apply Filters</button>
+        </div>
+      </section>
+
+      <!-- Quick Filters -->
+      <section class="quick-filters">
+        <div class="quick-filter-scroll">
+          <button class="quick-filter-btn active" data-target="all">
+            <i class="material-icons">fitness_center</i>
+            <span>All</span>
+          </button>
+          <button class="quick-filter-btn" data-target="back">
+            <i class="material-icons">fitness_center</i>
+            <span>Back</span>
+          </button>
+          <button class="quick-filter-btn" data-target="chest">
+            <i class="material-icons">fitness_center</i>
+            <span>Chest</span>
+          </button>
+          <button class="quick-filter-btn" data-target="shoulders">
+            <i class="material-icons">fitness_center</i>
+            <span>Shoulders</span>
+          </button>
+          <button class="quick-filter-btn" data-target="upper arms">
+            <i class="material-icons">fitness_center</i>
+            <span>Arms</span>
+          </button>
+          <button class="quick-filter-btn" data-target="upper legs">
+            <i class="material-icons">fitness_center</i>
+            <span>Legs</span>
+          </button>
+          <button class="quick-filter-btn" data-target="waist">
+            <i class="material-icons">fitness_center</i>
+            <span>Core</span>
+          </button>
+          <button class="quick-filter-btn" data-target="lower legs">
+            <i class="material-icons">directions_run</i>
+            <span>Calves</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Exercise Library Content -->
+      <section class="library-content">
+        <div class="library-header">
+          <div class="result-count">
+            <span id="exercise-count">0</span> exercises found
+            <span class="total-count">of <span id="total-exercises-count">1300+</span> total</span>
+          </div>
+          <div class="view-options">
+            <button id="grid-view" class="view-option active" aria-label="Grid view">
+              <i class="material-icons">grid_view</i>
+            </button>
+            <button id="list-view" class="view-option" aria-label="List view">
+              <i class="material-icons">view_list</i>
+            </button>
+            <div class="sort-container">
+              <label for="sort-select">Sort by:</label>
+              <select id="sort-select" class="sort-select">
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="difficulty-asc">Difficulty (Low to High)</option>
+                <option value="difficulty-desc">Difficulty (High to Low)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" class="loading-indicator">
+          <div class="spinner"></div>
+          <p>Loading exercises from ExerciseDB...</p>
+        </div>
+
+        <!-- Exercise Grid -->
+        <div id="exercise-grid" class="exercise-grid">
+          <!-- Exercise cards will be dynamically added here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+          <i class="material-icons">search_off</i>
+          <h3>No exercises found</h3>
+          <p>Try adjusting your search or filters to find what you're looking for.</p>
+          <button id="clear-search-filters" class="btn-primary">Clear Search & Filters</button>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="error-state hidden">
+          <i class="material-icons">error_outline</i>
+          <h3>Something went wrong</h3>
+          <p id="error-message">Failed to load exercises. Please check your connection and try again.</p>
+          <button id="retry-loading" class="btn-primary">Try Again</button>
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more-container">
+          <button id="load-more" class="load-more-btn">
+            <span>Load More Exercises</span>
+            <i class="material-icons">expand_more</i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Exercise Categories -->
+      <section class="exercise-categories">
+        <div class="section-header">
+          <h2>Browse by Category</h2>
+          <p>Explore exercises by body part or equipment type</p>
+        </div>
+        <div class="category-grid">
+          <div class="category-card" data-category="chest">
+            <i class="material-icons">fitness_center</i>
+            <h3>Chest</h3>
+            <p>Build a powerful chest with targeted exercises</p>
+          </div>
+          <div class="category-card" data-category="back">
+            <i class="material-icons">fitness_center</i>
+            <h3>Back</h3>
+            <p>Strengthen your back and improve posture</p>
+          </div>
+          <div class="category-card" data-category="shoulders">
+            <i class="material-icons">fitness_center</i>
+            <h3>Shoulders</h3>
+            <p>Develop strong, defined shoulders</p>
+          </div>
+          <div class="category-card" data-category="upper arms">
+            <i class="material-icons">fitness_center</i>
+            <h3>Arms</h3>
+            <p>Build impressive arm strength and size</p>
+          </div>
+          <div class="category-card" data-category="upper legs">
+            <i class="material-icons">fitness_center</i>
+            <h3>Legs</h3>
+            <p>Power up your lower body workouts</p>
+          </div>
+          <div class="category-card" data-category="waist">
+            <i class="material-icons">fitness_center</i>
+            <h3>Core</h3>
+            <p>Strengthen your core and abs</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Favorites Section -->
+      <section class="saved-workouts">
+        <div class="section-header">
+          <h2>Your Favorite Exercises</h2>
+          <button id="view-all-favorites" class="btn-secondary">
+            <i class="material-icons">favorite</i>
+            <span>View All Favorites</span>
+          </button>
+        </div>
+        <div class="workout-cards" id="favorite-exercises-preview">
+          <!-- Favorite exercises preview will be dynamically added here -->
+          <div class="empty-workouts" id="empty-favorites">
+            <i class="material-icons">favorite_border</i>
+            <h3>No favorite exercises yet</h3>
+            <p>Start adding exercises to your favorites by clicking the heart icon.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Exercise Detail Modal -->
+  <div id="exercise-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-exercise-name">Exercise Name</h2>
+        <button id="close-modal" class="close-modal">
+          <i class="material-icons">close</i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="exercise-detail-grid">
+          <div class="exercise-media">
+            <div class="exercise-gif-container">
+              <img id="modal-exercise-gif" src="/placeholder.svg?height=300&width=400" alt="Exercise animation">
+            </div>
+          </div>
+          <div class="exercise-info">
+            <div class="info-badges">
+              <div class="detail-item">
+                <span class="detail-label">Target Muscle:</span>
+                <span id="modal-target" class="detail-value">Target Muscle</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Equipment:</span>
+                <span id="modal-equipment" class="detail-value">Equipment</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Body Part:</span>
+                <span id="modal-body-part" class="detail-value">Body Part</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Difficulty:</span>
+                <span id="modal-difficulty" class="detail-value difficulty-badge">Difficulty</span>
+              </div>
+            </div>
+            <div class="exercise-instructions">
+              <h3>Instructions</h3>
+              <ol id="modal-instructions">
+                <!-- Instructions will be added dynamically -->
+              </ol>
+            </div>
+            <div class="secondary-muscles">
+              <h3>Secondary Muscles</h3>
+              <div id="modal-secondary-muscles" class="muscle-tags">
+                <!-- Secondary muscles will be added dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="add-to-favorites" class="btn-secondary">
+          <i class="material-icons">favorite_border</i>
+          <span>Add to Favorites</span>
+        </button>
+        <button id="add-to-workout" class="btn-primary">
+          <i class="material-icons">playlist_add</i>
+          <span>Add to Workout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast" class="toast hidden">
+    <i id="toast-icon" class="material-icons">info</i>
+    <span id="toast-message">Message</span>
+    <button id="toast-close" class="toast-close">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/modules/library.js"></script>
+</body>
+</html>

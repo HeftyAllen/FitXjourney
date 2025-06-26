@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Photo Tracker & Progress - Track your fitness journey with our AI-powered photo tracker. Upload your progress photos, view your transformation timeline, and receive personalized AI feedback on your fitness journey." />
+  <title>Photo Tracker & Progress - FitJourney</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components/photo-tracker.css" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  
+  <!-- Plotly for Charts -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header class="tracker-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <span>FitJourney</span>
+      </a>
+      <nav class="tracker-nav">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="workout.html">Workouts</a></li>
+          <li><a href="nutrition.html">Nutrition</a></li>
+          <li><a href="photo-tracker.html" class="active">Progress</a></li>
+          <li><a href="settings.html">Settings</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="material-icons">menu</i>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Main Content Area -->
+  <main class="tracker-main">
+    <div class="container">
+      <!-- Page Introduction -->
+      <section class="tracker-intro">
+        <h1>Photo Tracker & Progress</h1>
+        <p>Track your fitness journey with visual progress tracking. Upload photos, compare transformations, and get AI-powered insights to help you reach your goals.</p>
+        
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">photo_library</i>
+            </div>
+            <div class="stat-content">
+              <h3>Total Photos</h3>
+              <p class="stat-value" id="total-photos">0</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">calendar_today</i>
+            </div>
+            <div class="stat-content">
+              <h3>Tracking Since</h3>
+              <p class="stat-value" id="tracking-since">N/A</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">trending_up</i>
+            </div>
+            <div class="stat-content">
+              <h3>Latest Weight</h3>
+              <p class="stat-value" id="latest-weight">N/A</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="material-icons">insights</i>
+            </div>
+            <div class="stat-content">
+              <h3>Progress Score</h3>
+              <p class="stat-value" id="progress-score">N/A</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="btn btn-primary" id="upload-photo-btn">
+            <i class="material-icons">add_a_photo</i> Upload New Photo
+          </button>
+          <button class="btn btn-accent" id="compare-photos-btn">
+            <i class="material-icons">compare</i> Compare Photos
+          </button>
+          <button class="btn btn-secondary" id="log-weight-btn">
+            <i class="material-icons">monitor_weight</i> Log Weight
+          </button>
+          <button class="btn btn-secondary" id="view-charts-btn">
+            <i class="material-icons">bar_chart</i> View Charts
+          </button>
+        </div>
+      </section>
+      
+      <!-- Upload Photo Section -->
+      <section id="upload-photo" class="tracker-section">
+        <h2>Upload Your Progress Photo</h2>
+        <p>Capture and document your transformation over time. Upload your latest progress photo along with details to track your journey effectively.</p>
+        
+        <div class="upload-form">
+          <div class="upload-preview" id="photo-preview">
+            <div class="placeholder">
+              <i class="material-icons">add_photo_alternate</i>
+              <p>Preview will appear here</p>
+            </div>
+          </div>
+          
+          <div class="form-fields">
+            <form id="upload-form">
+              <div class="form-group">
+                <label for="photo-upload">Choose Photo:</label>
+                <input type="file" id="photo-upload" name="photo-upload" accept="image/*" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="photo-date">Date:</label>
+                <input type="date" id="photo-date" name="photo-date" value="" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="photo-category">Category:</label>
+                <select id="photo-category" name="photo-category">
+                  <option value="front">Front View</option>
+                  <option value="side">Side View</option>
+                  <option value="back">Back View</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="photo-caption">Notes:</label>
+                <textarea id="photo-caption" name="photo-caption" placeholder="Share your progress or notes about this photo..." required></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label for="current-weight">Current Weight (optional):</label>
+                <div class="weight-input">
+                  <input type="number" id="current-weight" name="current-weight" step="0.1" placeholder="Enter your weight" />
+                  <select id="weight-unit">
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancel-upload">Cancel</button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="material-icons">cloud_upload</i> Upload Photo
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Transformation Timeline -->
+      <section id="photo-timeline" class="tracker-section">
+        <h2>Your Transformation Timeline</h2>
+        <p>Review your progress over time with our interactive timeline. Click on any photo to view details and see how far you've come on your fitness journey.</p>
+        
+        <!-- Filter Controls -->
+        <div class="timeline-controls">
+          <div class="search-filter">
+            <input type="text" id="search-photos" placeholder="Search notes..." />
+            <i class="material-icons">search</i>
+          </div>
+          
+          <div class="category-filter">
+            <label for="category-select">Filter by:</label>
+            <select id="category-select">
+              <option value="all">All Photos</option>
+              <option value="front">Front View</option>
+              <option value="side">Side View</option>
+              <option value="back">Back View</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          
+          <div class="sort-options">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Photo Gallery -->
+        <div class="photo-gallery" id="photo-gallery">
+          <!-- Empty state message -->
+          <div class="empty-gallery" id="empty-gallery">
+            <i class="material-icons">photo_library</i>
+            <h3>No photos yet</h3>
+            <p>Upload your first progress photo to start tracking your fitness journey.</p>
+            <button class="btn btn-primary" id="upload-first-photo">
+              <i class="material-icons">add_a_photo</i> Upload First Photo
+            </button>
+          </div>
+          
+          <!-- Photo cards will be dynamically added here -->
+        </div>
+      </section>
+      
+      <!-- Before & After Comparison -->
+      <section id="before-after" class="tracker-section">
+        <h2>Before & After Comparison</h2>
+        <p>Compare two selected progress photos side-by-side to clearly see your transformation over time.</p>
+        
+        <div class="comparison-controls">
+          <div class="form-group">
+            <label for="before-select">Before Photo:</label>
+            <select id="before-select">
+              <option value="">Select a photo</option>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="after-select">After Photo:</label>
+            <select id="after-select">
+              <option value="">Select a photo</option>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+        </div>
+        
+        <div class="comparison-container">
+          <div class="comparison-wrapper">
+            <div class="before-image">
+              <img id="before-image-display" src="images/placeholder-photo.jpg" alt="Before Photo" />
+            </div>
+            <div class="after-image">
+              <img id="after-image-display" src="images/placeholder-photo.jpg" alt="After Photo" />
+            </div>
+            <div class="comparison-slider" id="comparison-slider"></div>
+          </div>
+          
+          <div class="comparison-labels">
+            <span>Before</span>
+            <span>After</span>
+          </div>
+        </div>
+        
+        <input type="range" min="0" max="100" value="50" id="comparisonRange" class="comparison-range" />
+      </section>
+      
+      <!-- Weight Tracking -->
+      <section id="weight-tracking" class="tracker-section">
+        <h2>Weight Tracking</h2>
+        <p>Log and monitor your weight changes over time to track your progress toward your fitness goals.</p>
+        
+        <div class="weight-tracking-container">
+          <div class="weight-form-container">
+            <form id="weight-form">
+              <div class="form-group">
+                <label for="weight-input">Weight:</label>
+                <div class="weight-input">
+                  <input type="number" step="0.1" id="weight-input" placeholder="Enter your weight" required />
+                  <select id="weight-unit-log">
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="weight-date">Date:</label>
+                <input type="date" id="weight-date" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="weight-notes">Notes (optional):</label>
+                <textarea id="weight-notes" placeholder="Any notes about this weight entry..."></textarea>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="material-icons">save</i> Log Weight
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          <div class="weight-history">
+            <h3>Weight History</h3>
+            <div class="weight-table-container">
+              <table class="weight-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Weight</th>
+                    <th>Change</th>
+                  </tr>
+                </thead>
+                <tbody id="weight-history-body">
+                  <!-- Weight entries will be added dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Body Measurements -->
+      <section id="body-measurements" class="tracker-section">
+        <h2>Body Measurements</h2>
+        <p>Track detailed body measurements to get a comprehensive view of your physical changes beyond weight and photos.</p>
+        
+        <div class="measurements-container">
+          <div class="measurement-form">
+            <h3>Log Measurements</h3>
+            <form id="measurements-form">
+              <div class="measurements-grid">
+                <div class="form-group">
+                  <label for="chest">Chest (cm):</label>
+                  <input type="number" step="0.1" id="chest" placeholder="Chest" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="waist">Waist (cm):</label>
+                  <input type="number" step="0.1" id="waist" placeholder="Waist" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="hips">Hips (cm):</label>
+                  <input type="number" step="0.1" id="hips" placeholder="Hips" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="bicep">Bicep (cm):</label>
+                  <input type="number" step="0.1" id="bicep" placeholder="Bicep" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="thigh">Thigh (cm):</label>
+                  <input type="number" step="0.1" id="thigh" placeholder="Thigh" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="calf">Calf (cm):</label>
+                  <input type="number" step="0.1" id="calf" placeholder="Calf" />
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="save-measurements">
+                  <i class="material-icons">save</i> Save Measurements
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Progress Graphs -->
+      <section id="progress-graphs" class="tracker-section">
+        <h2>Progress Graphs</h2>
+        <p>Visualize your progress with interactive graphs showing your weight, measurements, and other metrics over time.</p>
+        
+        <div class="chart-tabs">
+          <div class="chart-tab active" data-chart="weight">Weight</div>
+          <div class="chart-tab" data-chart="measurements">Measurements</div>
+          <div class="chart-tab" data-chart="combined">Combined View</div>
+        </div>
+        
+        <div class="chart-container">
+          <div id="progressChart" style="width:100%; height:400px;"></div>
+        </div>
+        
+        <div class="chart-actions">
+          <button class="btn btn-secondary" id="load-weight-graph">
+            <i class="material-icons">timeline</i> Weight Graph
+          </button>
+          <button class="btn btn-secondary" id="load-measurement-graph">
+            <i class="material-icons">straighten</i> Measurements Graph
+          </button>
+          <button class="btn btn-secondary" id="export-data">
+            <i class="material-icons">download</i> Export Data
+          </button>
+        </div>
+      </section>
+      
+      <!-- AI Feedback -->
+      <section id="ai-feedback" class="tracker-section">
+        <h2>AI Feedback on Your Progress</h2>
+        <p>Our AI system analyzes your uploaded photos and provides personalized feedback on your form, posture, and overall transformation.</p>
+        
+        <div class="ai-feedback-placeholder">
+          <p><i class="material-icons">psychology</i> Upload photos and run AI analysis to get personalized feedback on your progress.</p>
+          <button class="btn btn-accent btn-run-ai">
+            <i class="material-icons">auto_awesome</i> Run AI Analysis
+          </button>
+        </div>
+        
+        <div id="ai-results" class="ai-results" style="display: none;">
+          <!-- AI analysis results will be displayed here -->
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- AI Chatbot -->
+  <div id="ai-chatbot" class="ai-chatbot hidden">
+    <div class="chat-header">
+      <h3>FitJourney Assistant</h3>
+      <button id="close-chat" aria-label="Close Chat">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-message bot">Hello! How can I help with your fitness progress tracking today?</div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Type your question..." aria-label="Chat input" />
+      <button id="send-chat" aria-label="Send Message"><i class="material-icons">send</i></button>
+    </div>
+  </div>
+  
+  <!-- Chat Toggle Button -->
+  <button id="chat-toggle" aria-label="Chat with our AI Assistant">
+    <i class="material-icons">chat</i>
+  </button>
+  
+  <!-- Footer -->
+  <footer class="tracker-footer">
+    <div class="container">
+      <p>&copy; 2025 FitJourney. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <!-- JavaScript -->
+  <script src="js/modules/photo-tracker.js"></script>
+</body>
+</html>

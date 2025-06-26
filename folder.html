@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meal Planner</title>
+  <!-- Google Fonts (Optional) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Example: Using 'Poppins' font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+  --primary: #8E44AD;       /* Rich Purple */
+  --accent:  #E67E22;       /* Warm Orange */
+  --dark-bg: #121212;
+  --darker-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --light-text: #b0b0b0;
+  --glow: rgba(142, 68, 173, 0.4);
+}
+
+/* Reset and base styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--dark-bg);
+  font-family: 'Poppins', sans-serif; /* or your preferred font */
+  color: var(--text-color);
+}
+
+/* Container holding the entire meal planner card */
+.meal-planner-container {
+  max-width: 600px;
+  margin: 3rem auto;  /* Centered with some spacing from the top */
+  background-color: var(--darker-bg);
+  border: 1px solid #2c2c2c;       /* Subtle border */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* A bit of shadow for depth */
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+/* Header section */
+.meal-planner-header {
+  margin-bottom: 1.5rem;
+}
+
+.meal-planner-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.meal-planner-header p {
+  font-size: 0.9rem;
+  color: var(--light-text);
+}
+
+/* Body / form section */
+.meal-planner-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form rows */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--light-text);
+  margin-bottom: 0.4rem;
+}
+
+/* Select and Date input */
+.form-row select,
+.form-row input[type="date"] {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  background-color: var(--dark-bg);
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Button styling */
+.generate-button {
+  padding: 0.7rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.generate-button:hover {
+  box-shadow: 0 0 8px var(--glow);
+}
+
+/* Placeholder area for the meal plan result */
+.meal-plan-result {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--light-text);
+}
+
+  </style>
+</head>
+<body>
+  <div class="meal-planner-container">
+    <header class="meal-planner-header">
+      <h1>Meal Planner</h1>
+      <p>Generate and manage your daily meal plan based on your nutritional goals.</p>
+    </header>
+
+    <section class="meal-planner-body">
+      <div class="form-row">
+        <label for="planType">Plan Type</label>
+        <select id="planType" name="planType">
+          <option value="daily" selected>Daily Plan</option>
+          <option value="weekly">Weekly Plan</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="dateInput">Select Date (Optional)</label>
+        <input type="date" id="dateInput" name="dateInput" />
+      </div>
+
+      <button class="generate-button">Generate Meal Plan</button>
+
+      <div class="meal-plan-result">
+        <p>No meal plan generated yet. Click the button above to create one.</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

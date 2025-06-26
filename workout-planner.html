@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FitJourney Workout Planner - Plan your personalized workout session from our extensive exercise library." />
+  <meta name="keywords" content="Workout, Planner, Exercise, AI, Fitness, FitJourney" />
+  <meta name="author" content="FitJourney Team" />
+  <title>Workout Planner - FitJourney</title>
+  
+  <!-- Main CSS Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components/workout-planner.css" />
+  
+  <!-- Material Icons for UI Elements -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- HEADER: Branding and Navigation -->
+  <header class="workout-header">
+    <div class="container">
+      <a href="index.html" class="logo" aria-label="FitJourney Home">
+        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <span>FitJourney</span>
+      </a>
+      <nav class="workout-nav" aria-label="Primary Navigation">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="library.html">Exercise Library</a></li>
+          <li><a href="workout-session.html">Workout Session</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="workout-planner.html" class="active">Workout Planner</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <button id="theme-toggle-btn">
+          <i class="material-icons">dark_mode</i>
+        </button>
+        <div class="user-profile">
+          <img src="images/profile-placeholder.jpg" alt="User Profile" />
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- MAIN CONTENT AREA -->
+  <main class="workout-main container">
+    <div class="page-header">
+      <h1>Plan Your Workout</h1>
+      <p>Create a personalized workout routine from our extensive exercise library powered by ExerciseDB.</p>
+    </div>
+
+    <div class="workout-planner-layout">
+      <!-- Left Column: Filters and Options -->
+      <section class="planner-sidebar">
+        <div class="sidebar-section">
+          <h2>Muscle Groups</h2>
+          <div class="filter-options" role="group" aria-label="Filter Exercises">
+            <button class="filter-btn active" data-filter="all">
+              <i class="material-icons">fitness_center</i>
+              <span>All</span>
+            </button>
+            <button class="filter-btn" data-filter="back">
+              <i class="material-icons">accessibility_new</i>
+              <span>Back</span>
+            </button>
+            <button class="filter-btn" data-filter="cardio">
+              <i class="material-icons">directions_run</i>
+              <span>Cardio</span>
+            </button>
+            <button class="filter-btn" data-filter="chest">
+              <i class="material-icons">accessibility</i>
+              <span>Chest</span>
+            </button>
+            <button class="filter-btn" data-filter="lower arms">
+              <i class="material-icons">front_hand</i>
+              <span>Lower Arms</span>
+            </button>
+            <button class="filter-btn" data-filter="lower legs">
+              <i class="material-icons">airline_seat_legroom_extra</i>
+              <span>Lower Legs</span>
+            </button>
+            <button class="filter-btn" data-filter="neck">
+              <i class="material-icons">face</i>
+              <span>Neck</span>
+            </button>
+            <button class="filter-btn" data-filter="shoulders">
+              <i class="material-icons">sports_martial_arts</i>
+              <span>Shoulders</span>
+            </button>
+            <button class="filter-btn" data-filter="upper arms">
+              <i class="material-icons">sports_handball</i>
+              <span>Upper Arms</span>
+            </button>
+            <button class="filter-btn" data-filter="upper legs">
+              <i class="material-icons">airline_seat_legroom_normal</i>
+              <span>Upper Legs</span>
+            </button>
+            <button class="filter-btn" data-filter="waist">
+              <i class="material-icons">straighten</i>
+              <span>Waist</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h2>Equipment</h2>
+          <div class="equipment-filter">
+            <select id="equipment" class="form-select">
+              <option value="">All Equipment</option>
+              <option value="assisted">Assisted</option>
+              <option value="band">Band</option>
+              <option value="barbell">Barbell</option>
+              <option value="body weight">Body Weight</option>
+              <option value="bosu ball">Bosu Ball</option>
+              <option value="cable">Cable</option>
+              <option value="dumbbell">Dumbbell</option>
+              <option value="elliptical machine">Elliptical Machine</option>
+              <option value="ez barbell">EZ Barbell</option>
+              <option value="hammer">Hammer</option>
+              <option value="kettlebell">Kettlebell</option>
+              <option value="leverage machine">Leverage Machine</option>
+              <option value="medicine ball">Medicine Ball</option>
+              <option value="olympic barbell">Olympic Barbell</option>
+              <option value="resistance band">Resistance Band</option>
+              <option value="roller">Roller</option>
+              <option value="rope">Rope</option>
+              <option value="skierg machine">Skierg Machine</option>
+              <option value="sled machine">Sled Machine</option>
+              <option value="smith machine">Smith Machine</option>
+              <option value="stability ball">Stability Ball</option>
+              <option value="stationary bike">Stationary Bike</option>
+              <option value="stepmill machine">Stepmill Machine</option>
+              <option value="tire">Tire</option>
+              <option value="trap bar">Trap Bar</option>
+              <option value="upper body ergometer">Upper Body Ergometer</option>
+              <option value="weighted">Weighted</option>
+              <option value="wheel roller">Wheel Roller</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h2>Workout Settings</h2>
+          <div class="workout-settings">
+            <div class="setting-group">
+              <label for="session-duration">Session Duration</label>
+              <div class="input-with-unit">
+                <input type="number" id="session-duration" min="10" max="120" value="45" />
+                <span class="unit">min</span>
+              </div>
+            </div>
+            
+            <div class="setting-group">
+              <label for="difficulty">Difficulty Level</label>
+              <select id="difficulty" class="form-select">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            
+            <div class="setting-group">
+              <label for="rest-timer">Rest Between Sets</label>
+              <div class="input-with-unit">
+                <input type="number" id="rest-timer" min="10" max="180" value="60" />
+                <span class="unit">sec</span>
+              </div>
+            </div>
+            
+            <div class="setting-group">
+              <label for="transition-timer">Transition Time</label>
+              <div class="input-with-unit">
+                <input type="number" id="transition-timer" min="5" max="60" value="15" />
+                <span class="unit">sec</span>
+              </div>
+            </div>
+            
+            <div class="setting-group">
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="custom-workout" />
+                <label for="custom-workout">Generate AI Workout</label>
+                <span class="tooltip" data-tooltip="Let our AI create a balanced workout based on your selections">
+                  <i class="material-icons">info</i>
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <button id="generate-workout-btn" class="btn btn-primary">
+            <i class="material-icons">fitness_center</i> Generate Workout
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Column: Exercise Browser and Generated Workout -->
+      <section class="planner-content">
+        <div class="content-section exercise-browser">
+          <div class="section-header">
+            <h2>Exercise Browser</h2>
+            <div class="search-container">
+              <input type="text" id="exercise-search" placeholder="Search exercises..." />
+              <button id="search-btn" class="btn-icon">
+                <i class="material-icons">search</i>
+              </button>
+            </div>
+          </div>
+          
+          <div id="loading-indicator" class="loading-indicator hidden">
+            <div class="spinner"></div>
+            <p>Loading exercises...</p>
+          </div>
+          
+          <div id="exercise-grid" class="exercise-grid">
+            <!-- Exercise cards will be dynamically generated here -->
+          </div>
+          
+          <div id="pagination" class="pagination">
+            <button id="prev-page" class="btn btn-secondary" disabled>
+              <i class="material-icons">chevron_left</i> Previous
+            </button>
+            <span id="page-indicator">Page 1 of 1</span>
+            <button id="next-page" class="btn btn-secondary">
+              Next <i class="material-icons">chevron_right</i>
+            </button>
+          </div>
+        </div>
+
+        <div id="generated-workout" class="content-section generated-workout hidden">
+          <div class="section-header">
+            <h2>Your Custom Workout</h2>
+            <div class="workout-actions">
+              <button id="clear-workout-btn" class="btn btn-secondary">
+                <i class="material-icons">clear</i> Clear
+              </button>
+              <button id="save-workout-btn" class="btn btn-secondary">
+                <i class="material-icons">save</i> Save
+              </button>
+              <button id="print-workout-btn" class="btn btn-secondary">
+                <i class="material-icons">print</i> Print
+              </button>
+            </div>
+          </div>
+          
+          <div id="workout-summary" class="workout-summary">
+            <div class="summary-item">
+              <i class="material-icons">timer</i>
+              <div class="summary-details">
+                <span class="summary-value" id="total-duration">45</span>
+                <span class="summary-label">Minutes</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <i class="material-icons">fitness_center</i>
+              <div class="summary-details">
+                <span class="summary-value" id="exercise-count">0</span>
+                <span class="summary-label">Exercises</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <i class="material-icons">whatshot</i>
+              <div class="summary-details">
+                <span class="summary-value" id="difficulty-level">Intermediate</span>
+                <span class="summary-label">Difficulty</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="workout-list-container">
+            <h3>Exercise List</h3>
+            <ul id="workout-list" class="workout-list">
+              <!-- Workout exercises will be dynamically generated here -->
+            </ul>
+          </div>
+          
+          <button id="start-workout-btn" class="btn btn-primary">
+            <i class="material-icons">play_arrow</i> Start Workout Session
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- AI Chatbot Integration -->
+  <div id="ai-chatbot" class="ai-chatbot hidden" role="dialog" aria-label="AI Workout Assistant">
+    <div class="chat-header">
+      <h3><i class="material-icons">smart_toy</i> Workout Assistant</h3>
+      <button id="close-chat" aria-label="Close Chat">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-message bot">Hello! I'm your workout assistant. How can I help you plan your workout today?</div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Ask me anything about workouts..." aria-label="Chat input" />
+      <button id="send-chat" aria-label="Send Message"><i class="material-icons">send</i></button>
+    </div>
+  </div>
+  
+  <!-- Chat Toggle Button -->
+  <button id="chat-toggle" class="chat-toggle" aria-label="Chat with our AI Assistant">
+    <i class="material-icons">chat</i>
+  </button>
+  
+  <!-- Exercise Detail Modal -->
+  <div id="exercise-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div id="exercise-detail"></div>
+    </div>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer class="workout-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+          <span>FitJourney</span>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>Features</h4>
+            <ul>
+              <li><a href="#">Workout Planner</a></li>
+              <li><a href="#">Exercise Library</a></li>
+              <li><a href="#">Progress Tracking</a></li>
+              <li><a href="#">Nutrition</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="material-icons">facebook</i></a>
+          <a href="#" aria-label="Twitter"><i class="material-icons">twitter</i></a>
+          <a href="#" aria-label="Instagram"><i class="material-icons">instagram</i></a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 FitJourney. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Include the workout planner JS module -->
+  <script type="module" src="js/modules/workout-planner.js"></script>
+  <script type="module" src="js/modules/chatbot.js"></script>
+</body>
+</html>
