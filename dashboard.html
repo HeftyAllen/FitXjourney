@@ -7,17 +7,921 @@
   <meta name="keywords" content="FitJourney, workout dashboard, fitness, workout planner, progress tracking, nutrition log, hydration, challenges, AI coaching, workout library" />
   <meta name="author" content="FitJourney Team" />
   <title>FitJourney Dashboard - Workout Planning & Tracking</title>
-
+  
   <!-- Main Stylesheets -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/components/dashboard.css" />
-    <link rel="stylesheet" href="css/components/notifications.css" />  
+  <link rel="stylesheet" href="css/components/notifications.css" />  
+  
   <!-- Material Icons for UI elements -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Enhanced Dashboard CSS */
+    :root {
+      --primary: #6A1B9A;
+      --accent: #FF6F00;
+      --dark-bg: #1C1C1C;
+      --darker-bg: #121212;
+      --text-color: #e0e0e0;
+      --light-text: #b0b0b0;
+      --success: #4CAF50;
+      --warning: #FFC107;
+      --error: #F44336;
+      --card-bg: var(--darker-bg);
+      --border-radius: 8px;
+      --transition-speed: 0.3s;
+    }
+
+    body.light-mode {
+      --dark-bg: #f2f2f2;
+      --darker-bg: #ffffff;
+      --text-color: #212121;
+      --light-text: #515C6F;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--darker-bg);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .dashboard-header {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      padding: 0.75rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(106, 27, 154, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 8px;
+      margin-right: 0.75rem;
+    }
+
+    .top-nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      gap: 1rem;
+    }
+
+    .top-nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .top-nav a:hover, .top-nav a.active {
+      background: rgba(255, 111, 0, 0.15);
+      color: var(--accent);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      padding: 0.5rem 0;
+      min-width: 180px;
+      z-index: 1200;
+    }
+
+    .dropdown.active .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.7rem 1.25rem;
+      color: var(--text-color);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.5rem;
+      color: white;
+      font-weight: bold;
+    }
+
+    .user-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      min-width: 200px;
+      z-index: 2000;
+      padding: 0.5rem 0;
+    }
+
+    .user-profile.active .user-dropdown-menu {
+      display: block;
+    }
+
+    /* Main Content */
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .dashboard-content {
+      padding: 1.5rem 0;
+    }
+
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .highlight {
+      color: #fff200;
+      font-weight: 700;
+    }
+
+    /* Quick Actions */
+    .quick-actions-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .quick-action-button {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      color: var(--text-color);
+    }
+
+    .quick-action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(106, 27, 154, 0.3);
+    }
+
+    .quick-action-button i {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Sections */
+    .dashboard-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.5rem;
+    }
+
+    .section-header h1 {
+      color: var(--accent);
+      margin: 0;
+      font-size: 1.75rem;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* Stats Cards */
+    .overview-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(106, 27, 154, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
+
+    .stat-icon i {
+      font-size: 1.75rem;
+      color: var(--primary);
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0.25rem 0;
+    }
+
+    .stat-change {
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    .stat-change.positive {
+      color: var(--success);
+    }
+
+    /* Charts */
+    .overview-charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .chart {
+      height: 300px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-text);
+    }
+
+    /* Folders */
+    .folders-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .workout-folder {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      transition: transform 0.2s;
+    }
+
+    .workout-folder:hover {
+      transform: translateY(-2px);
+    }
+
+    .create-folder-card {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .folder-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .folder-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .folder-workouts {
+      margin: 1rem 0;
+    }
+
+    .empty-folder {
+      color: var(--light-text);
+      font-style: italic;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* Workouts */
+    .workouts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .workout-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      transition: transform 0.2s;
+    }
+
+    .workout-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .workout-card h2 {
+      margin: 0 0 0.5rem 0;
+      color: var(--text-color);
+    }
+
+    .workout-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    /* AI Suggestions */
+    .ai-coach-summary {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .ai-coach-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .ai-suggestions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .suggestion-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .suggestion-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .ai-tag {
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+
+    /* Search and Filters */
+    .search-filters {
+      margin-bottom: 1.5rem;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      background: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--light-text);
+    }
+
+    .filter-options {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-options select {
+      padding: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      background: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .active-filters {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      background: var(--primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter-tag i {
+      cursor: pointer;
+    }
+
+    /* History Table */
+    .history-table-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .history-table th,
+    .history-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .history-table th {
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Progress Metrics */
+    .progress-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .metric-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(106, 27, 154, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
+
+    .metric-progress {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      margin: 0.5rem 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    /* Challenges */
+    .challenges-rewards-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .challenges-card,
+    .rewards-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-header h2 {
+      color: var(--accent);
+      margin: 0;
+    }
+
+    .badge {
+      background: var(--primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .challenge-list {
+      padding: 1rem;
+    }
+
+    .challenge-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .challenge-header {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      cursor: pointer;
+    }
+
+    .challenge-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(106, 27, 154, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+    }
+
+    .challenge-icon i {
+      color: var(--accent);
+    }
+
+    .challenge-info {
+      flex: 1;
+    }
+
+    .challenge-info h3 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1rem;
+    }
+
+    .reward-label {
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin: 0;
+    }
+
+    .challenge-progress-indicator {
+      margin: 0 1rem;
+      font-size: 0.9rem;
+      color: var(--light-text);
+    }
+
+    .challenge-toggle i {
+      color: var(--light-text);
+      transition: transform 0.3s;
+    }
+
+    .challenge-item.expanded .challenge-toggle i {
+      transform: rotate(180deg);
+    }
+
+    .challenge-details {
+      padding: 0 1rem 1rem 1rem;
+      display: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .challenge-item.expanded .challenge-details {
+      display: block;
+    }
+
+    .progress-container {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .reward-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+
+    .reward-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .reward-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(106, 27, 154, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .reward-icon i {
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #e65c00;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-color);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: none;
+      color: var(--light-text);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent);
+    }
+
+    /* Empty States */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--light-text);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    /* Notifications */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateX(400px);
+      transition: transform 0.3s;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification-success {
+      border-left: 4px solid var(--success);
+    }
+
+    .notification-error {
+      border-left: 4px solid var(--error);
+    }
+
+    .notification-warning {
+      border-left: 4px solid var(--warning);
+    }
+
+    .notification-close {
+      background: none;
+      border: none;
+      color: var(--light-text);
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .challenges-rewards-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .rewards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .overview-charts {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-container {
+        flex-wrap: wrap;
+      }
+      
+      .top-nav {
+        order: 3;
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .rewards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .quick-actions-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
+
 <body>
   <!-- Top Navigation Header -->
   <header class="dashboard-header">
@@ -29,15 +933,23 @@
           <span>FitJourney</span>
         </a>
       </div>
+      
+      <!-- Add this right after the header-left div -->
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      
       <!-- Center: Top Navigation with Dropdowns -->
-      <nav class="top-nav">
+      <nav class="top-nav mobile-nav" id="top-nav">
         <ul>
           <li><a href="#" class="active">Dashboard</a></li>
           <li class="dropdown">
             <a href="#">Workouts <i class="material-icons">arrow_drop_down</i></a>
             <ul class="dropdown-menu">
-              <li><a href="#my-workouts">My Workouts</a></li>
-              <li><a href="#ai-coaching-recommendations">AI Coaching</a></li>
+              <li><a href="workout-planner.html">My Workout Planner</a></li>
+              <li><a href="workout-session.html">My Workout Session</a></li>
               <li><a href="#workout-history">Workout History</a></li>
             </ul>
           </li>
@@ -47,31 +959,38 @@
               <li><a href="progress.html">Progress</a></li>
               <li><a href="nutrition.html">Nutrition</a></li>
               <li><a href="#challenges">Challenges</a></li>
-              <li><a href="#workout-library">Library</a></li>
+              <li><a href="library.html">Library</a></li>
             </ul>
           </li>
           <li class="dropdown">
             <a href="#">Account <i class="material-icons">arrow_drop_down</i></a>
             <ul class="dropdown-menu">
               <li><a href="settings.html">Settings</a></li>
-               <li><a href="profile.html">profile</a></li>
-              <li><a href="logout.html">Logout</a></li>
+              <li><a href="profile.html">profile</a></li>
+             
             </ul>
           </li>
         </ul>
       </nav>
+      
       <!-- Right: Notifications & User Profile -->
       <div class="header-right">
         <div class="notifications">
           <i class="material-icons">notifications</i>
           <span class="notification-badge">3</span>
         </div>
-        <div class="user-profile">
+        <div class="user-profile" tabindex="0">
           <div class="avatar">
-            <img src="images/profile-placeholder.jpg" alt="User Profile" id="JD">
+            <img src="images/profile-placeholder.jpg" alt="User Profile" id="user-avatar">
+            <span id="user-initials">G</span>
           </div>
-          <span>John Doe</span>
+          <span class="user-name">Guest</span>
           <i class="material-icons">arrow_drop_down</i>
+          <ul class="user-dropdown-menu">
+            <li><a href="profile.html"><i class="material-icons">person</i> Profile</a></li>
+            <li><a href="settings.html"><i class="material-icons">settings</i> Settings</a></li>
+            <li><a href="logout.html"><i class="material-icons">logout</i> Logout</a></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -80,86 +999,52 @@
   <!-- Main Dashboard Container -->
   <div class="dashboard-container">
     <!-- Main Content Area -->
-    <main class="dashboard-content">
+    <main class="dashboard-content" role="main">
+      <!-- Welcome Banner (will be populated by JS) -->
+      <div class="welcome-banner" id="welcome-banner">
+        <h2>Welcome, <span class="highlight">Guest</span>! Ready to crush your goals today?</h2>
+      </div>
+
       <!-- Quick Actions Bar -->
-      <section id="quick-actions" class="quick-actions-bar">
-        <div class="quick-action-button">
+      <nav id="quick-actions" class="quick-actions-bar" aria-label="Quick actions">
+        <button class="quick-action-button" aria-label="Create new workout" id="btn-new-workout">
           <i class="material-icons">add</i>
-            <a href="workout-planner.html" class="quick-action-link"><span>New Workout</span></a>
-        </div>
-        <div class="quick-action-button">
+          <span>New Workout</span>
+        </button>
+        <button class="quick-action-button" aria-label="Start workout session" id="btn-start-session">
           <i class="material-icons">fitness_center</i>
           <span>Start Session</span>
-        </div>
-        <div class="quick-action-button">
+        </button>
+        <button class="quick-action-button" aria-label="Log meal" id="btn-log-meal">
           <i class="material-icons">restaurant</i>
           <span>Log Meal</span>
-        </div>
-        <div class="quick-action-button">
+        </button>
+        <button class="quick-action-button" aria-label="Log water" id="btn-log-water">
           <i class="material-icons">local_drink</i>
           <span>Log Water</span>
-        </div>
-        <div class="quick-action-button">
+        </button>
+        <button class="quick-action-button" aria-label="View progress" id="btn-view-progress">
           <i class="material-icons">insert_chart</i>
           <span>View Progress</span>
-        </div>
-      </section>
-
-      <!-- 1. Dashboard Overview -->
-      <section id="overview" class="dashboard-section">
-        <div class="section-header">
-          <h1>Dashboard Overview</h1>
+        </button>
+      </nav>
+      
+      <!-- Dashboard Overview -->
+      <section id="overview" class="dashboard-section" aria-labelledby="dashboard-overview-title">
+        <header class="section-header">
+          <h1 id="dashboard-overview-title">Dashboard Overview</h1>
           <div class="section-actions">
-            <button class="btn-icon" title="Refresh Data">
+            <button class="btn-icon" title="Refresh Data" aria-label="Refresh Data" id="btn-refresh-data">
               <i class="material-icons">refresh</i>
             </button>
-            <button class="btn-icon" title="View Full Report">
+            <button class="btn-icon" title="View Full Report" aria-label="View Full Report" id="btn-full-report">
               <i class="material-icons">open_in_new</i>
             </button>
           </div>
-        </div>
+        </header>
         
-        <div class="overview-stats">
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="material-icons">fitness_center</i>
-            </div>
-            <div class="stat-content">
-              <h2>Total Workouts</h2>
-              <p class="stat-value">24</p>
-              <p class="stat-change positive">+3 from last month</p>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="material-icons">event</i>
-            </div>
-            <div class="stat-content">
-              <h2>This Week</h2>
-              <p class="stat-value">5 Workouts</p>
-              <p class="stat-change positive">On track for goal</p>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="material-icons">timer</i>
-            </div>
-            <div class="stat-content">
-              <h2>Total Time</h2>
-              <p class="stat-value">8 hrs 30 min</p>
-              <p class="stat-change positive">+45 min from last week</p>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="material-icons">local_fire_department</i>
-            </div>
-            <div class="stat-content">
-              <h2>Calories Burned</h2>
-              <p class="stat-value">3,200 kcal</p>
-              <p class="stat-change positive">+320 from last week</p>
-            </div>
-          </div>
+        <div class="overview-stats" id="overview-stats">
+          <!-- Stats will be populated by JavaScript -->
         </div>
         
         <div class="overview-charts">
@@ -167,9 +1052,9 @@
             <div class="chart-header">
               <h3>Weekly Workout Activity</h3>
               <div class="chart-controls">
-                <button class="btn-chart-period active">Week</button>
-                <button class="btn-chart-period">Month</button>
-                <button class="btn-chart-period">Year</button>
+                <button class="btn-chart-period active" data-period="week">Week</button>
+                <button class="btn-chart-period" data-period="month">Month</button>
+                <button class="btn-chart-period" data-period="year">Year</button>
               </div>
             </div>
             <div class="chart" id="weekly-workout-chart"></div>
@@ -189,221 +1074,34 @@
           </div>
         </div>
       </section>
-
-      <!-- 2. My Workouts Section -->
-      <section id="my-workouts" class="dashboard-section">
-        <div class="section-header">
-          <h1>My Workouts</h1>
+      
+      <!-- My Workouts Section -->
+      <section id="my-workouts" class="dashboard-section" aria-labelledby="my-workouts-title">
+        <header class="section-header">
+          <h1 id="my-workouts-title">My Workouts</h1>
           <div class="section-actions">
-            <button class="btn-primary" id="create-workout-btn">
-              <i class="material-icons">add</i> Create Workout
+            <button class="btn-primary" id="create-workout-btn" aria-label="Create Workout">
+             
             </button>
           </div>
-        </div>
+        </header>
         
-        <div class="workout-folders">
-          <h2>Workout Folders</h2>
-          <div class="folder-container">
-            <div class="folder-card" id="create-folder">
-              <div class="folder-header">
-                <i class="material-icons">add</i>
-                <span class="folder-title">Create New Folder</span>
-              </div>
-            </div>
-            
-            <div class="folder-card">
-              <div class="folder-header">
-                <i class="material-icons">folder</i>
-                <span class="folder-title">Flexibility</span>
-                <span class="folder-count">1 workout</span>
-                <i class="material-icons folder-menu">more_vert</i>
-              </div>
-              <div class="folder-content">
-                <p>Last: 3 weeks ago</p>
-                <div class="folder-progress">
-                  <div class="progress-bar" style="width: 10%"></div>
-                </div>
-                <p>10% complete</p>
-              </div>
-            </div>
-            
-            <div class="folder-card">
-              <div class="folder-header">
-                <i class="material-icons">folder</i>
-                <span class="folder-title">HIIT</span>
-                <span class="folder-count">2 workouts</span>
-                <i class="material-icons folder-menu">more_vert</i>
-              </div>
-              <div class="folder-content">
-                <p>Last: 2 weeks ago</p>
-                <div class="folder-progress">
-                  <div class="progress-bar" style="width: 20%"></div>
-                </div>
-                <p>20% complete</p>
-              </div>
-            </div>
-            
-            <div class="folder-card">
-              <div class="folder-header">
-                <i class="material-icons">folder</i>
-                <span class="folder-title">Cardio</span>
-                <span class="folder-count">3 workouts</span>
-                <i class="material-icons folder-menu">more_vert</i>
-              </div>
-              <div class="folder-content">
-                <p>Last: 1 week ago</p>
-                <div class="folder-progress">
-                  <div class="progress-bar" style="width: 40%"></div>
-                </div>
-                <p>40% complete</p>
-              </div>
-            </div>
-            
-            <div class="folder-card">
-              <div class="folder-header">
-                <i class="material-icons">folder</i>
-                <span class="folder-title">Strength Training</span>
-                <span class="folder-count">5 workouts</span>
-                <i class="material-icons folder-menu">more_vert</i>
-              </div>
-              <div class="folder-content">
-                <p>Last: 2 days ago</p>
-                <div class="folder-progress">
-                  <div class="progress-bar" style="width: 60%"></div>
-                </div>
-                <p>60% complete</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- DYNAMIC FOLDER CONTAINER: All folders and folder actions will be rendered here by JS -->
+        <div class="folders-container" id="folders-container"></div>
         
-        <div class="workout-search">
-          <div class="search-box">
-            <i class="material-icons">search</i>
-            <input type="text" placeholder="Search workouts..." id="workout-search">
-          </div>
-          <div class="filter-options">
-            <div class="filter-dropdown">
-              <button class="filter-btn">All Types <i class="material-icons">arrow_drop_down</i></button>
-            </div>
-            <div class="filter-dropdown">
-              <button class="filter-btn">All Durations <i class="material-icons">arrow_drop_down</i></button>
-            </div>
-            <button class="filter-more">
-              <i class="material-icons">filter_list</i> More Filters
-            </button>
-          </div>
-        </div>
-        
-        <div class="workouts-container">
-          <div class="workout-card">
-            <div class="workout-header">
-              <h3>Full Body Strength</h3>
-              <span class="workout-tag">Strength</span>
-            </div>
-            <div class="workout-details">
-              <div class="workout-info">
-                <i class="material-icons">timer</i>
-                <span>45 minutes</span>
-              </div>
-              <div class="workout-info">
-                <i class="material-icons">fitness_center</i>
-                <span>8 exercises</span>
-              </div>
-            </div>
-            <p class="workout-description">A comprehensive full-body workout targeting all major muscle groups.</p>
-            <div class="workout-actions">
-              <button class="btn-secondary">
-                <i class="material-icons">edit</i> Edit
-              </button>
-              <button class="btn-secondary">
-                <i class="material-icons">delete</i> Delete
-              </button>
-              <button class="btn-primary">
-                <i class="material-icons">play_arrow</i> Start
-              </button>
-            </div>
-          </div>
-          
-          <div class="workout-card">
-            <div class="workout-header">
-              <h3>HIIT Cardio</h3>
-              <span class="workout-tag">Cardio</span>
-            </div>
-            <div class="workout-details">
-              <div class="workout-info">
-                <i class="material-icons">timer</i>
-                <span>30 minutes</span>
-              </div>
-              <div class="workout-info">
-                <i class="material-icons">fitness_center</i>
-                <span>6 exercises</span>
-              </div>
-            </div>
-            <p class="workout-description">High-intensity interval training to maximize calorie burn and endurance.</p>
-            <div class="workout-actions">
-              <button class="btn-secondary">
-                <i class="material-icons">edit</i> Edit
-              </button>
-              <button class="btn-secondary">
-                <i class="material-icons">delete</i> Delete
-              </button>
-              <button class="btn-primary">
-                <i class="material-icons">play_arrow</i> Start
-              </button>
-            </div>
-          </div>
-          
-          <div class="workout-card">
-            <div class="workout-header">
-              <h3>Core Crusher</h3>
-              <span class="workout-tag">Core</span>
-            </div>
-            <div class="workout-details">
-              <div class="workout-info">
-                <i class="material-icons">timer</i>
-                <span>20 minutes</span>
-              </div>
-              <div class="workout-info">
-                <i class="material-icons">fitness_center</i>
-                <span>5 exercises</span>
-              </div>
-            </div>
-            <p class="workout-description">Focused core workout to strengthen abs, obliques and lower back muscles.</p>
-            <div class="workout-actions">
-              <button class="btn-secondary">
-                <i class="material-icons">edit</i> Edit
-              </button>
-              <button class="btn-secondary">
-                <i class="material-icons">delete</i> Delete
-              </button>
-              <button class="btn-primary">
-                <i class="material-icons">play_arrow</i> Start
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="pagination">
-          <button class="pagination-btn">
-            <i class="material-icons">chevron_left</i>
-          </button>
-          <span class="pagination-info">Page 1 of 3</span>
-          <button class="pagination-btn">
-            <i class="material-icons">chevron_right</i>
-          </button>
-        </div>
+        <!-- DYNAMIC WORKOUTS CONTAINER: All workouts (not in folders) will be rendered here by JS -->
+        <div class="workouts-container" id="workouts-container"></div>
       </section>
-
-      <!-- 3. AI Coaching & Recommendations -->
+      
+      <!-- AI Coaching & Recommendations -->
       <section id="ai-coaching-recommendations" class="dashboard-section">
         <div class="section-header">
           <h1>AI Coaching &amp; Recommendations</h1>
           <div class="section-actions">
-            <button class="btn-primary">
+            <button class="btn-primary" id="btn-personalized-plan">
               <i class="material-icons">auto_awesome</i> Get Personalized Plan
             </button>
-            <button class="btn-secondary">
+            <button class="btn-secondary" id="btn-chat-coach">
               <i class="material-icons">chat</i> Chat with Coach
             </button>
           </div>
@@ -411,98 +1109,25 @@
         
         <div class="ai-coach-summary">
           <div class="ai-coach-avatar">
-            <img src="images/ai-coach.png" alt="AI Coach">
+            <img src="images/ai-coach.png" alt="AI Coach" id="ai-coach-image">
           </div>
           <div class="ai-coach-message">
-            <h3>Hello, John! Here's your personalized fitness insight:</h3>
-            <p>Based on your recent activity patterns and goals, I've created some tailored workout recommendations. Your consistency has improved by 15% this week - great job! I've noticed you're focusing more on upper body exercises, so I've included some balanced options below.</p>
+            <h3 id="ai-greeting">Hello! Here's your personalized fitness insight:</h3>
+            <p id="ai-message">Based on your recent activity patterns and goals, I've created some tailored workout recommendations. Keep up the great work!</p>
           </div>
         </div>
         
-        <div class="ai-suggestions">
-          <div class="suggestion-card">
-            <div class="suggestion-header">
-              <h3>Lower Body Focus</h3>
-              <span class="ai-tag">AI Recommended</span>
-            </div>
-            <p>This workout balances your training by targeting legs and glutes.</p>
-            <div class="suggestion-details">
-              <div class="detail-item">
-                <span class="detail-label">Difficulty</span>
-                <span class="detail-value">Intermediate</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Duration</span>
-                <span class="detail-value">40 minutes</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Equipment</span>
-                <span class="detail-value">Dumbbells, Bench</span>
-              </div>
-            </div>
-            <button class="btn-primary">
-              <i class="material-icons">play_arrow</i> Start Workout
-            </button>
-          </div>
-          
-          <div class="suggestion-card">
-            <div class="suggestion-header">
-              <h3>Recovery Yoga Flow</h3>
-              <span class="ai-tag">AI Recommended</span>
-            </div>
-            <p>Your intensity has been high - this yoga session will help with recovery.</p>
-            <div class="suggestion-details">
-              <div class="detail-item">
-                <span class="detail-label">Difficulty</span>
-                <span class="detail-value">Beginner</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Duration</span>
-                <span class="detail-value">25 minutes</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Equipment</span>
-                <span class="detail-value">Yoga Mat</span>
-              </div>
-            </div>
-            <button class="btn-primary">
-              <i class="material-icons">play_arrow</i> Start Workout
-            </button>
-          </div>
-          
-          <div class="suggestion-card">
-            <div class="suggestion-header">
-              <h3>Balanced Circuit</h3>
-              <span class="ai-tag">AI Recommended</span>
-            </div>
-            <p>Full-body circuit training that optimizes your available time.</p>
-            <div class="suggestion-details">
-              <div class="detail-item">
-                <span class="detail-label">Difficulty</span>
-                <span class="detail-value">Advanced</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Duration</span>
-                <span class="detail-value">35 minutes</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Equipment</span>
-                <span class="detail-value">Full Gym</span>
-              </div>
-            </div>
-            <button class="btn-primary">
-              <i class="material-icons">play_arrow</i> Start Workout
-            </button>
-          </div>
+        <div class="ai-suggestions" id="ai-suggestions">
+          <!-- Dynamic AI suggestions will be rendered here by JS -->
         </div>
       </section>
       
-      <!-- 4. Workout History -->
+      <!-- Workout History -->
       <section id="workout-history" class="dashboard-section">
         <div class="section-header">
           <h1>Workout History</h1>
           <div class="section-actions">
-            <button class="btn-secondary">
+            <button class="btn-secondary" id="btn-export-history">
               <i class="material-icons">download</i> Export
             </button>
             <div class="date-range-picker">
@@ -515,17 +1140,49 @@
         <div class="search-filters">
           <div class="search-box">
             <i class="material-icons">search</i>
-            <input type="text" placeholder="Search history..." id="history-search">
+            <input type="text" placeholder="Search workouts..." id="workout-search">
           </div>
-          <div class="active-filters">
-            <div class="filter-tag">
-              Cardio <i class="material-icons">close</i>
+          <div class="filter-options">
+            <div class="filter-dropdown">
+              <select id="filter-type" class="filter-btn">
+                <option value="all">All Types</option>
+                <option value="cardio">Cardio</option>
+                <option value="strength">Strength</option>
+                <option value="flexibility">Flexibility</option>
+                <option value="hiit">HIIT</option>
+                <option value="yoga">Yoga</option>
+              </select>
             </div>
-            <div class="filter-tag">
-              > 30 min <i class="material-icons">close</i>
+            <div class="filter-dropdown">
+              <select id="filter-difficulty" class="filter-btn">
+                <option value="all">All Difficulties</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
             </div>
-            <button class="clear-filters">Clear All</button>
+            <div class="filter-dropdown">
+              <select id="filter-duration" class="filter-btn">
+                <option value="all">All Durations</option>
+                <option value="0-15">0-15 min</option>
+                <option value="16-30">16-30 min</option>
+                <option value="31-45">31-45 min</option>
+                <option value="46-1000">46+ min</option>
+              </select>
+            </div>
+            <div class="filter-dropdown">
+              <select id="filter-focus" class="filter-btn">
+                <option value="all">All Focus Areas</option>
+                <option value="upper body">Upper Body</option>
+                <option value="lower body">Lower Body</option>
+                <option value="core">Core</option>
+                <option value="full body">Full Body</option>
+                <option value="mobility">Mobility</option>
+              </select>
+            </div>
           </div>
+          <div class="active-filters" id="active-filters"></div>
+          <button class="clear-filters" id="clear-filters">Clear All</button>
         </div>
         
         <div class="history-table-container">
@@ -540,86 +1197,27 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>5/14/2025</td>
-                <td>Full Body Strength</td>
-                <td>45:30</td>
-                <td>420 kcal</td>
-                <td>Great session</td>
-                <td>
-                  <button class="btn-icon" title="View Details">
-                    <i class="material-icons">visibility</i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>5/12/2025</td>
-                <td>HIIT Cardio</td>
-                <td>30:15</td>
-                <td>380 kcal</td>
-                <td>Felt challenging</td>
-                <td>
-                  <button class="btn-icon" title="View Details">
-                    <i class="material-icons">visibility</i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>5/9/2025</td>
-                <td>Core Crusher</td>
-                <td>20:00</td>
-                <td>200 kcal</td>
-                <td>Need to increase intensity</td>
-                <td>
-                  <button class="btn-icon" title="View Details">
-                    <i class="material-icons">visibility</i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>5/7/2025</td>
-                <td>Full Body Strength</td>
-                <td>42:15</td>
-                <td>400 kcal</td>
-                <td>Improved squats form</td>
-                <td>
-                  <button class="btn-icon" title="View Details">
-                    <i class="material-icons">visibility</i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>5/4/2025</td>
-                <td>HIIT Cardio</td>
-                <td>32:45</td>
-                <td>410 kcal</td>
-                <td>Pushed through fatigue</td>
-                <td>
-                  <button class="btn-icon" title="View Details">
-                    <i class="material-icons">visibility</i>
-                  </button>
-                </td>
-              </tr>
+            <tbody id="history-table-body">
+              <!-- History will be populated by JavaScript -->
             </tbody>
           </table>
         </div>
         
-        <div class="pagination">
-          <button class="pagination-btn">Previous</button>
+        <div class="pagination" id="history-pagination">
+          <button class="pagination-btn" id="prev-page">Previous</button>
           <button class="pagination-btn active">1</button>
           <button class="pagination-btn">2</button>
           <button class="pagination-btn">3</button>
-          <button class="pagination-btn">Next</button>
+          <button class="pagination-btn" id="next-page">Next</button>
         </div>
       </section>
-
-      <!-- 5. Detailed Progress Analytics -->
+      
+      <!-- Detailed Progress Analytics -->
       <section id="progress" class="dashboard-section">
         <div class="section-header">
           <h1>Progress Analytics</h1>
           <div class="section-actions">
-            <button class="btn-secondary">
+            <button class="btn-secondary" id="btn-set-goals">
               <i class="material-icons">flag</i> Set Goals
             </button>
             <select id="progress-time-period">
@@ -631,46 +1229,8 @@
           </div>
         </div>
         
-        <div class="progress-metrics">
-          <div class="metric-card">
-            <div class="metric-icon">
-              <i class="material-icons">timer</i>
-            </div>
-            <div class="metric-content">
-              <h2>Average Workout Duration</h2>
-              <p class="metric-value">42 min</p>
-              <div class="metric-progress">
-                <div class="progress-bar" style="width: 84%"></div>
-              </div>
-              <p class="metric-target">Target: 50 min</p>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon">
-              <i class="material-icons">calendar_today</i>
-            </div>
-            <div class="metric-content">
-              <h2>Weekly Consistency</h2>
-              <p class="metric-value">5/7 days</p>
-              <div class="metric-progress">
-                <div class="progress-bar" style="width: 71%"></div>
-              </div>
-              <p class="metric-target">Target: 7 days</p>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-icon">
-              <i class="material-icons">local_fire_department</i>
-            </div>
-            <div class="metric-content">
-              <h2>Total Calories Burned</h2>
-              <p class="metric-value">12,000 kcal</p>
-              <div class="metric-progress">
-                <div class="progress-bar" style="width: 80%"></div>
-              </div>
-              <p class="metric-target">Target: 15,000 kcal</p>
-            </div>
-          </div>
+        <div class="progress-metrics" id="progress-metrics">
+          <!-- Progress metrics will be populated by JavaScript -->
         </div>
         
         <div class="progress-charts-container">
@@ -689,203 +1249,59 @@
           </div>
         </div>
       </section>
+      
+      <!-- Challenges & Rewards -->
+      <section id="challenges" class="dashboard-section">
+        <div class="section-header">
+          <h1>Challenges &amp; Rewards</h1>
+          <div class="section-actions">
+            <button class="btn-secondary" id="browse-challenges-btn">
+              <i class="material-icons">explore</i> Browse Challenges
+            </button>
+          </div>
+        </div>
+        
+        <div class="challenges-rewards-container">
+          <!-- Active Challenges Card -->
+          <div class="challenges-card">
+            <div class="card-header">
+              <h2>Active Challenges</h2>
+              <span class="badge" id="active-challenges-count">3 Active</span>
+            </div>
+            
+            <div class="challenge-list" id="challenge-list">
+              <!-- Challenges will be populated by JavaScript -->
+            </div>
+          </div>
+          
+          <!-- Rewards Card -->
+          <div class="rewards-card">
+            <div class="card-header">
+              <h2>Your Rewards</h2>
+              <span class="badge" id="rewards-count">5 Earned</span>
+            </div>
+            
+            <div class="rewards-grid" id="rewards-grid">
+              <!-- Rewards will be populated by JavaScript -->
+            </div>
+            
+            <div class="view-all-rewards">
+              <button class="btn-secondary" id="view-all-rewards-btn">View All Rewards</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 
-      <!-- 6. Challenges & Rewards -->
-  
-<section id="challenges" class="dashboard-section">
-  <div class="section-header">
-    <h1>Challenges &amp; Rewards</h1>
-    <div class="section-actions">
-      <button class="btn-secondary" id="browse-challenges-btn">
-        <i class="material-icons">explore</i> Browse Challenges
-      </button>
-    </div>
-  </div>
-  
-  <div class="challenges-rewards-container">
-    <!-- Active Challenges Card -->
-    <div class="challenges-card">
-      <div class="card-header">
-        <h2>Active Challenges</h2>
-        <span class="badge">3 Active</span>
-      </div>
-      
-      <div class="challenge-list">
-        <!-- Challenge 1 -->
-        <div class="challenge-item">
-          <div class="challenge-header" data-challenge="1">
-            <div class="challenge-icon">
-              <i class="material-icons">fitness_center</i>
-            </div>
-            <div class="challenge-info">
-              <h3>Workout 5 Days This Week</h3>
-              <p class="reward-label">Badge: Consistency</p>
-            </div>
-            <div class="challenge-progress-indicator">
-              <span>3/5</span>
-            </div>
-            <div class="challenge-toggle">
-              <i class="material-icons">expand_more</i>
-            </div>
-          </div>
-          
-          <div class="challenge-details">
-            <p>Complete at least one workout on 5 different days this week.</p>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 60%"></div>
-            </div>
-            <button class="btn-primary mark-complete-btn" data-challenge="1">
-              <i class="material-icons">check</i> Mark as Complete
-            </button>
-          </div>
-        </div>
-        
-        <!-- Challenge 2 -->
-        <div class="challenge-item">
-          <div class="challenge-header" data-challenge="2">
-            <div class="challenge-icon">
-              <i class="material-icons">directions_run</i>
-            </div>
-            <div class="challenge-info">
-              <h3>10 Chest Workouts</h3>
-              <p class="reward-label">Badge: Chest Champion</p>
-            </div>
-            <div class="challenge-progress-indicator">
-              <span>4/10</span>
-            </div>
-            <div class="challenge-toggle">
-              <i class="material-icons">expand_more</i>
-            </div>
-          </div>
-          
-          <div class="challenge-details">
-            <p>Perform at least 10 chest workouts this week. Automatically tracked from your logs.</p>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 40%"></div>
-            </div>
-            <p class="auto-tracked"><i class="material-icons">auto_awesome</i> This challenge is tracked automatically from your workout logs.</p>
-          </div>
-        </div>
-        
-        <!-- Challenge 3 -->
-        <div class="challenge-item">
-          <div class="challenge-header" data-challenge="3">
-            <div class="challenge-icon">
-              <i class="material-icons">play_circle</i>
-            </div>
-            <div class="challenge-info">
-              <h3>Start a Cardio Challenge</h3>
-              <p class="reward-label">Badge: Cardio Starter</p>
-            </div>
-            <div class="challenge-progress-indicator">
-              <span>0/30</span>
-            </div>
-            <div class="challenge-toggle">
-              <i class="material-icons">expand_more</i>
-            </div>
-          </div>
-          
-          <div class="challenge-details">
-            <p>Begin a cardio challenge by starting a timed session and track your cardio minutes.</p>
-            <div class="progress-container">
-              <div class="progress-bar" style="width: 0%"></div>
-            </div>
-            <button class="btn-primary start-challenge-btn" data-challenge="3">
-              <i class="material-icons">play_arrow</i> Start Challenge
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Rewards Card -->
-    <div class="rewards-card">
-      <div class="card-header">
-        <h2>Your Rewards</h2>
-        <span class="badge">5 Earned</span>
-      </div>
-      
-      <div class="rewards-grid">
-        <!-- Reward 1 -->
-        <div class="reward-item">
-          <div class="reward-icon">
-            <i class="material-icons">emoji_events</i>
-          </div>
-          <h4>Consistency</h4>
-          <p>Workout 5 Days This Week completed!</p>
-        </div>
-        
-        <!-- Reward 2 -->
-        <div class="reward-item">
-          <div class="reward-icon">
-            <i class="material-icons">star</i>
-          </div>
-          <h4>Chest Champion</h4>
-          <p>10 Chest Workouts a Week completed!</p>
-        </div>
-        
-        <!-- Reward 3 -->
-        <div class="reward-item">
-          <div class="reward-icon">
-            <i class="material-icons">military_tech</i>
-          </div>
-          <h4>Cardio Starter</h4>
-          <p>Start a Cardio Challenge completed!</p>
-        </div>
-        
-        <!-- Reward 4 -->
-        <div class="reward-item">
-          <div class="reward-icon">
-            <i class="material-icons">verified</i>
-          </div>
-          <h4>Zen Master</h4>
-          <p>Meditate 10 Minutes completed!</p>
-        </div>
-        
-        <!-- Reward 5 -->
-        <div class="reward-item">
-          <div class="reward-icon">
-            <i class="material-icons">workspace_premium</i>
-          </div>
-          <h4>Push-Up Pro</h4>
-          <p>10 Push-Ups Challenge completed!</p>
-        </div>
-      </div>
-      
-      <div class="view-all-rewards">
-        <button class="btn-secondary" id="view-all-rewards-btn">View All Rewards</button>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- Modals -->
   <!-- Modal for Viewing Workout Details -->
   <div class="modal" id="detailModal">
     <div class="modal-content">
       <span class="modal-close" id="modalClose">&times;</span>
       <h3 id="modalTitle">Workout Details</h3>
       <div id="modalBody">
-        <div class="workout-detail">
-          <p><strong>Date:</strong> May 14, 2025</p>
-          <p><strong>Duration:</strong> 45:30</p>
-          <p><strong>Type:</strong> Strength</p>
-          <p><strong>Calories Burned:</strong> 420 kcal</p>
-          <p><strong>Description:</strong> A comprehensive full-body workout targeting all major muscle groups.</p>
-          
-          <h4>Exercises:</h4>
-          <ul class="exercise-list">
-            <li><strong>Squats:</strong> 3 sets × 12 reps</li>
-            <li><strong>Bench Press:</strong> 3 sets × 10 reps</li>
-            <li><strong>Deadlifts:</strong> 3 sets × 8 reps</li>
-            <li><strong>Shoulder Press:</strong> 3 sets × 10 reps</li>
-            <li><strong>Pull-ups:</strong> 3 sets × 8 reps</li>
-            <li><strong>Lunges:</strong> 3 sets × 12 reps per leg</li>
-            <li><strong>Planks:</strong> 3 sets × 60 seconds</li>
-            <li><strong>Russian Twists:</strong> 3 sets × 20 reps</li>
-          </ul>
-          
-          <h4>Feedback:</h4>
-          <p>Great session! Felt strong throughout the workout. Increased weight on squats and bench press.</p>
-        </div>
+        <!-- Modal content will be populated by JavaScript -->
       </div>
       <div class="modal-actions">
         <button class="btn-secondary" id="modal-edit">Edit</button>
@@ -922,83 +1338,6 @@
     </div>
   </div>
 
-  <!-- Create Workout Modal -->
-  <div class="modal" id="createWorkoutModal">
-    <div class="modal-content wide-modal">
-      <span class="modal-close">&times;</span>
-      <h3>Create New Workout</h3>
-      <form id="create-workout-form">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="workout-name">Workout Name</label>
-            <input type="text" id="workout-name" required placeholder="e.g., Full Body HIIT">
-          </div>
-          <div class="form-group">
-            <label for="workout-type">Workout Type</label>
-            <select id="workout-type" required>
-              <option value="">Select Type</option>
-              <option value="strength">Strength</option>
-              <option value="cardio">Cardio</option>
-              <option value="hiit">HIIT</option>
-              <option value="flexibility">Flexibility</option>
-              <option value="balance">Balance</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="workout-duration">Duration (minutes)</label>
-            <input type="number" id="workout-duration" min="5" max="180" required placeholder="e.g., 45">
-          </div>
-          <div class="form-group">
-            <label for="workout-difficulty">Difficulty</label>
-            <select id="workout-difficulty" required>
-              <option value="">Select Difficulty</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-group full-width">
-          <label for="workout-description">Description</label>
-          <textarea id="workout-description" rows="3" placeholder="Describe your workout..."></textarea>
-        </div>
-        
-        <div class="exercise-section">
-          <h4>Exercises</h4>
-          <table id="exercise-table">
-            <thead>
-              <tr>
-                <th>Exercise Name</th>
-                <th>Sets</th>
-                <th>Reps/Time</th>
-                <th>Rest</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="text" placeholder="Exercise name" class="exercise-name"></td>
-                <td><input type="number" placeholder="Sets" class="exercise-sets" min="1"></td>
-                <td><input type="text" placeholder="Reps/Time" class="exercise-reps"></td>
-                <td><input type="text" placeholder="Rest time" class="exercise-rest"></td>
-                <td><button type="button" class="btn-icon remove-exercise"><i class="material-icons">delete</i></button></td>
-              </tr>
-            </tbody>
-          </table>
-          <button type="button" class="btn-add" id="add-exercise">
-            <i class="material-icons">add</i> Add Exercise
-          </button>
-        </div>
-        
-        <div class="form-actions">
-          <button type="button" class="btn-secondary" id="cancel-workout">Cancel</button>
-          <button type="submit" class="btn-primary" id="save-workout">Save Workout</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <!-- AI Chatbot Integration -->
   <div id="ai-chatbot" class="ai-chatbot hidden">
     <div class="chat-header">
@@ -1024,7 +1363,7 @@
           <img src="images/ai-coach.png" alt="AI Coach">
         </div>
         <div class="message-content">
-          <p>Hello, John! How can I help with your fitness journey today?</p>
+          <p>Hello! How can I help with your fitness journey today?</p>
           <span class="message-time">10:00 AM</span>
         </div>
       </div>
@@ -1082,9 +1421,14 @@
     </div>
   </footer>
 
+  <!-- Notification Container -->
+  <div id="notification-container"></div>
+
+  <!-- Add before closing body tag -->
+  <div class="mobile-overlay" id="mobile-overlay"></div>
+
   <!-- JS Modules -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script type="module" src="js/modules/dashboard.js"></script>
-  <script type="module" src="js/modules/workout-planner.js"></script>
+  <script src="js/modules/dashboard.js"></script>
 </body>
 </html>

@@ -9,8 +9,8 @@
   <title>Workout Planner - FitJourney</title>
   
   <!-- Main CSS Stylesheets -->
-  <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/components/workout-planner.css" />
+  <link rel="stylesheet" href="css/main.css" />
   
   <!-- Material Icons for UI Elements -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -20,26 +20,40 @@
   <!-- HEADER: Branding and Navigation -->
   <header class="workout-header">
     <div class="container">
-      <a href="index.html" class="logo" aria-label="FitJourney Home">
-        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
-        <span>FitJourney</span>
-      </a>
-      <nav class="workout-nav" aria-label="Primary Navigation">
-        <ul>
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="library.html">Exercise Library</a></li>
-          <li><a href="workout-session.html">Workout Session</a></li>
-          <li><a href="progress.html">Progress</a></li>
-          <li><a href="settings.html">Settings</a></li>
-          <li><a href="workout-planner.html" class="active">Workout Planner</a></li>
-        </ul>
-      </nav>
-      <div class="theme-toggle">
-        <button id="theme-toggle-btn">
-          <i class="material-icons">dark_mode</i>
-        </button>
-        <div class="user-profile">
-          <img src="images/profile-placeholder.jpg" alt="User Profile" />
+      <div class="header-left">
+        <a href="index.html" class="logo" aria-label="FitJourney Home">
+          <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+          <span>FitJourney</span>
+        </a>
+        <nav class="nav desktop-nav" aria-label="Primary Navigation">
+          <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="library.html">Exercise Library</a></li>
+            <li><a href="workout-session.html">Workout Session</a></li>
+            <li><a href="progress.html">Progress</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="workout-planner.html" class="active">Workout Planner</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="theme-toggle">
+          <button id="theme-toggle-btn" aria-label="Toggle theme">
+            <i class="material-icons">dark_mode</i>
+          </button>
+        </div>
+        <div class="user-profile" id="userProfile">
+          <div class="avatar">
+            <img src="images/profile-placeholder.jpg" alt="User Profile" />
+          </div>
+          <span class="user-name">John Doe</span>
+          <i class="material-icons dropdown-arrow">keyboard_arrow_down</i>
+          <!-- User Dropdown -->
+          <div class="user-dropdown" id="userDropdown">
+            <a href="profile.html" class="dropdown-item">Profile</a>
+            <a href="settings.html" class="dropdown-item">Settings</a>
+            <a href="#" class="dropdown-item">Logout</a>
+          </div>
         </div>
       </div>
     </div>
@@ -49,14 +63,171 @@
   <main class="workout-main container">
     <div class="page-header">
       <h1>Plan Your Workout</h1>
-      <p>Create a personalized workout routine from our extensive exercise library powered by ExerciseDB.</p>
+      <p>Create a personalized workout routine with our advanced scheduling system and exercise library.</p>
     </div>
+
+    <!-- WEEKLY SCHEDULE SECTION -->
+    <section class="schedule-section">
+      <div class="section-header">
+        <h2><i class="material-icons">calendar_today</i> Weekly Schedule</h2>
+        <div class="schedule-actions">
+          <button class="btn btn-secondary" id="clear-schedule-btn">
+            <i class="material-icons">clear_all</i> Clear Schedule
+          </button>
+          <button class="btn btn-primary" id="save-schedule-btn">
+            <i class="material-icons">save</i> Save Schedule
+          </button>
+        </div>
+      </div>
+      
+      <div class="weekly-calendar">
+        <div class="time-slots">
+          <div class="time-slot-header">Time</div>
+          <div class="time-slot" data-time="06:00">6:00 AM</div>
+          <div class="time-slot" data-time="08:00">8:00 AM</div>
+          <div class="time-slot" data-time="12:00">12:00 PM</div>
+          <div class="time-slot" data-time="17:00">5:00 PM</div>
+          <div class="time-slot" data-time="19:00">7:00 PM</div>
+        </div>
+        
+        <div class="days-grid">
+          <div class="day-column" data-day="monday">
+            <div class="day-header">
+              <span class="day-name">Monday</span>
+              <span class="day-date" id="monday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="monday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="monday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="monday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="monday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="monday" data-time="19:00"></div>
+            </div>
+          </div>
+          
+          <div class="day-column" data-day="tuesday">
+            <div class="day-header">
+              <span class="day-name">Tuesday</span>
+              <span class="day-date" id="tuesday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="tuesday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="tuesday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="tuesday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="tuesday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="tuesday" data-time="19:00"></div>
+            </div>
+          </div>
+          
+          <div class="day-column" data-day="wednesday">
+            <div class="day-header">
+              <span class="day-name">Wednesday</span>
+              <span class="day-date" id="wednesday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="wednesday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="wednesday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="wednesday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="wednesday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="wednesday" data-time="19:00"></div>
+            </div>
+          </div>
+          
+          <div class="day-column" data-day="thursday">
+            <div class="day-header">
+              <span class="day-name">Thursday</span>
+              <span class="day-date" id="thursday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="thursday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="thursday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="thursday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="thursday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="thursday" data-time="19:00"></div>
+            </div>
+          </div>
+          
+          <div class="day-column" data-day="friday">
+            <div class="day-header">
+              <span class="day-name">Friday</span>
+              <span class="day-date" id="friday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="friday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="friday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="friday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="friday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="friday" data-time="19:00"></div>
+            </div>
+          </div>
+          
+          <div class="day-column" data-day="saturday">
+            <div class="day-header">
+              <span class="day-name">Saturday</span>
+              <span class="day-date" id="saturday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="saturday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="saturday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="saturday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="saturday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="saturday" data-time="19:00"></div>
+            </div>
+          </div>
+          
+          <div class="day-column" data-day="sunday">
+            <div class="day-header">
+              <span class="day-name">Sunday</span>
+              <span class="day-date" id="sunday-date"></span>
+            </div>
+            <div class="workout-slots">
+              <div class="workout-slot" data-day="sunday" data-time="06:00"></div>
+              <div class="workout-slot" data-day="sunday" data-time="08:00"></div>
+              <div class="workout-slot" data-day="sunday" data-time="12:00"></div>
+              <div class="workout-slot" data-day="sunday" data-time="17:00"></div>
+              <div class="workout-slot" data-day="sunday" data-time="19:00"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div class="workout-planner-layout">
       <!-- Left Column: Filters and Options -->
       <section class="planner-sidebar">
+        <!-- WORKOUT CATEGORIES -->
         <div class="sidebar-section">
-          <h2>Muscle Groups</h2>
+          <h2><i class="material-icons">category</i> Workout Categories</h2>
+          <div class="category-options" role="group" aria-label="Workout Categories">
+            <button class="category-btn active" data-category="all">
+              <i class="material-icons">fitness_center</i>
+              <span>All Workouts</span>
+            </button>
+            <button class="category-btn" data-category="strength">
+              <i class="material-icons">sports_martial_arts</i>
+              <span>Strength</span>
+            </button>
+            <button class="category-btn" data-category="cardio">
+              <i class="material-icons">directions_run</i>
+              <span>Cardio</span>
+            </button>
+            <button class="category-btn" data-category="flexibility">
+              <i class="material-icons">self_improvement</i>
+              <span>Flexibility</span>
+            </button>
+            <button class="category-btn" data-category="hiit">
+              <i class="material-icons">whatshot</i>
+              <span>HIIT</span>
+            </button>
+            <button class="category-btn" data-category="yoga">
+              <i class="material-icons">spa</i>
+              <span>Yoga</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h2><i class="material-icons">accessibility_new</i> Muscle Groups</h2>
           <div class="filter-options" role="group" aria-label="Filter Exercises">
             <button class="filter-btn active" data-filter="all">
               <i class="material-icons">fitness_center</i>
@@ -106,7 +277,7 @@
         </div>
 
         <div class="sidebar-section">
-          <h2>Equipment</h2>
+          <h2><i class="material-icons">build</i> Equipment</h2>
           <div class="equipment-filter">
             <select id="equipment" class="form-select">
               <option value="">All Equipment</option>
@@ -143,10 +314,13 @@
         </div>
 
         <div class="sidebar-section">
-          <h2>Workout Settings</h2>
+          <h2><i class="material-icons">settings</i> Workout Settings</h2>
           <div class="workout-settings">
             <div class="setting-group">
-              <label for="session-duration">Session Duration</label>
+              <label for="session-duration">
+                <i class="material-icons">timer</i>
+                Session Duration
+              </label>
               <div class="input-with-unit">
                 <input type="number" id="session-duration" min="10" max="120" value="45" />
                 <span class="unit">min</span>
@@ -154,7 +328,10 @@
             </div>
             
             <div class="setting-group">
-              <label for="difficulty">Difficulty Level</label>
+              <label for="difficulty">
+                <i class="material-icons">trending_up</i>
+                Difficulty Level
+              </label>
               <select id="difficulty" class="form-select">
                 <option value="beginner">Beginner</option>
                 <option value="intermediate" selected>Intermediate</option>
@@ -163,7 +340,10 @@
             </div>
             
             <div class="setting-group">
-              <label for="rest-timer">Rest Between Sets</label>
+              <label for="rest-timer">
+                <i class="material-icons">pause</i>
+                Rest Between Sets
+              </label>
               <div class="input-with-unit">
                 <input type="number" id="rest-timer" min="10" max="180" value="60" />
                 <span class="unit">sec</span>
@@ -171,7 +351,10 @@
             </div>
             
             <div class="setting-group">
-              <label for="transition-timer">Transition Time</label>
+              <label for="transition-timer">
+                <i class="material-icons">swap_horiz</i>
+                Transition Time
+              </label>
               <div class="input-with-unit">
                 <input type="number" id="transition-timer" min="5" max="60" value="15" />
                 <span class="unit">sec</span>
@@ -181,7 +364,10 @@
             <div class="setting-group">
               <div class="checkbox-wrapper">
                 <input type="checkbox" id="custom-workout" />
-                <label for="custom-workout">Generate AI Workout</label>
+                <label for="custom-workout">
+                  <i class="material-icons">smart_toy</i>
+                  Generate AI Workout
+                </label>
                 <span class="tooltip" data-tooltip="Let our AI create a balanced workout based on your selections">
                   <i class="material-icons">info</i>
                 </span>
@@ -199,7 +385,7 @@
       <section class="planner-content">
         <div class="content-section exercise-browser">
           <div class="section-header">
-            <h2>Exercise Browser</h2>
+            <h2><i class="material-icons">search</i> Exercise Browser</h2>
             <div class="search-container">
               <input type="text" id="exercise-search" placeholder="Search exercises..." />
               <button id="search-btn" class="btn-icon">
@@ -230,8 +416,11 @@
 
         <div id="generated-workout" class="content-section generated-workout hidden">
           <div class="section-header">
-            <h2>Your Custom Workout</h2>
+            <h2><i class="material-icons">assignment</i> Your Custom Workout</h2>
             <div class="workout-actions">
+              <button id="schedule-workout-btn" class="btn btn-accent">
+                <i class="material-icons">schedule</i> Schedule
+              </button>
               <button id="clear-workout-btn" class="btn btn-secondary">
                 <i class="material-icons">clear</i> Clear
               </button>
@@ -266,6 +455,13 @@
                 <span class="summary-label">Difficulty</span>
               </div>
             </div>
+            <div class="summary-item">
+              <i class="material-icons">category</i>
+              <div class="summary-details">
+                <span class="summary-value" id="workout-category">Mixed</span>
+                <span class="summary-label">Category</span>
+              </div>
+            </div>
           </div>
           
           <div class="workout-list-container">
@@ -275,13 +471,59 @@
             </ul>
           </div>
           
-          <button id="start-workout-btn" class="btn btn-primary">
-            <i class="material-icons">play_arrow</i> Start Workout Session
-          </button>
+          <div class="workout-actions-bottom">
+            <button id="start-workout-btn" class="btn btn-primary">
+              <i class="material-icons">play_arrow</i> Start Workout Session
+            </button>
+          </div>
         </div>
       </section>
     </div>
   </main>
+
+  <!-- SCHEDULE WORKOUT MODAL -->
+  <div id="schedule-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div class="modal-header">
+        <h3><i class="material-icons">schedule</i> Schedule Workout</h3>
+      </div>
+      <div class="modal-body">
+        <div class="schedule-form">
+          <div class="form-group">
+            <label for="schedule-day">Select Day</label>
+            <select id="schedule-day" class="form-select">
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="schedule-time">Select Time</label>
+            <select id="schedule-time" class="form-select">
+              <option value="06:00">6:00 AM</option>
+              <option value="08:00">8:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="workout-name">Workout Name</label>
+            <input type="text" id="workout-name" class="form-input" placeholder="Enter workout name..." />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-schedule-btn">Cancel</button>
+        <button class="btn btn-primary" id="confirm-schedule-btn">Schedule Workout</button>
+      </div>
+    </div>
+  </div>
 
   <!-- AI Chatbot Integration -->
   <div id="ai-chatbot" class="ai-chatbot hidden" role="dialog" aria-label="AI Workout Assistant">
@@ -356,8 +598,220 @@
     </div>
   </footer>
   
-  <!-- Include the workout planner JS module -->
+  <!-- Include the enhanced workout planner JS module -->
   <script type="module" src="js/modules/workout-planner.js"></script>
   <script type="module" src="js/modules/chatbot.js"></script>
+
+<script>
+  // ==========================================================================
+// Mobile Menu Handler - Enhanced Navigation for Small Screens
+// ==========================================================================
+
+class MobileMenuHandler {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    this.createMobileMenuToggle();
+    this.setupEventListeners();
+    this.handleResize();
+  }
+
+  createMobileMenuToggle() {
+    // Check if mobile menu toggle already exists
+    let mobileToggle = document.getElementById('mobile-menu-toggle');
+    
+    if (!mobileToggle) {
+      // Create mobile menu toggle button
+      mobileToggle = document.createElement('button');
+      mobileToggle.id = 'mobile-menu-toggle';
+      mobileToggle.className = 'mobile-menu-toggle';
+      mobileToggle.setAttribute('aria-label', 'Toggle mobile menu');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      mobileToggle.innerHTML = `
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      `;
+
+      // Insert the toggle button in the header
+      const headerRight = document.querySelector('.header-right');
+      if (headerRight) {
+        headerRight.insertBefore(mobileToggle, headerRight.firstChild);
+      }
+    }
+
+    // Create mobile navigation overlay if it doesn't exist
+    let mobileNav = document.getElementById('mobile-nav-overlay');
+    if (!mobileNav) {
+      mobileNav = document.createElement('div');
+      mobileNav.id = 'mobile-nav-overlay';
+      mobileNav.className = 'mobile-nav-overlay';
+      
+      // Clone the desktop navigation
+      const desktopNav = document.querySelector('.nav.desktop-nav');
+      if (desktopNav) {
+        const navClone = desktopNav.cloneNode(true);
+        navClone.className = 'mobile-nav-menu';
+        navClone.setAttribute('role', 'navigation');
+        navClone.setAttribute('aria-label', 'Mobile Navigation');
+        
+        // Add close button to mobile nav
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'mobile-nav-close';
+        closeBtn.setAttribute('aria-label', 'Close mobile menu');
+        closeBtn.innerHTML = '<i class="material-icons">close</i>';
+        
+        // Create mobile nav container
+        const mobileNavContainer = document.createElement('div');
+        mobileNavContainer.className = 'mobile-nav-container';
+        mobileNavContainer.appendChild(closeBtn);
+        mobileNavContainer.appendChild(navClone);
+        
+        mobileNav.appendChild(mobileNavContainer);
+        document.body.appendChild(mobileNav);
+      }
+    }
+  }
+
+  setupEventListeners() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileNavClose = document.querySelector('.mobile-nav-close');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a');
+
+    // Toggle mobile menu
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggleMobileMenu();
+      });
+    }
+
+    // Close mobile menu when clicking overlay
+    if (mobileNavOverlay) {
+      mobileNavOverlay.addEventListener('click', (e) => {
+        if (e.target === mobileNavOverlay) {
+          this.closeMobileMenu();
+        }
+      });
+    }
+
+    // Close mobile menu when clicking close button
+    if (mobileNavClose) {
+      mobileNavClose.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.closeMobileMenu();
+      });
+    }
+
+    // Close mobile menu when clicking navigation links
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        this.closeMobileMenu();
+      });
+    });
+
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeMobileMenu();
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      this.handleResize();
+    });
+
+    // Prevent body scroll when mobile menu is open
+    this.preventBodyScroll();
+  }
+
+  toggleMobileMenu() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    
+    if (mobileNavOverlay && mobileToggle) {
+      const isOpen = mobileNavOverlay.classList.contains('active');
+      
+      if (isOpen) {
+        this.closeMobileMenu();
+      } else {
+        this.openMobileMenu();
+      }
+    }
+  }
+
+  openMobileMenu() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    
+    if (mobileNavOverlay && mobileToggle) {
+      mobileNavOverlay.classList.add('active');
+      mobileToggle.classList.add('active');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('mobile-menu-open');
+      
+      // Focus management
+      const firstLink = mobileNavOverlay.querySelector('a');
+      if (firstLink) {
+        setTimeout(() => firstLink.focus(), 100);
+      }
+    }
+  }
+
+  closeMobileMenu() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+    
+    if (mobileNavOverlay && mobileToggle) {
+      mobileNavOverlay.classList.remove('active');
+      mobileToggle.classList.remove('active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('mobile-menu-open');
+      
+      // Return focus to toggle button
+      mobileToggle.focus();
+    }
+  }
+
+  handleResize() {
+    // Close mobile menu if screen becomes larger
+    if (window.innerWidth > 768) {
+      this.closeMobileMenu();
+    }
+  }
+
+  preventBodyScroll() {
+    // Prevent body scroll when mobile menu is open
+    const style = document.createElement('style');
+    style.textContent = `
+      body.mobile-menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// Initialize mobile menu when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new MobileMenuHandler();
+});
+
+// Handle dynamic content loading
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    new MobileMenuHandler();
+  });
+} else {
+  new MobileMenuHandler();
+}
+</script>
 </body>
 </html>

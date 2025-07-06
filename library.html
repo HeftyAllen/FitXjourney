@@ -12,9 +12,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/components/library-main.css">
   <link rel="stylesheet" href="css/components/library.css">
-  
 </head>
 <body class="dark-theme">
   <!-- Header Navigation -->
@@ -24,29 +22,52 @@
         <div class="logo-circle">FJ</div>
         <span>FitJourney</span>
       </a>
-      <nav class="nav">
+      
+      <nav class="nav" id="main-nav">
         <ul>
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="workout-session.html">Workouts</a></li>
-          <li><a href="nutrition.html">Nutrition</a></li>
-          <li><a href="progress.html">Progress</a></li>
-          <li><a href="library.html" class="active">Exercise Library</a></li>
+          <li><a href="dashboard.html">
+            <i class="material-icons">dashboard</i>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="workout-session.html">
+            <i class="material-icons">fitness_center</i>
+            <span>Workouts</span>
+          </a></li>
+          <li><a href="nutrition.html">
+            <i class="material-icons">restaurant</i>
+            <span>Nutrition</span>
+          </a></li>
+          <li><a href="progress.html">
+            <i class="material-icons">trending_up</i>
+            <span>Progress</span>
+          </a></li>
+          <li><a href="library.html" class="active">
+            <i class="material-icons">library_books</i>
+            <span> Library</span>
+          </a></li>
         </ul>
       </nav>
       
       <div class="header-right">
-        <button id="theme-toggle-btn" class="theme-toggle">
+        <button id="theme-toggle-btn" class="theme-toggle" title="Toggle theme">
           <i class="material-icons">dark_mode</i>
         </button>
+        
         <div class="user-profile">
           <div class="avatar">
-            <img src="images/profile-placeholder.jpg" alt="User Profile" id="JD">
+            <img src="images/profile-placeholder.jpg" alt="User Profile">
           </div>
-          <span>John Doe</span>
-          <i class="material-icons">arrow_drop_down</i>
+          <div class="user-info">
+            <span class="user-name">John Doe</span>
+            <span class="user-status">Premium</span>
+          </div>
+          <i class="material-icons dropdown-arrow">arrow_drop_down</i>
         </div>
-        <button class="mobile-menu-toggle">
-          <i class="material-icons">menu</i>
+        
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
         </button>
       </div>
     </div>
@@ -58,204 +79,309 @@
       <!-- Hero Section -->
       <section class="hero-section">
         <div class="hero-content">
-          <h1>Exercise Library</h1>
-          <p>Browse through our comprehensive collection of exercises to build your perfect workout routine.</p>
+          <div class="hero-badge">
+            <i class="material-icons">auto_awesome</i>
+            <span>AI-Powered Exercise Library</span>
+          </div>
+          <h1>Discover Your Perfect Workout</h1>
+          <p>Browse 1300+ exercises with AI guidance to build your ideal fitness routine</p>
+          
           <div class="hero-stats">
-            <div class="stat">
-              <span class="stat-number" id="total-exercises">1300+</span>
-              <span class="stat-label">Exercises</span>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="material-icons">fitness_center</i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-number" id="total-exercises">1300+</span>
+                <span class="stat-label">Exercises</span>
+              </div>
             </div>
-            <div class="stat">
-              <span class="stat-number">15+</span>
-              <span class="stat-label">Body Parts</span>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="material-icons">category</i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Categories</span>
+              </div>
             </div>
-            <div class="stat">
-              <span class="stat-number">20+</span>
-              <span class="stat-label">Equipment Types</span>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="material-icons">smart_toy</i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-number">AI</span>
+                <span class="stat-label">Coach</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="search-container">
-          <div class="search-box">
-            <i class="material-icons">search</i>
-            <input type="text" id="search-input" placeholder="Search exercises by name, muscle, or equipment...">
-            <button id="search-clear" class="search-clear">
+      </section>
+
+      <!-- Search and AI Chat Section -->
+      <section class="search-section">
+        <div class="search-wrapper">
+          <div class="search-container">
+            <div class="search-box">
+              <i class="material-icons search-icon">search</i>
+              <input type="text" id="search-input" placeholder="Search exercises, muscles, or equipment...">
+              <button id="search-clear" class="search-clear">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <button id="filter-toggle" class="filter-toggle">
+              <i class="material-icons">tune</i>
+              <span>Filters</span>
+              <span class="filter-count hidden" id="filter-count">0</span>
+            </button>
+          </div>
+          
+          <div class="ai-chat-toggle">
+            <button id="ai-chat-btn" class="ai-chat-button">
+              <div class="ai-icon">
+                <i class="material-icons">smart_toy</i>
+                <div class="ai-pulse"></div>
+              </div>
+              <div class="ai-text">
+                <span class="ai-title">AI Coach</span>
+                <span class="ai-subtitle">Ask anything</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Chat Panel -->
+      <section class="ai-chat-panel" id="ai-chat-panel">
+        <div class="chat-container">
+          <div class="chat-header">
+            <div class="chat-title">
+              <div class="chat-avatar">
+                <i class="material-icons">smart_toy</i>
+              </div>
+              <div class="chat-info">
+                <h3>AI Fitness Coach</h3>
+                <span class="online-status">
+                  <span class="status-dot"></span>
+                  Online
+                </span>
+              </div>
+            </div>
+            <button id="close-chat" class="close-chat">
               <i class="material-icons">close</i>
             </button>
           </div>
-          <button id="filter-toggle" class="filter-toggle">
-            <i class="material-icons">tune</i>
-            <span>Filters</span>
-          </button>
+          
+          <div class="chat-body" id="chat-body">
+            <div class="chat-message ai-message">
+              <div class="message-avatar">
+                <i class="material-icons">smart_toy</i>
+              </div>
+              <div class="message-content">
+                <p>👋 Hi! I'm your AI fitness coach. Ask me anything about exercises, workout routines, form tips, or fitness goals!</p>
+                <div class="quick-questions">
+                  <button class="quick-question" data-question="What are the best exercises for building chest muscles?">
+                    💪 Best chest exercises?
+                  </button>
+                  <button class="quick-question" data-question="How do I improve my squat form?">
+                    🏋️ Squat form tips?
+                  </button>
+                  <button class="quick-question" data-question="What's a good beginner workout routine?">
+                    🌟 Beginner routine?
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="chat-input-container">
+            <div class="chat-suggestions">
+              <span class="suggestion-label">💡 Try asking:</span>
+              <div class="suggestions-list">
+                <button class="suggestion" data-question="How many sets and reps for muscle building?">Sets & reps</button>
+                <button class="suggestion" data-question="What exercises target the core?">Core exercises</button>
+                <button class="suggestion" data-question="How to prevent workout injuries?">Injury prevention</button>
+              </div>
+            </div>
+            <div class="chat-input-box">
+              <input type="text" id="chat-input" placeholder="Ask about exercises, form, routines...">
+              <button id="send-message" class="send-button">
+                <i class="material-icons">send</i>
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- Filter Panel -->
       <section class="filter-panel" id="filter-panel">
-        <div class="filter-header">
-          <h3>Filter Exercises</h3>
-          <button id="close-filter" class="close-filter">
-            <i class="material-icons">close</i>
-          </button>
-        </div>
-        <div class="filter-body">
-          <div class="filter-group">
-            <h4>Body Part</h4>
-            <div class="filter-options muscle-group-options">
-              <label class="filter-option">
-                <input type="checkbox" value="back">
-                <span>Back</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="chest">
-                <span>Chest</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="shoulders">
-                <span>Shoulders</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="upper arms">
-                <span>Upper Arms</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="lower arms">
-                <span>Lower Arms</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="upper legs">
-                <span>Upper Legs</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="lower legs">
-                <span>Lower Legs</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="waist">
-                <span>Core</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="cardio">
-                <span>Cardio</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="neck">
-                <span>Neck</span>
-              </label>
+        <div class="filter-container">
+          <div class="filter-header">
+            <h3>Filter Exercises</h3>
+            <div class="filter-actions">
+              <button id="reset-filters" class="filter-reset">Reset</button>
+              <button id="close-filter" class="close-filter">
+                <i class="material-icons">close</i>
+              </button>
             </div>
           </div>
-
-          <div class="filter-group">
-            <h4>Equipment</h4>
-            <div class="filter-options equipment-options">
-              <label class="filter-option">
-                <input type="checkbox" value="body weight">
-                <span>Body Weight</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="dumbbell">
-                <span>Dumbbell</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="barbell">
-                <span>Barbell</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="cable">
-                <span>Cable</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="machine">
-                <span>Machine</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="kettlebell">
-                <span>Kettlebell</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="resistance band">
-                <span>Resistance Band</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="medicine ball">
-                <span>Medicine Ball</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="stability ball">
-                <span>Stability Ball</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="ez barbell">
-                <span>EZ Barbell</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="olympic barbell">
-                <span>Olympic Barbell</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="trap bar">
-                <span>Trap Bar</span>
-              </label>
+          
+          <div class="filter-body">
+            <div class="filter-group">
+              <h4>
+                <i class="material-icons">accessibility</i>
+                Body Part
+              </h4>
+              <div class="filter-options muscle-group-options">
+                <label class="filter-option">
+                  <input type="checkbox" value="back">
+                  <span class="checkmark"></span>
+                  <span>Back</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="chest">
+                  <span class="checkmark"></span>
+                  <span>Chest</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="shoulders">
+                  <span class="checkmark"></span>
+                  <span>Shoulders</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="upper arms">
+                  <span class="checkmark"></span>
+                  <span>Upper Arms</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="lower arms">
+                  <span class="checkmark"></span>
+                  <span>Lower Arms</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="upper legs">
+                  <span class="checkmark"></span>
+                  <span>Upper Legs</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="lower legs">
+                  <span class="checkmark"></span>
+                  <span>Lower Legs</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="waist">
+                  <span class="checkmark"></span>
+                  <span>Core</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="cardio">
+                  <span class="checkmark"></span>
+                  <span>Cardio</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="filter-group">
+              <h4>
+                <i class="material-icons">fitness_center</i>
+                Equipment
+              </h4>
+              <div class="filter-options equipment-options">
+                <label class="filter-option">
+                  <input type="checkbox" value="body weight">
+                  <span class="checkmark"></span>
+                  <span>Body Weight</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="dumbbell">
+                  <span class="checkmark"></span>
+                  <span>Dumbbell</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="barbell">
+                  <span class="checkmark"></span>
+                  <span>Barbell</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="cable">
+                  <span class="checkmark"></span>
+                  <span>Cable</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="machine">
+                  <span class="checkmark"></span>
+                  <span>Machine</span>
+                </label>
+                <label class="filter-option">
+                  <input type="checkbox" value="kettlebell">
+                  <span class="checkmark"></span>
+                  <span>Kettlebell</span>
+                </label>
+              </div>
             </div>
           </div>
-
-          <div class="filter-group">
-            <h4>Difficulty Level</h4>
-            <div class="filter-options difficulty-options">
-              <label class="filter-option">
-                <input type="checkbox" value="beginner">
-                <span>Beginner</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="intermediate">
-                <span>Intermediate</span>
-              </label>
-              <label class="filter-option">
-                <input type="checkbox" value="advanced">
-                <span>Advanced</span>
-              </label>
-            </div>
+          
+          <div class="filter-footer">
+            <button id="apply-filters" class="apply-filters">
+              <i class="material-icons">check</i>
+              Apply Filters
+            </button>
           </div>
-        </div>
-        <div class="filter-footer">
-          <button id="reset-filters" class="reset-filters">Reset Filters</button>
-          <button id="apply-filters" class="apply-filters">Apply Filters</button>
         </div>
       </section>
 
       <!-- Quick Filters -->
       <section class="quick-filters">
+        <div class="quick-filters-header">
+          <h3>Browse by Category</h3>
+        </div>
         <div class="quick-filter-scroll">
           <button class="quick-filter-btn active" data-target="all">
-            <i class="material-icons">fitness_center</i>
-            <span>All</span>
-          </button>
-          <button class="quick-filter-btn" data-target="back">
-            <i class="material-icons">fitness_center</i>
-            <span>Back</span>
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
+            <span>All Exercises</span>
           </button>
           <button class="quick-filter-btn" data-target="chest">
-            <i class="material-icons">fitness_center</i>
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
             <span>Chest</span>
           </button>
+          <button class="quick-filter-btn" data-target="back">
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
+            <span>Back</span>
+          </button>
           <button class="quick-filter-btn" data-target="shoulders">
-            <i class="material-icons">fitness_center</i>
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
             <span>Shoulders</span>
           </button>
           <button class="quick-filter-btn" data-target="upper arms">
-            <i class="material-icons">fitness_center</i>
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
             <span>Arms</span>
           </button>
           <button class="quick-filter-btn" data-target="upper legs">
-            <i class="material-icons">fitness_center</i>
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
             <span>Legs</span>
           </button>
           <button class="quick-filter-btn" data-target="waist">
-            <i class="material-icons">fitness_center</i>
+            <div class="filter-icon">
+              <i class="material-icons">fitness_center</i>
+            </div>
             <span>Core</span>
           </button>
           <button class="quick-filter-btn" data-target="lower legs">
-            <i class="material-icons">directions_run</i>
+            <div class="filter-icon">
+              <i class="material-icons">directions_run</i>
+            </div>
             <span>Calves</span>
           </button>
         </div>
@@ -264,33 +390,38 @@
       <!-- Exercise Library Content -->
       <section class="library-content">
         <div class="library-header">
-          <div class="result-count">
-            <span id="exercise-count">0</span> exercises found
-            <span class="total-count">of <span id="total-exercises-count">1300+</span> total</span>
-          </div>
-          <div class="view-options">
-            <button id="grid-view" class="view-option active" aria-label="Grid view">
-              <i class="material-icons">grid_view</i>
-            </button>
-            <button id="list-view" class="view-option" aria-label="List view">
-              <i class="material-icons">view_list</i>
-            </button>
-            <div class="sort-container">
-              <label for="sort-select">Sort by:</label>
-              <select id="sort-select" class="sort-select">
-                <option value="name-asc">Name (A-Z)</option>
-                <option value="name-desc">Name (Z-A)</option>
-                <option value="difficulty-asc">Difficulty (Low to High)</option>
-                <option value="difficulty-desc">Difficulty (High to Low)</option>
-              </select>
+          <div class="result-info">
+            <div class="result-count">
+              <span id="exercise-count">0</span> exercises found
+            </div>
+            <div class="view-controls">
+              <div class="view-options">
+                <button id="grid-view" class="view-option active" title="Grid view">
+                  <i class="material-icons">grid_view</i>
+                </button>
+                <button id="list-view" class="view-option" title="List view">
+                  <i class="material-icons">view_list</i>
+                </button>
+              </div>
+              <div class="sort-container">
+                <select id="sort-select" class="sort-select">
+                  <option value="name-asc">Name A-Z</option>
+                  <option value="name-desc">Name Z-A</option>
+                  <option value="difficulty-asc">Difficulty ↑</option>
+                  <option value="difficulty-desc">Difficulty ↓</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Loading Indicator -->
         <div id="loading-indicator" class="loading-indicator">
-          <div class="spinner"></div>
-          <p>Loading exercises from ExerciseDB...</p>
+          <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Loading exercises...</h3>
+            <p>Fetching the best exercises for you</p>
+          </div>
         </div>
 
         <!-- Exercise Grid -->
@@ -300,18 +431,17 @@
 
         <!-- Empty State -->
         <div id="empty-state" class="empty-state hidden">
-          <i class="material-icons">search_off</i>
-          <h3>No exercises found</h3>
-          <p>Try adjusting your search or filters to find what you're looking for.</p>
-          <button id="clear-search-filters" class="btn-primary">Clear Search & Filters</button>
-        </div>
-
-        <!-- Error State -->
-        <div id="error-state" class="error-state hidden">
-          <i class="material-icons">error_outline</i>
-          <h3>Something went wrong</h3>
-          <p id="error-message">Failed to load exercises. Please check your connection and try again.</p>
-          <button id="retry-loading" class="btn-primary">Try Again</button>
+          <div class="empty-content">
+            <div class="empty-icon">
+              <i class="material-icons">search_off</i>
+            </div>
+            <h3>No exercises found</h3>
+            <p>Try adjusting your search terms or filters to find what you're looking for.</p>
+            <button id="clear-search-filters" class="btn-primary">
+              <i class="material-icons">refresh</i>
+              Clear Filters
+            </button>
+          </div>
         </div>
 
         <!-- Load More -->
@@ -322,70 +452,78 @@
           </button>
         </div>
       </section>
-
-      <!-- Exercise Categories -->
-      <section class="exercise-categories">
-        <div class="section-header">
-          <h2>Browse by Category</h2>
-          <p>Explore exercises by body part or equipment type</p>
-        </div>
-        <div class="category-grid">
-          <div class="category-card" data-category="chest">
-            <i class="material-icons">fitness_center</i>
-            <h3>Chest</h3>
-            <p>Build a powerful chest with targeted exercises</p>
-          </div>
-          <div class="category-card" data-category="back">
-            <i class="material-icons">fitness_center</i>
-            <h3>Back</h3>
-            <p>Strengthen your back and improve posture</p>
-          </div>
-          <div class="category-card" data-category="shoulders">
-            <i class="material-icons">fitness_center</i>
-            <h3>Shoulders</h3>
-            <p>Develop strong, defined shoulders</p>
-          </div>
-          <div class="category-card" data-category="upper arms">
-            <i class="material-icons">fitness_center</i>
-            <h3>Arms</h3>
-            <p>Build impressive arm strength and size</p>
-          </div>
-          <div class="category-card" data-category="upper legs">
-            <i class="material-icons">fitness_center</i>
-            <h3>Legs</h3>
-            <p>Power up your lower body workouts</p>
-          </div>
-          <div class="category-card" data-category="waist">
-            <i class="material-icons">fitness_center</i>
-            <h3>Core</h3>
-            <p>Strengthen your core and abs</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Favorites Section -->
-      <section class="saved-workouts">
-        <div class="section-header">
-          <h2>Your Favorite Exercises</h2>
-          <button id="view-all-favorites" class="btn-secondary">
-            <i class="material-icons">favorite</i>
-            <span>View All Favorites</span>
-          </button>
-        </div>
-        <div class="workout-cards" id="favorite-exercises-preview">
-          <!-- Favorite exercises preview will be dynamically added here -->
-          <div class="empty-workouts" id="empty-favorites">
-            <i class="material-icons">favorite_border</i>
-            <h3>No favorite exercises yet</h3>
-            <p>Start adding exercises to your favorites by clicking the heart icon.</p>
-          </div>
-        </div>
-      </section>
     </div>
   </main>
 
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <div class="logo-circle">FJ</div>
+            <span>FitJourney</span>
+          </div>
+          <p>Your AI-powered fitness companion for achieving your health and wellness goals.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">
+              <i class="material-icons">facebook</i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="material-icons">twitter</i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="material-icons">instagram</i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="workout-session.html">Workouts</a></li>
+            <li><a href="nutrition.html">Nutrition</a></li>
+            <li><a href="progress.html">Progress</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Stay Updated</h4>
+          <p>Get the latest fitness tips and updates</p>
+          <div class="newsletter">
+            <input type="email" placeholder="Enter your email">
+            <button class="newsletter-btn">
+              <i class="material-icons">send</i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 FitJourney. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <!-- Exercise Detail Modal -->
   <div id="exercise-modal" class="modal">
+    <div class="modal-backdrop"></div>
     <div class="modal-content">
       <div class="modal-header">
         <h2 id="modal-exercise-name">Exercise Name</h2>
@@ -396,40 +534,49 @@
       <div class="modal-body">
         <div class="exercise-detail-grid">
           <div class="exercise-media">
-            <div class="exercise-gif-container">
+            <div class="media-container">
               <img id="modal-exercise-gif" src="/placeholder.svg?height=300&width=400" alt="Exercise animation">
             </div>
           </div>
           <div class="exercise-info">
             <div class="info-badges">
               <div class="detail-item">
-                <span class="detail-label">Target Muscle:</span>
-                <span id="modal-target" class="detail-value">Target Muscle</span>
+                <div class="detail-icon">
+                  <i class="material-icons">gps_fixed</i>
+                </div>
+                <div class="detail-content">
+                  <span class="detail-label">Target Muscle</span>
+                  <span id="modal-target" class="detail-value">Target Muscle</span>
+                </div>
               </div>
               <div class="detail-item">
-                <span class="detail-label">Equipment:</span>
-                <span id="modal-equipment" class="detail-value">Equipment</span>
+                <div class="detail-icon">
+                  <i class="material-icons">fitness_center</i>
+                </div>
+                <div class="detail-content">
+                  <span class="detail-label">Equipment</span>
+                  <span id="modal-equipment" class="detail-value">Equipment</span>
+                </div>
               </div>
               <div class="detail-item">
-                <span class="detail-label">Body Part:</span>
-                <span id="modal-body-part" class="detail-value">Body Part</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Difficulty:</span>
-                <span id="modal-difficulty" class="detail-value difficulty-badge">Difficulty</span>
+                <div class="detail-icon">
+                  <i class="material-icons">accessibility</i>
+                </div>
+                <div class="detail-content">
+                  <span class="detail-label">Body Part</span>
+                  <span id="modal-body-part" class="detail-value">Body Part</span>
+                </div>
               </div>
             </div>
+            
             <div class="exercise-instructions">
-              <h3>Instructions</h3>
+              <h3>
+                <i class="material-icons">list</i>
+                Instructions
+              </h3>
               <ol id="modal-instructions">
                 <!-- Instructions will be added dynamically -->
               </ol>
-            </div>
-            <div class="secondary-muscles">
-              <h3>Secondary Muscles</h3>
-              <div id="modal-secondary-muscles" class="muscle-tags">
-                <!-- Secondary muscles will be added dynamically -->
-              </div>
             </div>
           </div>
         </div>
@@ -439,9 +586,9 @@
           <i class="material-icons">favorite_border</i>
           <span>Add to Favorites</span>
         </button>
-        <button id="add-to-workout" class="btn-primary">
-          <i class="material-icons">playlist_add</i>
-          <span>Add to Workout</span>
+        <button id="ask-ai-about-exercise" class="btn-primary">
+          <i class="material-icons">smart_toy</i>
+          <span>Ask AI Coach</span>
         </button>
       </div>
     </div>
@@ -449,14 +596,16 @@
 
   <!-- Toast Notifications -->
   <div id="toast" class="toast hidden">
-    <i id="toast-icon" class="material-icons">info</i>
-    <span id="toast-message">Message</span>
+    <div class="toast-content">
+      <i id="toast-icon" class="material-icons">info</i>
+      <span id="toast-message">Message</span>
+    </div>
     <button id="toast-close" class="toast-close">
       <i class="material-icons">close</i>
     </button>
   </div>
 
   <!-- Scripts -->
-  <script src="js/modules/library.js"></script>
+  <script  type="module" src="js/modules/library.js"></script>
 </body>
 </html>

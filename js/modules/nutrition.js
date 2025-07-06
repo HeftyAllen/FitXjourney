@@ -923,7 +923,6 @@ class NutritionTracker {
           </div>
         </div>
         <div class="customizer-actions">
-          <button class="btn btn-secondary" id="save-template">Save as Template</button>
           <button class="btn btn-primary" id="generate-custom-plan">Generate Meal Plan</button>
         </div>
       </div>
@@ -933,10 +932,6 @@ class NutritionTracker {
     // Add event listeners
     document.getElementById("generate-custom-plan")?.addEventListener("click", () => {
       this.generateCustomMealPlan()
-    })
-
-    document.getElementById("save-template")?.addEventListener("click", () => {
-      this.saveMealPlanTemplate()
     })
   }
 
@@ -1015,22 +1010,22 @@ class NutritionTracker {
         const recipe = this.generateMealForPlan(dietPreference, caloriesPerMeal, excludeFoods, maxCookingTime)
 
         html += `
-          <div class="meal-plan-meal">
-            <div class="meal-header">
-              <h5>${mealType}</h5>
+          <div class="meal-plan-meal" style="background:var(--card-bg,#fff);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:1.2rem;padding:1rem;display:flex;flex-direction:column;gap:0.5rem;">
+            <div class="meal-header" style="display:flex;align-items:center;justify-content:space-between;">
+              <h5 style="margin:0;">${mealType}</h5>
               <span class="meal-calories">${recipe.calories} kcal</span>
             </div>
-            <div class="meal-content">
-              <img src="${recipe.image}" alt="${recipe.name}" />
-              <div class="meal-details">
-                <h6>${recipe.name}</h6>
-                <p class="meal-macros">
+            <div class="meal-content" style="display:flex;align-items:center;gap:1rem;">
+              <img src="${recipe.image}" alt="${recipe.name}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.08);margin-right:1rem;" />
+              <div class="meal-details" style="flex:1;">
+                <h6 style="margin:0 0 0.3rem 0;">${recipe.name}</h6>
+                <p class="meal-macros" style="margin:0 0 0.2rem 0;font-size:0.95em;">
                   P: ${recipe.protein}g | C: ${recipe.carbs}g | F: ${recipe.fat}g
                 </p>
-                <p class="cooking-time">
-                  <i class="material-icons">timer</i> ${recipe.cookingTime} min
+                <p class="cooking-time" style="margin:0 0 0.2rem 0;font-size:0.92em;color:#666;">
+                  <i class="material-icons" style="font-size:1em;vertical-align:middle;">timer</i> ${recipe.cookingTime} min
                 </p>
-                <div class="meal-actions">
+                <div class="meal-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
                   <button class="btn-small" onclick="nutritionTracker.viewRecipeDetails('${recipe.id}')">View Recipe</button>
                   <button class="btn-small" onclick="nutritionTracker.addToFoodLog('${recipe.name}', ${recipe.calories}, ${recipe.protein}, ${recipe.carbs}, ${recipe.fat}, '${mealType.toLowerCase()}')">Add to Log</button>
                   <button class="btn-small" onclick="nutritionTracker.replaceMeal(${dayIndex}, ${mealIndex})">Replace</button>
@@ -1817,6 +1812,8 @@ class NutritionTracker {
     }
   }
 
+
+
   displayRecipeDetails(recipe, container) {
     if (!container) return
 
@@ -2227,16 +2224,23 @@ class NutritionTracker {
   // ====================================================
 
   toggleTheme() {
-    document.body.classList.toggle("light-theme")
-    const themeIcon = document.querySelector("#theme-toggle-btn i")
-    if (themeIcon) {
-      themeIcon.textContent = document.body.classList.contains("light-theme") ? "dark_mode" : "light_mode"
+    // Remove any old theme classes
+    document.body.classList.remove("light-theme");
+    // Toggle dashboard-compatible light mode
+    const isLight = !document.body.classList.contains("light-mode");
+    if (isLight) {
+      document.body.classList.add("light-mode");
+    } else {
+      document.body.classList.remove("light-mode");
     }
-
-    const theme = document.body.classList.contains("light-theme") ? "light" : "dark"
-    localStorage.setItem("nutrition_theme", theme)
-
-    this.showToast(`Switched to ${theme} theme`, "info")
+    // Update icon
+    const themeIcon = document.querySelector("#theme-toggle-btn i");
+    if (themeIcon) {
+      themeIcon.textContent = isLight ? "dark_mode" : "light_mode";
+    }
+    // Save preference
+    localStorage.setItem("nutrition_theme", isLight ? "light" : "dark");
+    this.showToast(`Switched to ${isLight ? "light" : "dark"} theme`, "info");
   }
 
   // ====================================================
@@ -2366,12 +2370,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.nutritionTracker = new NutritionTracker()
 
   // Load theme preference
-  const savedTheme = localStorage.getItem("nutrition_theme")
+  const savedTheme = localStorage.getItem("nutrition_theme");
   if (savedTheme === "light") {
-    document.body.classList.add("light-theme")
-    const themeIcon = document.querySelector("#theme-toggle-btn i")
+    document.body.classList.add("light-mode");
+    document.body.classList.remove("light-theme");
+    const themeIcon = document.querySelector("#theme-toggle-btn i");
     if (themeIcon) {
-      themeIcon.textContent = "dark_mode"
+      themeIcon.textContent = "dark_mode";
     }
   }
 })

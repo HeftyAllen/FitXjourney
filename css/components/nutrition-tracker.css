@@ -2,6 +2,27 @@
    Nutrition Tracker CSS - Enhanced with Sidebar Integration
    ========================================================================== */
 
+/* Body Styles */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.light-mode {
+  background: #f8fafc;
+  color: #1a202c;
+  --dark-bg: #f2f2f2;
+  --darker-bg: #ffffff;
+  --card-bg: #ffffff;
+  --elevated-bg: #ffffff;
+  --text-color: #212121;
+  --light-text: #515c6f;
+  --muted-text: #718096;
+}
+
 /* Stat Cards */
 .stat-cards {
   display: grid;
@@ -149,6 +170,17 @@
   border-color: var(--primary);
 }
 
+body.light-mode .form-group input,
+body.light-mode .form-group select {
+  background: #f8fafc;
+  color: #1a202c;
+  border: 1px solid #ddd;
+}
+body.light-mode .form-group input:focus,
+body.light-mode .form-group select:focus {
+  border-color: var(--accent);
+}
+
 .quantity-input {
   display: flex;
 }
@@ -285,6 +317,15 @@
 .meal-btn.active i,
 .meal-btn.active span {
   color: white;
+}
+
+body.light-mode .meal-btn.active {
+  background: var(--accent);
+  color: #181717;
+}
+body.light-mode .meal-btn.active i,
+body.light-mode .meal-btn.active span {
+  color: #1d1c1c;
 }
 
 /* Food Log Form */
@@ -1049,6 +1090,15 @@
   color: white;
 }
 
+body.light-mode .chat-message.bot {
+  background: #f2cfff;
+  color: #6a1b9a;
+}
+body.light-mode .chat-message.user {
+  background: #ffe0b2;
+  color: #ff6f00;
+}
+
 .chat-footer {
   display: flex;
   padding: 1rem;
@@ -1132,98 +1182,11 @@
   color: var(--light-text);
 }
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-  .two-column {
-    grid-template-columns: 1fr;
-  }
+body.light-mode .empty-state {
+  color: #b0b0b0;
 }
-
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .stat-cards {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-  
-  .meal-plan-meals {
-    grid-template-columns: 1fr;
-  }
-  
-  .ai-chatbot {
-    width: 300px;
-  }
-  
-  .recipe-cards-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .progress-stats {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .meal-buttons {
-    gap: 0.5rem;
-  }
-  
-  .meal-btn {
-    min-width: 70px;
-    padding: 0.75rem;
-  }
-  
-  .meal-btn i {
-    font-size: 1.25rem;
-  }
-  
-  .meal-btn span {
-    font-size: 0.75rem;
-  }
-  
-  .progress-wheel {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .progress-wheel::before {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .progress-percentage {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .ai-chatbot {
-    width: 90%;
-    right: 5%;
-    left: 5%;
-  }
-  
-  .chat-toggle {
-    right: 10px;
-    bottom: 10px;
-    width: 50px;
-    height: 50px;
-  }
-  
-  .nutrition-preview {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .recipe-actions {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .search-container {
-    width: 100%;
-  }
+body.light-mode .empty-state i {
+  color: var(--primary);
 }
 
 /* Scrollbar Styling */
@@ -1242,4 +1205,226 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, var(--accent), var(--primary));
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+body.light-mode ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6a1b9a, #ff6f00);
+}
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff6f00, #6a1b9a);
+}
+
+/* Override styles for light mode */
+body.light-mode .stat-card,
+body.light-mode .nutrition-section,
+body.light-mode .food-log-form,
+body.light-mode .preview-item,
+body.light-mode .meal-btn,
+body.light-mode .food-log-entry,
+body.light-mode .product-search-container,
+body.light-mode .modal-content,
+body.light-mode .header,
+body.light-mode .dashboard-footer {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: #eee !important;
+  box-shadow: 0 2px 12px rgba(106, 27, 154, 0.06);
+}
+
+body.light-mode .stat-icon {
+  background: linear-gradient(135deg, #f2cfff, #ffe0b2);
+  color: var(--primary);
+}
+
+body.light-mode .section-header h1,
+body.light-mode .section-header h2 {
+  color: var(--accent);
+}
+
+body.light-mode .form-group label,
+body.light-mode .progress-label,
+body.light-mode .label {
+  color: var(--light-text);
+}
+
+body.light-mode .header .logo span,
+body.light-mode .dashboard-footer .footer-left,
+body.light-mode .dashboard-footer .footer-right a {
+  color: #6a1b9a !important;
+}
+
+body.light-mode .header .logo span {
+  font-weight: 700;
+}
+
+body.light-mode .nav.desktop-nav a,
+body.light-mode .sidebar-nav-link,
+body.light-mode .sidebar-title {
+  color: #6a1b9a !important;
+  background: none !important;
+}
+
+body.light-mode .nav.desktop-nav a.active,
+body.light-mode .nav.desktop-nav a:hover {
+  background: #ffe0b2 !important;
+  color: #ff6f00 !important;
+}
+
+body.light-mode .sidebar {
+  background: #fff !important;
+  border-right: 1px solid #eee !important;
+}
+
+body.light-mode .sidebar-nav-link.active,
+body.light-mode .sidebar-nav-link:hover {
+  background: #ffe0b2 !important;
+  color: #ff6f00 !important;
+}
+
+body.light-mode .sidebar-nav-badge,
+body.light-mode .water-badge {
+  background: #ff6f00 !important;
+  color: #fff !important;
+}
+
+body.light-mode .sidebar-section {
+  border-bottom: 1px solid #eee !important;
+}
+
+body.light-mode .sidebar-title {
+  color: #6a1b9a !important;
+}
+
+body.light-mode .user-profile,
+body.light-mode .avatar {
+  background: #f2cfff !important;
+  color: #6a1b9a !important;
+}
+
+body.light-mode .user-dropdown {
+  background: #fff !important;
+  color: #1a202c !important;
+  box-shadow: 0 4px 16px rgba(106, 27, 154, 0.08);
+}
+body.light-mode .user-dropdown a {
+  color: #1a202c !important;
+}
+body.light-mode .user-dropdown a:hover {
+  background: #ffe0b2 !important;
+  color: #ff6f00 !important;
+}
+
+body.light-mode .dropdown-divider {
+  border-top: 1px solid #eee !important;
+}
+
+/* Light mode: Make theme toggler and sidebar menu icons black for visibility */
+body.light-mode .theme-toggle .material-icons,
+body.light-mode .sidebar-toggle .material-icons,
+body.light-mode .sidebar-nav-link .material-icons,
+body.light-mode .sidebar-title .material-icons,
+body.light-mode .header-right .material-icons,
+body.light-mode .dropdown-arrow.material-icons {
+  color: #222 !important;
+}
+
+/* Also ensure nav and header icons are black in light mode */
+body.light-mode .nav.desktop-nav .material-icons {
+  color: #222 !important;
+}
+
+/* Responsive Design: Auto-fit for all screen sizes */
+@media (max-width: 1200px) {
+  .two-column {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .sidebar {
+    width: 220px;
+  }
+}
+
+@media (max-width: 900px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+  .stat-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .nutrition-section, .modal-content, .food-log-form, .product-search-container {
+    padding: 1rem !important;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .chat-header, .chat-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .chat-footer input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .stat-cards {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .main-content, .nutrition-section, .stat-card, .food-log-form, .product-search-container, .modal-content {
+    padding: 0.5rem !important;
+  }
+  .section-header h1, .section-header h2 {
+    font-size: 1rem;
+  }
+  .form-group input, .form-group select {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+  }
+  .meal-btn, .btn, .btn-primary, .btn-secondary {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+  }
+  .food-log-entries, .food-log-container {
+    padding: 0.25rem;
+  }
+  .chat-body {
+    max-height: 200px;
+    font-size: 0.95rem;
+  }
+  .modal-content {
+    width: 98vw;
+    min-width: unset;
+    max-width: 100vw;
+  }
+  .product-autocomplete-input {
+    font-size: 0.95rem;
+  }
+  .footer-content {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .header, .main-content, .sidebar, .dashboard-footer, .nutrition-section, .modal-content {
+    padding: 0.1rem !important;
+  }
+  .section-header h1, .section-header h2 {
+    font-size: 0.85rem;
+  }
+  .btn, .btn-primary, .btn-secondary {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.5rem;
+  }
+  .form-group input, .form-group select {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.5rem;
+  }
 }

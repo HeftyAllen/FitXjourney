@@ -22,25 +22,43 @@
 <body>
   <!-- Header Navigation -->
   <header class="tracker-header">
-    <div class="container">
-      <a href="index.html" class="logo">
-        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
-        <span>FitJourney</span>
-      </a>
-      <nav class="tracker-nav">
-        <ul>
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="workout.html">Workouts</a></li>
-          <li><a href="nutrition.html">Nutrition</a></li>
-          <li><a href="photo-tracker.html" class="active">Progress</a></li>
-          <li><a href="settings.html">Settings</a></li>
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+      <span>FitJourney</span>
+    </a>
+    <nav class="tracker-nav">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="workout.html">Workouts</a></li>
+        <li><a href="nutrition.html">Nutrition</a></li>
+        <li><a href="photo-tracker.html" class="active">Progress</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+      <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle theme">
+        <i class="material-icons">dark_mode</i>
+      </button>
+      <div class="user-profile" tabindex="0">
+        <div class="avatar">
+          <img src="images/profile-placeholder.jpg" alt="User Profile" id="user-avatar">
+          <span id="user-initials">G</span>
+        </div>
+        <span class="user-name">Guest</span>
+        <i class="material-icons">arrow_drop_down</i>
+        <ul class="user-dropdown-menu">
+          <li><a href="profile.html"><i class="material-icons">person</i> Profile</a></li>
+          <li><a href="settings.html"><i class="material-icons">settings</i> Settings</a></li>
+          <li><a href="logout.html"><i class="material-icons">logout</i> Logout</a></li>
         </ul>
-      </nav>
+      </div>
       <button class="mobile-menu-toggle" aria-label="Toggle menu">
         <i class="material-icons">menu</i>
       </button>
     </div>
-  </header>
+  </div>
+</header>
   
   <!-- Main Content Area -->
   <main class="tracker-main">
@@ -447,7 +465,9 @@
     </div>
   </footer>
   
+  <!-- Add before </body> -->
+<!-- User dropdown logic is now handled in photo-tracker.js only -->
   <!-- JavaScript -->
-  <script src="js/modules/photo-tracker.js"></script>
+  <script type="module"  src="js/modules/photo-tracker.js"></script>
 </body>
 </html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Settings - FitJourney. Manage your account, authentication, and app preferences." />
+  <meta name="keywords" content="Settings, FitJourney, Account, Preferences, Auth" />
+  <title>Settings - FitJourney</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Material Icons for UI Elements -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- Settings Page CSS -->
+  <link rel="stylesheet" href="css/components/settings.css" />
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <header class="dashboard-header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <span>FitJourney</span>
+      </a>
+      <nav class="top-nav" id="top-nav">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="workout-session.html">Workouts</a></li>
+          <li><a href="nutrition.html">Nutrition</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="settings.html" class="active">Settings</a></li>
+        </ul>
+      </nav>
+      <div class="header-right">
+        <div class="theme-toggle">
+          <button id="theme-toggle-btn">
+            <i class="material-icons">dark_mode</i>
+          </button>
+        </div>
+        <div class="user-profile">
+          <div class="avatar">
+            <img src="images/profile-placeholder.jpg" alt="User Profile" id="header-avatar">
+          </div>
+          <span id="header-username">User</span>
+          <i class="material-icons">arrow_drop_down</i>
+          <div class="user-dropdown-menu">
+            <a href="profile.html"><i class="material-icons">person</i> Profile</a>
+            <a href="settings.html"><i class="material-icons">settings</i> Settings</a>
+            <a href="#" id="header-logout-btn"><i class="material-icons">logout</i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SETTINGS CONTENT -->
+  <main class="settings-main">
+    <!-- User Profile Header -->
+    <section class="settings-profile-header">
+      <div class="profile-header-content">
+        <div class="profile-avatar-section">
+          <div class="avatar-large">
+            <img src="images/profile-placeholder.jpg" alt="User Avatar" id="overview-avatar">
+            <button class="btn-avatar-edit"><i class="material-icons">edit</i></button>
+          </div>
+        </div>
+        <div class="profile-info-section">
+          <h1 id="overview-username">John Doe</h1>
+          <p id="overview-email">john.doe@email.com</p>
+          <span class="user-status active">Active Account</span>
+        </div>
+        <div class="profile-stats-section">
+          <div class="stat-item">
+            <span class="stat-value">42</span>
+            <span class="stat-label">Workouts</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">36h</span>
+            <span class="stat-label">Total Time</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">12.5k</span>
+            <span class="stat-label">Calories</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">7</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings Layout -->
+    <div class="settings-layout">
+      <!-- Settings Sidebar Navigation -->
+      <aside class="settings-sidebar">
+        <nav class="settings-nav">
+          <button class="nav-item active" data-section="account">
+            <i class="material-icons">account_circle</i>
+            <span>Account</span>
+          </button>
+          <button class="nav-item" data-section="security">
+            <i class="material-icons">lock</i>
+            <span>Security</span>
+          </button>
+          <button class="nav-item" data-section="preferences">
+            <i class="material-icons">tune</i>
+            <span>Preferences</span>
+          </button>
+          <button class="nav-item" data-section="integrations">
+            <i class="material-icons">sync</i>
+            <span>Integrations</span>
+          </button>
+          <button class="nav-item" data-section="data">
+            <i class="material-icons">storage</i>
+            <span>Data & Privacy</span>
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Settings Content Area -->
+      <div class="settings-content">
+        <!-- Account Section -->
+        <section class="content-section active" id="account-section">
+          <div class="section-header">
+            <h2>Account Information</h2>
+            <p>Manage your personal information and profile settings</p>
+          </div>
+          
+          <form id="settings-account-form" class="settings-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-email">Email Address</label>
+                <input type="email" id="settings-email" name="email" value="john.doe@email.com" required />
+              </div>
+              <div class="form-group">
+                <label for="settings-username">Username</label>
+                <input type="text" id="settings-username" name="username" value="johndoe" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="settings-bio">Bio</label>
+              <textarea id="settings-bio" name="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="settings-avatar">Profile Picture</label>
+              <div class="file-upload-area">
+                <input type="file" id="settings-avatar" name="avatar" accept="image/*" />
+                <div class="file-upload-text">
+                  <i class="material-icons">cloud_upload</i>
+                  <span>Choose file or drag and drop</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Security Section -->
+        <section class="content-section" id="security-section">
+          <div class="section-header">
+            <h2>Security Settings</h2>
+            <p>Manage your password and security preferences</p>
+          </div>
+          
+          <form id="settings-auth-form" class="settings-form">
+            <div class="form-group">
+              <label for="settings-current-password">Current Password</label>
+              <input type="password" id="settings-current-password" name="currentPassword" required />
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-new-password">New Password</label>
+                <input type="password" id="settings-new-password" name="newPassword" />
+              </div>
+              <div class="form-group">
+                <label for="settings-confirm-password">Confirm Password</label>
+                <input type="password" id="settings-confirm-password" name="confirmPassword" />
+              </div>
+            </div>
+            
+            <div class="security-options">
+              <h3>Two-Factor Authentication</h3>
+              <div class="option-group">
+                <div class="option-item">
+                  <div class="option-info">
+                    <span class="option-title">Email Authentication</span>
+                    <span class="option-desc">Receive codes via email</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" name="email-2fa">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="option-item">
+                  <div class="option-info">
+                    <span class="option-title">SMS Authentication</span>
+                    <span class="option-desc">Receive codes via text message</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" name="sms-2fa">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Update Security</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Preferences Section -->
+        <section class="content-section" id="preferences-section">
+          <div class="section-header">
+            <h2>App Preferences</h2>
+            <p>Customize your FitJourney experience</p>
+          </div>
+          
+          <form id="settings-preferences-form" class="settings-form">
+            <div class="preference-groups">
+              <div class="preference-group">
+                <h3>Appearance</h3>
+                <div class="option-group">
+                  <div class="option-item">
+                    <div class="option-info">
+                      <span class="option-title">Dark Mode</span>
+                      <span class="option-desc">Use dark theme</span>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" name="dark-mode" checked>
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="preference-group">
+                <h3>Notifications</h3>
+                <div class="option-group">
+                  <div class="option-item">
+                    <div class="option-info">
+                      <span class="option-title">Workout Reminders</span>
+                      <span class="option-desc">Get notified about scheduled workouts</span>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" name="workout-notifications" checked>
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                  <div class="option-item">
+                    <div class="option-info">
+                      <span class="option-title">Progress Updates</span>
+                      <span class="option-desc">Weekly progress summaries</span>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" name="progress-notifications">
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="preference-group">
+                <h3>Language & Region</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="settings-language">Language</label>
+                    <select id="settings-language" name="language">
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="de">German</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="settings-timezone">Timezone</label>
+                    <select id="settings-timezone" name="timezone">
+                      <option value="UTC">UTC</option>
+                      <option value="EST">Eastern Time</option>
+                      <option value="PST">Pacific Time</option>
+                      <option value="GMT">Greenwich Mean Time</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save Preferences</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Integrations Section -->
+        <section class="content-section" id="integrations-section">
+          <div class="section-header">
+            <h2>Connected Apps</h2>
+            <p>Sync your data with other fitness platforms</p>
+          </div>
+          
+          <div class="integrations-list">
+            <div class="integration-card">
+              <div class="integration-info">
+                <div class="integration-icon">
+                  <i class="material-icons">fitness_center</i>
+                </div>
+                <div class="integration-details">
+                  <h4>Google Fit</h4>
+                  <p>Sync workouts and health data</p>
+                </div>
+              </div>
+              <button class="btn btn-secondary">Connect</button>
+            </div>
+            
+            <div class="integration-card">
+              <div class="integration-info">
+                <div class="integration-icon">
+                  <i class="material-icons">watch</i>
+                </div>
+                <div class="integration-details">
+                  <h4>Apple Health</h4>
+                  <p>Import health and activity data</p>
+                </div>
+              </div>
+              <button class="btn btn-secondary">Connect</button>
+            </div>
+            
+            <div class="integration-card connected">
+              <div class="integration-info">
+                <div class="integration-icon">
+                  <i class="material-icons">directions_run</i>
+                </div>
+                <div class="integration-details">
+                  <h4>Strava</h4>
+                  <p>Connected • Last sync: 2 hours ago</p>
+                </div>
+              </div>
+              <button class="btn btn-danger">Disconnect</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data & Privacy Section -->
+        <section class="content-section" id="data-section">
+          <div class="section-header">
+            <h2>Data & Privacy</h2>
+            <p>Manage your data and account settings</p>
+          </div>
+          
+          <div class="data-options">
+            <div class="data-group">
+              <h3>Data Management</h3>
+              <div class="data-actions">
+                <div class="data-action-item">
+                  <div class="action-info">
+                    <i class="material-icons">cloud_download</i>
+                    <div>
+                      <h4>Download Your Data</h4>
+                      <p>Export all your FitJourney data</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-secondary">Download</button>
+                </div>
+                
+                <div class="data-action-item">
+                  <div class="action-info">
+                    <i class="material-icons">delete_sweep</i>
+                    <div>
+                      <h4>Clear Workout History</h4>
+                      <p>Remove all workout data (cannot be undone)</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-danger">Clear Data</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="data-group danger-zone">
+              <h3>Account Actions</h3>
+              <div class="data-actions">
+                <div class="data-action-item">
+                  <div class="action-info">
+                    <i class="material-icons">logout</i>
+                    <div>
+                      <h4>Sign Out</h4>
+                      <p>Sign out of your FitJourney account</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-secondary" id="logout-btn">Sign Out</button>
+                </div>
+                
+                <div class="data-action-item">
+                  <div class="action-info">
+                    <i class="material-icons">delete_forever</i>
+                    <div>
+                      <h4>Delete Account</h4>
+                      <p>Permanently delete your account and all data</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-danger" id="delete-account-btn">Delete Account</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="dashboard-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <span>FitJourney</span>
+      </div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><i class="material-icons">facebook</i></a>
+        <a href="#" aria-label="Twitter"><i class="material-icons">twitter</i></a>
+        <a href="#" aria-label="Instagram"><i class="material-icons">instagram</i></a>
+        <a href="#" aria-label="YouTube"><i class="material-icons">youtube_activity</i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 FitJourney. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/modules/settings.js"></script>
+</body>
+</html>

@@ -14,63 +14,91 @@
   <!-- Preconnect for Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Font Awesome for Navigation & Footer Social Icons -->
-  <script defer src="https://kit.fontawesome.com/7c10da4bc0.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   
   <!-- Main CSS -->
-  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/modern-landing.css" />
 </head>
+
 <body>
   <!-- Skip Link for Accessibility -->
   <a href="#main" class="skip-link">Skip to content</a>
   
-  <!-- HEADER & NAVIGATION BAR -->
-  <header>
-    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+  <!-- HEADER & NAVIGATION -->
+  <header class="header">
+    <nav class="navbar">
       <div class="nav-container">
-        <!-- Logo Section -->
-        <div class="nav-logo">
-          <a href="index.html">
-            <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+        <!-- Logo -->
+        <div class="nav-brand">
+          <a href="index.html" class="brand-link">
+            <img src="images/Fit X.jpg" alt="FitJourney Logo" class="brand-logo" />
+            <span class="brand-text">FitJourney</span>
           </a>
         </div>
         
-        <!-- Mobile Navigation Toggle -->
-        <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false">
-          <span class="material-icons">menu</span>
-          <span class="visually-hidden">Menu</span>
-        </button>
-        
-        <!-- Main Navigation Menu -->
-        <ul id="nav-menu" class="nav-menu">
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
+        <!-- Desktop Navigation -->
+        <ul class="nav-menu">
+          <li><a href="#hero" class="nav-link">Home</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
         </ul>
         
-        <!-- Dropdown for Account (Login/Register) -->
-        <div class="nav-dropdown">
-          <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
-            Account <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </button>
-          <div class="dropdown-content">
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-            <a href="settings.html">Settings</a>
-          </div>
+        <!-- Desktop Actions -->
+        <div class="nav-actions">
+          <a href="auth.html" class="btn btn-ghost">Login</a>
+          <a href="auth.html" class="btn btn-primary">Get Started</a>
         </div>
         
-        <!-- Social Media Icons in Navbar -->
-        <ul class="nav-social">
-          <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a></li>
-          <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
-          <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
-          <li><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
-        </ul>
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+      
+      <!-- Mobile Navigation Overlay -->
+      <div class="mobile-menu-overlay">
+        <div class="mobile-menu">
+          <div class="mobile-menu-header">
+            <div class="mobile-brand">
+              <img src="images/Fit X.jpg" alt="FitJourney Logo" class="mobile-logo" />
+              <span class="mobile-brand-text">FitJourney</span>
+            </div>
+            <button class="mobile-close-btn" aria-label="Close menu">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+          
+          <div class="mobile-menu-content">
+            <ul class="mobile-nav-links">
+              <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+              <li><a href="#features" class="mobile-nav-link">Features</a></li>
+              <li><a href="#how-it-works" class="mobile-nav-link">How It Works</a></li>
+              <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
+              <li><a href="dashboard.html" class="mobile-nav-link">Dashboard</a></li>
+            </ul>
+            
+            <div class="mobile-menu-actions">
+              <a href="auth.html" class="btn btn-ghost btn-full">Login</a>
+              <a href="auth.html" class="btn btn-primary btn-full">Get Started</a>
+            </div>
+            
+            <div class="mobile-menu-footer">
+              <div class="social-links">
+                <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   </header>
@@ -78,370 +106,705 @@
   <!-- MAIN CONTENT -->
   <main id="main">
     <!-- HERO SECTION -->
-    <section id="hero">
+    <section id="hero" class="hero">
       <div class="hero-container">
-        <div class="hero-text">
-          <h1>Welcome to FitJourney</h1>
-          <p>
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i data-lucide="zap"></i>
+            <span>AI-Powered Fitness Platform</span>
+          </div>
+          
+          <h1 class="hero-title">
+            Transform Your Body,<br>
+            <span class="gradient-text">Transform Your Life</span>
+          </h1>
+          
+          <p class="hero-description">
             Your ultimate companion for personalized fitness, nutrition, and transformation.
-            Start your journey to a healthier, happier you today.
+            Get AI-powered coaching, custom workout plans, and track your progress like never before.
           </p>
-          <div class="hero-buttons">
-            <a href="#features" class="btn btn-primary">Explore Features</a>
-            <a href="register.html" class="btn btn-secondary">Join Now</a>
+          
+          <div class="hero-actions">
+            <a href="auth.html" class="btn btn-primary btn-large">
+              <i data-lucide="rocket"></i>
+              Start Your Journey
+            </a>
+            <a href="#features" class="btn btn-ghost btn-large">
+              <i data-lucide="play-circle"></i>
+              Watch Demo
+            </a>
+          </div>
+          
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-number">10K+</div>
+              <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">95%</div>
+              <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">4.9★</div>
+              <div class="stat-label">User Rating</div>
+            </div>
           </div>
         </div>
-        <div class="hero-image">
-          <img src="images/hero.jpg" alt="Fitness Journey" />
+        
+        <div class="hero-visual">
+          <div class="hero-image-container">
+            <img src="images/Fit X.jpg" alt="Fitness Journey" class="hero-image" />
+            <div class="floating-card card-1">
+              <i data-lucide="activity"></i>
+              <div>
+                <div class="card-title">Workout Complete!</div>
+                <div class="card-subtitle">45 min • 320 calories</div>
+              </div>
+            </div>
+            <div class="floating-card card-2">
+              <i data-lucide="target"></i>
+              <div>
+                <div class="card-title">Goal Progress</div>
+                <div class="card-subtitle">85% completed</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     
-    <!-- FEATURES SECTION (Multiple Cards) -->
-    <section id="features">
+    <!-- FEATURES SECTION -->
+    <section id="features" class="features">
       <div class="container">
-        <h2>Our Features</h2>
-        <p>
-          FitJourney offers a comprehensive suite of tools designed to help you achieve your fitness goals.
-          Customize your workouts, monitor your nutrition, track your progress, and receive AI-powered coaching.
-        </p>
+        <div class="section-header">
+          <div class="section-badge">
+            <i data-lucide="star"></i>
+            <span>Features</span>
+          </div>
+          <h2 class="section-title">Everything You Need to Succeed</h2>
+          <p class="section-description">
+            Comprehensive tools designed to help you achieve your fitness goals faster and more effectively.
+          </p>
+        </div>
+        
         <div class="features-grid">
-          <!-- Card 1: Workout Planner -->
-          <div class="card">
-            <p class="card-title">Workout Planner</p>
-            <p class="small-desc">
-              Create your personalized weekly workout routines using our intuitive drag-and-drop planner.
-              Tailor your exercises to fit your specific goals.
-            </p>
-            <div class="go-corner">
-              <div class="go-arrow">→</div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="calendar"></i>
             </div>
+            <h3 class="feature-title">Smart Workout Planner</h3>
+            <p class="feature-description">
+              AI-powered workout plans that adapt to your progress, schedule, and preferences.
+            </p>
+            <ul class="feature-list">
+              <li><i data-lucide="check"></i> Personalized routines</li>
+              <li><i data-lucide="check"></i> Progress tracking</li>
+              <li><i data-lucide="check"></i> Exercise library</li>
+            </ul>
           </div>
-          <!-- Card 2: Nutrition Tracker -->
-          <div class="card">
-            <p class="card-title">Nutrition Tracker</p>
-            <p class="small-desc">
-              Log your meals and monitor calorie intake with ease.
-              Receive customized meal plans that complement your training regimen.
-            </p>
-            <div class="go-corner">
-              <div class="go-arrow">→</div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="apple"></i>
             </div>
+            <h3 class="feature-title">Nutrition Tracker</h3>
+            <p class="feature-description">
+              Track your meals, calories, and macros with our comprehensive nutrition database.
+            </p>
+            <ul class="feature-list">
+              <li><i data-lucide="check"></i> Meal logging</li>
+              <li><i data-lucide="check"></i> Macro tracking</li>
+              <li><i data-lucide="check"></i> Custom meal plans</li>
+            </ul>
           </div>
-          <!-- Card 3: Progress Photos -->
-          <div class="card">
-            <p class="card-title">Progress Photos</p>
-            <p class="small-desc">
-              Document your transformation by uploading weekly progress photos.
-              Compare your before and after images to see your hard work pay off.
-            </p>
-            <div class="go-corner">
-              <div class="go-arrow">→</div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="camera"></i>
             </div>
+            <h3 class="feature-title">Progress Photos</h3>
+            <p class="feature-description">
+              Document your transformation with before/after photos and visual progress tracking.
+            </p>
+            <ul class="feature-list">
+              <li><i data-lucide="check"></i> Photo timeline</li>
+              <li><i data-lucide="check"></i> Body measurements</li>
+              <li><i data-lucide="check"></i> Progress analytics</li>
+            </ul>
           </div>
-          <!-- Card 4: AI Coaching -->
-          <div class="card">
-            <p class="card-title">AI Coaching</p>
-            <p class="small-desc">
-              Leverage our AI-powered coach to receive real-time workout and nutrition recommendations,
-              ensuring your plan is always optimized for your needs.
-            </p>
-            <div class="go-corner">
-              <div class="go-arrow">→</div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i data-lucide="brain"></i>
             </div>
+            <h3 class="feature-title">AI Coach</h3>
+            <p class="feature-description">
+              Get personalized recommendations and real-time feedback from our AI coaching system.
+            </p>
+            <ul class="feature-list">
+              <li><i data-lucide="check"></i> Smart recommendations</li>
+              <li><i data-lucide="check"></i> Form analysis</li>
+              <li><i data-lucide="check"></i> 24/7 support</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
     
     <!-- HOW IT WORKS SECTION -->
-    <section id="how-it-works">
+    <section id="how-it-works" class="how-it-works">
       <div class="container">
-        <h2>How It Works</h2>
-        <p>
-          FitJourney simplifies your path to fitness by integrating workout planning, nutrition tracking, and progress monitoring into one seamless platform.
-        </p>
-        <div class="steps">
-          <article class="step">
-            <h3>Step 1: Set Your Goals</h3>
-            <p>
-              Begin by setting your fitness objectives—whether it’s losing weight, gaining muscle, or improving overall wellness.
-              Our system tailors the experience to meet your unique needs.
-            </p>
-          </article>
-          <article class="step">
-            <h3>Step 2: Create Your Plan</h3>
-            <p>
-              Use our drag-and-drop workout planner and intuitive nutrition tracker to build a customized plan that fits your lifestyle.
-              Fine-tune every detail for optimal results.
-            </p>
-          </article>
-          <article class="step">
-            <h3>Step 3: Track Your Progress</h3>
-            <p>
-              Log your workouts, record your meals, and upload weekly progress photos.
-              Our interactive dashboard lets you visualize your improvements over time.
-            </p>
-          </article>
-          <article class="step">
-            <h3>Step 4: Receive Personalized Feedback</h3>
-            <p>
-              Our AI coach analyzes your data in real time and provides adaptive recommendations, ensuring that you stay on track.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-    
-    <!-- FAQ SECTION (Updated with Provided FAQ Styling) -->
-    <section id="faq" class="faq-section">
-      <div class="container">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-item">
-          <p class="faq-question">What is FitJourney?</p>
-          <div class="faq-answer">
-            <p>
-              FitJourney is an all-in-one fitness platform that combines personalized workout planning, nutrition tracking, progress monitoring, and AI-powered coaching to help you achieve your health goals.
-            </p>
+        <div class="section-header">
+          <div class="section-badge">
+            <i data-lucide="map"></i>
+            <span>Process</span>
           </div>
+          <h2 class="section-title">How FitJourney Works</h2>
+          <p class="section-description">
+            Simple steps to transform your fitness journey with our intelligent platform.
+          </p>
         </div>
-        <div class="faq-item">
-          <p class="faq-question">How do I create a workout plan?</p>
-          <div class="faq-answer">
-            <p>
-              Our drag-and-drop interface makes it easy to build your workout routine. Simply select your exercises, adjust the sets and reps, and save your plan.
-            </p>
+        
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-number">01</div>
+            <div class="step-content">
+              <h3 class="step-title">Set Your Goals</h3>
+              <p class="step-description">
+                Define your fitness objectives and let our AI create a personalized plan tailored to your needs.
+              </p>
+            </div>
+            <div class="step-visual">
+              <i data-lucide="target"></i>
+            </div>
           </div>
-        </div>
-        <div class="faq-item">
-          <p class="faq-question">Can I track my nutrition?</p>
-          <div class="faq-answer">
-            <p>
-              Yes! Log your meals, monitor your calorie intake, and receive customized meal plans tailored to your training needs.
-            </p>
+          
+          <div class="step">
+            <div class="step-number">02</div>
+            <div class="step-content">
+              <h3 class="step-title">Follow Your Plan</h3>
+              <p class="step-description">
+                Execute your custom workout and nutrition plan with guided instructions and real-time feedback.
+              </p>
+            </div>
+            <div class="step-visual">
+              <i data-lucide="play"></i>
+            </div>
           </div>
-        </div>
-        <div class="faq-item">
-          <p class="faq-question">How does the AI coach work?</p>
-          <div class="faq-answer">
-            <p>
-              Our AI coach analyzes your workout and nutrition data in real time to offer personalized feedback and recommendations, ensuring your fitness plan evolves with you.
-            </p>
+          
+          <div class="step">
+            <div class="step-number">03</div>
+            <div class="step-content">
+              <h3 class="step-title">Track Progress</h3>
+              <p class="step-description">
+                Monitor your improvements with detailed analytics, progress photos, and performance metrics.
+              </p>
+            </div>
+            <div class="step-visual">
+              <i data-lucide="trending-up"></i>
+            </div>
           </div>
-        </div>
-        <div class="faq-item">
-          <p class="faq-question">Is my data secure?</p>
-          <div class="faq-answer">
-            <p>
-              Absolutely. We use robust security measures to protect your personal data and ensure that your progress and health information remain private.
-            </p>
+          
+          <div class="step">
+            <div class="step-number">04</div>
+            <div class="step-content">
+              <h3 class="step-title">Achieve Results</h3>
+              <p class="step-description">
+                Reach your fitness goals faster with AI-powered adjustments and continuous optimization.
+              </p>
+            </div>
+            <div class="step-visual">
+              <i data-lucide="trophy"></i>
+            </div>
           </div>
         </div>
       </div>
     </section>
     
-    <!-- TESTIMONIALS SECTION -->
-    <section id="testimonials">
+    <!-- FAQ SECTION -->
+    <section id="faq" class="faq">
       <div class="container">
-        <h2>User Testimonials</h2>
-        <p>
-          Hear from our community members who have transformed their lives with FitJourney.
-        </p>
-        <div class="testimonials-grid">
-          <article class="testimonial">
-            <img src="images/testimonial1.jpg" alt="Testimonial from Alex D." />
-            <blockquote>
-              "FitJourney has completely transformed my approach to fitness. The workout planner and nutrition tracker have kept me on track!"
-            </blockquote>
-            <p class="author">- Alex D.</p>
-          </article>
-          <article class="testimonial">
-            <img src="images/testimonial2.jpg" alt="Testimonial from Jamie L." />
-            <blockquote>
-              "The progress photo tracker is incredibly motivating. Seeing my transformation week after week inspires me to push harder."
-            </blockquote>
-            <p class="author">- Jamie L.</p>
-          </article>
-          <article class="testimonial">
-            <img src="images/testimonial3.jpg" alt="Testimonial from Morgan S." />
-            <blockquote>
-              "I love the personalized AI coaching. The real-time recommendations have helped me optimize my workouts and improve my form."
-            </blockquote>
-            <p class="author">- Morgan S.</p>
-          </article>
+        <div class="section-header">
+          <div class="section-badge">
+            <i data-lucide="help-circle"></i>
+            <span>FAQ</span>
+          </div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-description">
+            Get answers to common questions about FitJourney and how it can help you.
+          </p>
+        </div>
+        
+        <div class="faq-container">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is FitJourney?</span>
+              <i data-lucide="chevron-down" class="faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>FitJourney is an all-in-one fitness platform that combines personalized workout planning, nutrition tracking, progress monitoring, and AI-powered coaching to help you achieve your health goals.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I create a workout plan?</span>
+              <i data-lucide="chevron-down" class="faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Our AI analyzes your fitness level, goals, and preferences to create a personalized workout plan. You can also customize exercises, sets, and reps using our intuitive interface.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I track my nutrition?</span>
+              <i data-lucide="chevron-down" class="faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! Log your meals, monitor your calorie intake, track macros, and receive customized meal plans tailored to your training needs and dietary preferences.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How does the AI coach work?</span>
+              <i data-lucide="chevron-down" class="faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Our AI coach analyzes your workout and nutrition data in real-time to offer personalized feedback, form corrections, and recommendations, ensuring your fitness plan evolves with your progress.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my data secure?</span>
+              <i data-lucide="chevron-down" class="faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Absolutely. We use enterprise-grade security measures to protect your personal data and ensure that your progress and health information remain private and secure.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     
-    <!-- BLOG / UPDATES SECTION -->
-    <section id="blog">
+    <!-- CTA SECTION -->
+    <section class="cta">
       <div class="container">
-        <h2>Latest News & Updates</h2>
-        <p>
-          Stay up-to-date with the latest fitness tips, success stories, and FitJourney updates from our community.
-        </p>
-        <div class="blog-posts">
-          <article class="blog-post">
-            <img src="images/time.webp" alt="Maximize Your Workout Efficiency" />
-            <h3>5 Tips to Maximize Your Workout Efficiency</h3>
-            <p>
-              Discover expert advice on how to get the most out of your workouts and see faster results.
-            </p>
-            <a href="blog.html" class="btn btn-readmore">Read More</a>
-          </article>
-          <article class="blog-post">
-            <img src="images/nutrition.jpg" alt="Nutrition for Fitness" />
-            <h3>The Ultimate Guide to Nutrition for Fitness</h3>
-            <p>
-              Learn how to balance your meals, fuel your workouts, and maintain a healthy diet with our in-depth guide.
-            </p>
-            <a href="blog.html" class="btn btn-readmore">Read More</a>
-          </article>
-          <article class="blog-post">
-            <img src="images/AI.webp" alt="AI Revolution in Fitness" />
-            <h3>How AI is Revolutionizing Personal Fitness</h3>
-            <p>
-              Explore how artificial intelligence is transforming workout routines and nutrition planning for better results.
-            </p>
-            <a href="blog.html" class="btn btn-readmore">Read More</a>
-          </article>
+        <div class="cta-content">
+          <h2 class="cta-title">Ready to Transform Your Life?</h2>
+          <p class="cta-description">
+            Join thousands of users who are achieving their fitness goals with FitJourney's AI-powered platform.
+          </p>
+          <div class="cta-actions">
+            <a href="auth.html" class="btn btn-primary btn-large">
+              <i data-lucide="rocket"></i>
+              Start Free Trial
+            </a>
+            <a href="dashboard.html" class="btn btn-ghost btn-large">
+              <i data-lucide="external-link"></i>
+              View Dashboard
+            </a>
+          </div>
         </div>
       </div>
     </section>
-    
-    <!-- CALL-TO-ACTION SECTION -->
-    <section id="cta">
-      <div class="container">
-        <h2>Start Your Transformation Today</h2>
-        <p>
-          Join thousands of users who are transforming their lives with FitJourney.
-          Sign up now to unlock your personalized fitness, nutrition, and progress tracking tools.
-        </p>
-        <div class="cta-buttons">
-          <a href="register.html" class="btn btn-primary">Sign Up Now</a>
-          <a href="login.html" class="btn btn-secondary">Login</a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- EXTRA INFORMATION / FOOTER PROMO -->
-    <section id="extra-info">
-      <div class="container">
-        <h2>Why Choose FitJourney?</h2>
-        <p>
-          FitJourney is more than just a fitness app—it's a community, a mentor, and a personal guide on your journey to health and wellness.
-        </p>
-        <ul class="info-list">
-          <li>Personalized workout routines and meal plans</li>
-          <li>Interactive progress tracking with photos and logs</li>
-          <li>Adaptive AI coaching for real-time feedback</li>
-          <li>A supportive community and expert tips</li>
-          <li>Secure and user-friendly platform</li>
-        </ul>
-        <p>
-          Our goal is to empower you with the tools you need to succeed in your fitness journey. With FitJourney, every step you take brings you closer to the best version of yourself.
-        </p>
-      </div>
-    </section>
-    
-    <!-- FINAL CALL-TO-ACTION -->
-    <section id="final-cta">
-      <div class="container">
-        <h2>Ready to Get Started?</h2>
-        <p>
-          Whether you're just beginning or already on your fitness journey, FitJourney is here to support you every step of the way.
-        </p>
-        <div class="cta-buttons">
-          <a href="register.html" class="btn btn-primary">Create Your Account</a>
-          <a href="dashboard.html" class="btn btn-secondary">Access Your Dashboard</a>
-        </div>
-      </div>
-    </section>
-    
   </main>
-  <!-- AI Chatbot Integration -->
-  <div id="ai-chatbot" class="ai-chatbot hidden" role="dialog" aria-label="AI Workout Assistant">
+  
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="images/Fit X.jpg" alt="FitJourney Logo" />
+            <span>FitJourney</span>
+          </div>
+          <p class="footer-description">
+            Your all-in-one platform for personalized fitness, nutrition, and progress tracking.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-title">Product</h4>
+            <ul class="footer-list">
+              <li><a href="#features">Features</a></li>
+              <li><a href="dashboard.html">Dashboard</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#faq">FAQ</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4 class="footer-title">Account</h4>
+            <ul class="footer-list">
+              <li><a href="auth.html">Login</a></li>
+              <li><a href="auth.html">Register</a></li>
+              <li><a href="settings.html">Settings</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h4 class="footer-title">Contact</h4>
+            <ul class="footer-list">
+              <li><a href="mailto:support@fitjourney.com">support@fitjourney.com</a></li>
+              <li>+1 234 567 890</li>
+              <li>123 Fitness Way<br>Wellness City, Country</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 FitJourney. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- AI Chatbot -->
+  <div id="ai-chatbot" class="ai-chatbot hidden">
     <div class="chat-header">
-      <h3>FitJourney Assistant</h3>
-      <button id="close-chat" aria-label="Close Chat">
-        <i class="material-icons">close</i>
+      <div class="chat-title">
+        <i data-lucide="bot"></i>
+        <span>FitJourney Assistant</span>
+      </div>
+      <button id="close-chat" class="chat-close">
+        <i data-lucide="x"></i>
       </button>
     </div>
     <div class="chat-body" id="chat-body">
-      <div class="chat-message bot">Hello! How can I help with your workout today?</div>
+      <div class="chat-message bot">
+        <div class="message-content">
+          Hello! How can I help with your fitness journey today?
+        </div>
+      </div>
     </div>
     <div class="chat-footer">
-      <input type="text" id="chat-input" placeholder="Type your question..." aria-label="Chat input" />
-      <button id="send-chat" aria-label="Send Message"><i class="material-icons">send</i></button>
+      <input type="text" id="chat-input" placeholder="Ask me anything..." />
+      <button id="send-chat">
+        <i data-lucide="send"></i>
+      </button>
     </div>
   </div>
   
   <!-- Chat Toggle Button -->
-  <button id="chat-toggle" aria-label="Chat with our AI Assistant">
-    <i class="material-icons">chat</i>
+  <button id="chat-toggle" class="chat-toggle">
+    <i data-lucide="message-circle"></i>
   </button>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-container">
-      <!-- Left Column: Branding -->
-      <div class="footer-left">
-        <h3>FitJourney</h3>
-        <p>Your all-in-one platform for personalized fitness, nutrition, and progress tracking.</p>
-      </div>
-      <!-- Center Column: Quick Links -->
-      <div class="footer-center">
-        <ul class="footer-nav">
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
-        </ul>
-      </div>
-      <!-- Right Column: Social & Contact -->
-      <div class="footer-right">
-        <ul class="footer-social">
-          <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-          <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
-          <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
-          <li><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
-        </ul>
-        <ul class="footer-contact">
-          <li><a href="mailto:support@fitjourney.com">support@fitjourney.com</a></li>
-          <li>+1 234 567 890</li>
-          <li>123 Fitness Way, Wellness City, Country</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 FitJourney. All rights reserved.</p>
-    </div>
-  </footer>
   
-  <!-- JAVASCRIPT FILES -->
-  <script defer src="js/main.js"></script>
-  <script defer src="js/modules/workout.js"></script>
-  <script defer src="js/modules/nutrition.js"></script>
-  <script defer src="js/modules/chatbot.js"></script>
-  <script defer src="js/modules/photo-tracker.js"></script>
-  <script defer src="js/modules/voice-guidance.js"></script>
-  <script defer src="js/modules/adaptive-coaching.js"></script>
+  <!-- Theme Toggle Button -->
+  <button id="theme-toggle" class="theme-toggle">
+    <i data-lucide="sun" id="theme-icon"></i>
+  </button>
   
-  <!-- FAQ Toggle Script -->
+  <!-- JavaScript -->
   <script>
-    document.querySelectorAll('.faq-question').forEach(question => {
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const body = document.body;
+    
+    // Check for saved theme preference or default to 'dark'
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    body.classList.toggle('light-mode', currentTheme === 'light');
+    
+    // Update icon based on current theme
+    function updateThemeIcon() {
+      if (body.classList.contains('light-mode')) {
+        themeIcon.setAttribute('data-lucide', 'moon');
+      } else {
+        themeIcon.setAttribute('data-lucide', 'sun');
+      }
+      lucide.createIcons();
+    }
+    
+    updateThemeIcon();
+    
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      const theme = body.classList.contains('light-mode') ? 'light' : 'dark';
+      localStorage.setItem('theme', theme);
+      updateThemeIcon();
+    });
+    
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    function openMobileMenu() {
+      mobileMenuOverlay.classList.add('active');
+      mobileMenuBtn.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMobileMenu() {
+      mobileMenuOverlay.classList.remove('active');
+      mobileMenuBtn.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+    mobileCloseBtn.addEventListener('click', closeMobileMenu);
+    
+    // Close mobile menu when clicking on overlay
+    mobileMenuOverlay.addEventListener('click', (e) => {
+      if (e.target === mobileMenuOverlay) {
+        closeMobileMenu();
+      }
+    });
+    
+    // Close mobile menu when clicking nav links
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+    
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+        closeMobileMenu();
+      }
+    });
+    
+    // FAQ functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
       question.addEventListener('click', () => {
-        question.classList.toggle('active');
-        const answer = question.nextElementSibling;
-        if(answer.style.display === "block"){
-          answer.style.display = "none";
-        } else {
-          answer.style.display = "block";
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('active');
+          item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+          faqItem.classList.add('active');
+          question.setAttribute('aria-expanded', 'true');
         }
       });
     });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Chatbot functionality
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatbot = document.getElementById('ai-chatbot');
+    const closeChat = document.getElementById('close-chat');
+    const chatInput = document.getElementById('chat-input');
+    const sendChat = document.getElementById('send-chat');
+    const chatBody = document.getElementById('chat-body');
+    
+    function toggleChat() {
+      chatbot.classList.toggle('hidden');
+      if (!chatbot.classList.contains('hidden')) {
+        chatInput.focus();
+      }
+    }
+    
+    function addMessage(message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+      messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+      chatBody.appendChild(messageDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (message) {
+        addMessage(message, true);
+        chatInput.value = '';
+        
+        // Simulate bot response
+        setTimeout(() => {
+          const responses = [
+            "Thanks for your question! I'm here to help with your fitness journey.",
+            "That's a great question! Let me help you with that.",
+            "I'd be happy to assist you with your fitness goals!",
+            "Great question! Here's what I recommend for your fitness journey.",
+            "I'm here to support your transformation! How else can I help?"
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          addMessage(randomResponse);
+        }, 1000);
+      }
+    }
+    
+    chatToggle.addEventListener('click', toggleChat);
+    closeChat.addEventListener('click', toggleChat);
+    sendChat.addEventListener('click', sendMessage);
+    
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.feature-card, .step, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Active navigation link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+    
+    function updateActiveNavLink() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop <= 100) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', updateActiveNavLink);
+    
+    // Form validation helper
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+    
+    // Newsletter signup (if you add it later)
+    function handleNewsletterSignup(email) {
+      if (validateEmail(email)) {
+        // Add your newsletter signup logic here
+        console.log('Newsletter signup:', email);
+        return true;
+      }
+      return false;
+    }
+    
+    // Performance optimization: Lazy load images
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            imageObserver.unobserve(img);
+          }
+        });
+      });
+      
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    }
+    
+    // Error handling for missing elements
+    function safeAddEventListener(selector, event, handler) {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.addEventListener(event, handler);
+      }
+    }
+    
+    // Initialize tooltips (if needed)
+    function initTooltips() {
+      const tooltipElements = document.querySelectorAll('[data-tooltip]');
+      tooltipElements.forEach(element => {
+        element.addEventListener('mouseenter', showTooltip);
+        element.addEventListener('mouseleave', hideTooltip);
+      });
+    }
+    
+    function showTooltip(e) {
+      // Tooltip implementation
+    }
+    
+    function hideTooltip(e) {
+      // Tooltip implementation
+    }
+    
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Re-initialize icons after DOM changes
+      lucide.createIcons();
+      
+      // Initialize any additional features
+      initTooltips();
+      
+      // Set initial active nav link
+      updateActiveNavLink();
+    });
+    
+    // Handle page visibility changes
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        // Page is hidden
+      } else {
+        // Page is visible
+        lucide.createIcons(); // Refresh icons
+      }
+    });
   </script>
-    <script type="module" src="js/modules/workout-planner.js"></script>
 </body>
 </html>

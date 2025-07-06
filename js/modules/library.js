@@ -1,25 +1,39 @@
-// exercise-library.js
+// Exercise Library Redesigned - Matching Dashboard Theme with AI Chat
 
 // ===== Global Variables =====
-window.exerciseLibrary = window.exerciseLibrary || {}
-let exercises = window.exerciseLibrary.exercises || []
+let exercises = []
 let filteredExercises = []
 let currentPage = 1
 const exercisesPerPage = 20
 const favorites = JSON.parse(localStorage.getItem("favorites")) || []
-const savedWorkouts = JSON.parse(localStorage.getItem("savedWorkouts")) || []
-const selectedExercises = []
 let currentExercise = null
 let totalExercises = 0
 let isLoading = false
+const chatHistory = []
 
-// API Configuration with your key
+// API Configuration
 const API_CONFIG = {
   baseUrl: "https://exercisedb.p.rapidapi.com",
   headers: {
     "X-RapidAPI-Key": "02e5919d7cmshe07914db7605532p164aa8jsn0cde2d877db5",
     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
   },
+}
+
+// AI Chat responses for fitness questions
+const AI_RESPONSES = {
+  "chest exercises":
+    "Great chest exercises include push-ups, bench press, dumbbell flyes, and dips. For beginners, start with push-ups and incline push-ups. Focus on proper form with controlled movements.",
+  "squat form":
+    "For proper squat form: 1) Keep feet shoulder-width apart, 2) Keep chest up and core engaged, 3) Lower until thighs are parallel to ground, 4) Drive through heels to stand up, 5) Keep knees aligned with toes.",
+  "beginner routine":
+    "A great beginner routine includes: Day 1: Push-ups, squats, planks. Day 2: Rest or light walking. Day 3: Lunges, modified pull-ups, glute bridges. Start with 2-3 sets of 8-12 reps.",
+  "sets and reps":
+    "For muscle building: 3-4 sets of 8-12 reps with moderate to heavy weight. For strength: 3-5 sets of 1-6 reps with heavy weight. For endurance: 2-3 sets of 15+ reps with lighter weight.",
+  "core exercises":
+    "Effective core exercises include planks, dead bugs, bicycle crunches, mountain climbers, Russian twists, and leg raises. Focus on quality over quantity.",
+  "injury prevention":
+    "To prevent injuries: 1) Always warm up before exercising, 2) Use proper form, 3) Progress gradually, 4) Include rest days, 5) Stay hydrated, 6) Listen to your body and stop if you feel pain.",
 }
 
 // ===== DOM Elements =====
@@ -37,19 +51,24 @@ const resetFilters = document.getElementById("reset-filters")
 const applyFilters = document.getElementById("apply-filters")
 const quickFilterBtns = document.querySelectorAll(".quick-filter-btn")
 
+// AI Chat
+const aiChatBtn = document.getElementById("ai-chat-btn")
+const aiChatPanel = document.getElementById("ai-chat-panel")
+const closeChat = document.getElementById("close-chat")
+const chatBody = document.getElementById("chat-body")
+const chatInput = document.getElementById("chat-input")
+const sendMessage = document.getElementById("send-message")
+
 // Library Content
 const exerciseCount = document.getElementById("exercise-count")
-const totalExercisesCount = document.getElementById("total-exercises")
 const gridViewBtn = document.getElementById("grid-view")
 const listViewBtn = document.getElementById("list-view")
 const sortSelect = document.getElementById("sort-select")
 const loadingIndicator = document.getElementById("loading-indicator")
 const exerciseGrid = document.getElementById("exercise-grid")
 const emptyState = document.getElementById("empty-state")
-const errorState = document.getElementById("error-state")
 const clearSearchFilters = document.getElementById("clear-search-filters")
 const loadMoreBtn = document.getElementById("load-more")
-const retryLoading = document.getElementById("retry-loading")
 
 // Exercise Modal
 const exerciseModal = document.getElementById("exercise-modal")
@@ -58,11 +77,83 @@ const modalExerciseGif = document.getElementById("modal-exercise-gif")
 const modalTarget = document.getElementById("modal-target")
 const modalEquipment = document.getElementById("modal-equipment")
 const modalBodyPart = document.getElementById("modal-body-part")
-const modalDifficulty = document.getElementById("modal-difficulty")
 const modalInstructions = document.getElementById("modal-instructions")
-const modalSecondaryMuscles = document.getElementById("modal-secondary-muscles")
 const closeModal = document.getElementById("close-modal")
 const addToFavorites = document.getElementById("add-to-favorites")
+const askAiAboutExercise = document.getElementById("ask-ai-about-exercise")
+
+// ===== Theme Toggle with Enhanced Animations =====
+class LibraryThemeToggle {
+  constructor() {
+    this.isDark = document.body.classList.contains("dark-theme")
+    this.button = document.getElementById("theme-toggle-btn")
+    this.init()
+  }
+
+  init() {
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme")
+    if (savedTheme) {
+      this.isDark = savedTheme === "dark"
+      document.body.classList.toggle("dark-theme", this.isDark)
+      this.updateIcon()
+    }
+
+    // Add event listeners
+    if (this.button) {
+      this.button.addEventListener("click", () => this.toggle())
+
+      // Keyboard shortcut
+      document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "T") {
+          e.preventDefault()
+          this.toggle()
+        }
+      })
+    }
+
+    // System theme detection
+    if (window.matchMedia) {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      mediaQuery.addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+          this.isDark = e.matches
+          document.body.classList.toggle("dark-theme", this.isDark)
+          this.updateIcon()
+        }
+      })
+    }
+  }
+
+  toggle() {
+    this.isDark = !this.isDark
+    document.body.classList.toggle("dark-theme", this.isDark)
+    localStorage.setItem("theme", this.isDark ? "dark" : "light")
+    this.updateIcon()
+    this.animateToggle()
+
+    // Show toast
+    showToast(`Switched to ${this.isDark ? "dark" : "light"} mode`, "success")
+  }
+
+  updateIcon() {
+    if (this.button) {
+      const icon = this.button.querySelector("i")
+      if (icon) {
+        icon.textContent = this.isDark ? "light_mode" : "dark_mode"
+      }
+    }
+  }
+
+  animateToggle() {
+    if (this.button) {
+      this.button.style.transform = "rotate(360deg) scale(1.2)"
+      setTimeout(() => {
+        this.button.style.transform = ""
+      }, 300)
+    }
+  }
+}
 
 // ===== Initialization =====
 document.addEventListener("DOMContentLoaded", () => {
@@ -72,24 +163,22 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeApp() {
   console.log("Initializing Exercise Library...")
 
-  // Initialize theme
-  if (localStorage.getItem("theme") === "light") {
-    document.body.classList.remove("dark-theme")
-  }
+  // Initialize theme toggle
+  new LibraryThemeToggle()
 
   // Set up event listeners
   setupEventListeners()
 
-  // Fetch exercises immediately with the API key
+  // Fetch exercises immediately
   fetchExercises()
+
+  // Show welcome message
+  setTimeout(() => {
+    showToast("Welcome to the Exercise Library! Ask our AI coach any fitness questions.", "info")
+  }, 1000)
 }
 
 function setupEventListeners() {
-  // Theme toggle
-  if (themeToggle) {
-    themeToggle.addEventListener("click", toggleTheme)
-  }
-
   // Mobile menu
   if (mobileMenuToggle) {
     mobileMenuToggle.addEventListener("click", toggleMobileMenu)
@@ -116,6 +205,35 @@ function setupEventListeners() {
   if (applyFilters) {
     applyFilters.addEventListener("click", applyAllFilters)
   }
+
+  // AI Chat
+  if (aiChatBtn) {
+    aiChatBtn.addEventListener("click", toggleAiChat)
+  }
+  if (closeChat) {
+    closeChat.addEventListener("click", toggleAiChat)
+  }
+  if (sendMessage) {
+    sendMessage.addEventListener("click", sendChatMessage)
+  }
+  if (chatInput) {
+    chatInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendChatMessage()
+      }
+    })
+  }
+
+  // Quick questions and suggestions
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("quick-question") || e.target.classList.contains("suggestion")) {
+      const question = e.target.dataset.question
+      if (question) {
+        chatInput.value = question
+        sendChatMessage()
+      }
+    }
+  })
 
   // Quick filters
   quickFilterBtns.forEach((btn) => {
@@ -148,11 +266,6 @@ function setupEventListeners() {
     loadMoreBtn.addEventListener("click", loadMoreExercises)
   }
 
-  // Retry loading
-  if (retryLoading) {
-    retryLoading.addEventListener("click", fetchExercises)
-  }
-
   // Exercise modal
   if (closeModal) {
     closeModal.addEventListener("click", closeExerciseModal)
@@ -160,28 +273,14 @@ function setupEventListeners() {
   if (addToFavorites) {
     addToFavorites.addEventListener("click", toggleFavoriteInModal)
   }
-
-  // Category cards
-  const categoryCards = document.querySelectorAll(".category-card")
-  categoryCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      const category = card.dataset.category
-      if (category) {
-        handleCategoryFilter(category)
-      }
-    })
-  })
+  if (askAiAboutExercise) {
+    askAiAboutExercise.addEventListener("click", askAiAboutCurrentExercise)
+  }
 
   // Close modals when clicking outside
   window.addEventListener("click", (e) => {
     if (e.target === exerciseModal) closeExerciseModal()
   })
-}
-
-// ===== Theme Functions =====
-function toggleTheme() {
-  document.body.classList.toggle("dark-theme")
-  localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light")
 }
 
 // ===== Mobile Menu Functions =====
@@ -197,6 +296,159 @@ function toggleMobileMenu() {
   }
 }
 
+// ===== AI Chat Functions =====
+function toggleAiChat() {
+  if (aiChatPanel) {
+    aiChatPanel.classList.toggle("active")
+
+    // Close filter panel if open
+    if (aiChatPanel.classList.contains("active") && filterPanel) {
+      filterPanel.classList.remove("active")
+    }
+
+    // Focus on input when opening
+    if (aiChatPanel.classList.contains("active") && chatInput) {
+      setTimeout(() => chatInput.focus(), 300)
+    }
+  }
+}
+
+function sendChatMessage() {
+  const message = chatInput.value.trim()
+  if (!message) return
+
+  // Add user message to chat
+  addMessageToChat(message, "user")
+
+  // Clear input
+  chatInput.value = ""
+
+  // Show typing indicator
+  showTypingIndicator()
+
+  // Generate AI response
+  setTimeout(
+    () => {
+      hideTypingIndicator()
+      const response = generateAiResponse(message)
+      addMessageToChat(response, "ai")
+    },
+    1000 + Math.random() * 1000,
+  ) // Random delay for realism
+}
+
+function addMessageToChat(message, sender) {
+  if (!chatBody) return
+
+  const messageDiv = document.createElement("div")
+  messageDiv.className = `chat-message ${sender}-message`
+
+  const avatar = document.createElement("div")
+  avatar.className = "message-avatar"
+  avatar.innerHTML =
+    sender === "ai" ? '<i class="material-icons">smart_toy</i>' : '<i class="material-icons">person</i>'
+
+  const content = document.createElement("div")
+  content.className = "message-content"
+  content.innerHTML = `<p>${message}</p>`
+
+  messageDiv.appendChild(avatar)
+  messageDiv.appendChild(content)
+
+  chatBody.appendChild(messageDiv)
+
+  // Scroll to bottom
+  chatBody.scrollTop = chatBody.scrollHeight
+
+  // Add to chat history
+  chatHistory.push({ message, sender, timestamp: Date.now() })
+}
+
+function showTypingIndicator() {
+  if (!chatBody) return
+
+  const typingDiv = document.createElement("div")
+  typingDiv.className = "chat-message ai-message typing-indicator"
+  typingDiv.innerHTML = `
+    <div class="message-avatar">
+      <i class="material-icons">smart_toy</i>
+    </div>
+    <div class="message-content">
+      <div class="typing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  `
+
+  chatBody.appendChild(typingDiv)
+  chatBody.scrollTop = chatBody.scrollHeight
+}
+
+function hideTypingIndicator() {
+  const typingIndicator = chatBody.querySelector(".typing-indicator")
+  if (typingIndicator) {
+    typingIndicator.remove()
+  }
+}
+
+function generateAiResponse(message) {
+  const lowerMessage = message.toLowerCase()
+
+  // Check for specific keywords and return appropriate responses
+  for (const [keyword, response] of Object.entries(AI_RESPONSES)) {
+    if (lowerMessage.includes(keyword)) {
+      return response
+    }
+  }
+
+  // Default responses for common fitness topics
+  if (lowerMessage.includes("workout") || lowerMessage.includes("exercise")) {
+    return "I'd be happy to help with your workout questions! Could you be more specific about what you'd like to know? For example, are you looking for exercises for a particular muscle group, or do you need help with form?"
+  }
+
+  if (lowerMessage.includes("diet") || lowerMessage.includes("nutrition")) {
+    return "While I focus mainly on exercises, I can tell you that proper nutrition is crucial for fitness goals. Consider consulting with a nutritionist for detailed dietary advice. For workouts, I'm here to help!"
+  }
+
+  if (lowerMessage.includes("weight loss") || lowerMessage.includes("lose weight")) {
+    return "For weight loss, combine cardio exercises like running, cycling, or HIIT with strength training. Consistency is key! Try exercises like burpees, mountain climbers, and circuit training."
+  }
+
+  if (lowerMessage.includes("muscle") || lowerMessage.includes("build")) {
+    return "For muscle building, focus on compound exercises like squats, deadlifts, bench press, and pull-ups. Use progressive overload - gradually increase weight, reps, or sets over time."
+  }
+
+  // Generic helpful response
+  return "That's a great question! I'm here to help with exercise form, workout routines, muscle targeting, and fitness tips. Could you provide more details about what specific aspect of fitness you'd like to know about?"
+}
+
+function askAiAboutCurrentExercise() {
+  if (!currentExercise) return
+
+  // Open AI chat if not already open
+  if (!aiChatPanel.classList.contains("active")) {
+    toggleAiChat()
+  }
+
+  // Generate question about current exercise
+  const question = `Tell me more about the ${currentExercise.name} exercise. What muscles does it target and what are some form tips?`
+
+  // Set the question in the input
+  if (chatInput) {
+    chatInput.value = question
+  }
+
+  // Send the message
+  setTimeout(() => {
+    sendChatMessage()
+  }, 500)
+
+  // Close modal
+  closeExerciseModal()
+}
+
 // ===== API Functions =====
 async function fetchExercises(reset = true) {
   if (isLoading) return
@@ -204,7 +456,6 @@ async function fetchExercises(reset = true) {
   try {
     isLoading = true
     showLoading(true)
-    hideErrorState()
 
     console.log("Fetching exercises from API...")
 
@@ -220,8 +471,6 @@ async function fetchExercises(reset = true) {
       method: "GET",
       headers: API_CONFIG.headers,
     })
-
-    console.log("API Response status:", response.status)
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
@@ -240,7 +489,6 @@ async function fetchExercises(reset = true) {
       gifUrl: exercise.gifUrl,
       instructions: exercise.instructions || [],
       secondaryMuscles: exercise.secondaryMuscles || [],
-      difficulty: getDifficultyLevel(exercise.equipment, exercise.bodyPart),
     }))
 
     if (reset) {
@@ -248,11 +496,6 @@ async function fetchExercises(reset = true) {
       totalExercises = 1300 // ExerciseDB has around 1300+ exercises
     } else {
       exercises = [...exercises, ...processedExercises]
-    }
-
-    // Update total count
-    if (totalExercisesCount) {
-      totalExercisesCount.textContent = `${totalExercises}+`
     }
 
     filteredExercises = [...exercises]
@@ -264,24 +507,10 @@ async function fetchExercises(reset = true) {
     showToast(`Loaded ${processedExercises.length} exercises`, "success")
   } catch (error) {
     console.error("Error fetching exercises:", error)
-    showErrorState(error.message || "Failed to load exercises. Please check your connection.")
     showToast("Failed to load exercises", "error")
   } finally {
     isLoading = false
     showLoading(false)
-  }
-}
-
-// Helper function to determine difficulty level
-function getDifficultyLevel(equipment, bodyPart) {
-  if (equipment === "body weight") {
-    return "beginner"
-  } else if (equipment === "dumbbell" || equipment === "kettlebell") {
-    return "intermediate"
-  } else if (equipment === "barbell" || equipment === "cable") {
-    return "advanced"
-  } else {
-    return "intermediate"
   }
 }
 
@@ -312,7 +541,6 @@ async function fetchExercisesByBodyPart(bodyPart) {
       gifUrl: exercise.gifUrl,
       instructions: exercise.instructions || [],
       secondaryMuscles: exercise.secondaryMuscles || [],
-      difficulty: getDifficultyLevel(exercise.equipment, exercise.bodyPart),
     }))
 
     exercises = processedExercises
@@ -327,7 +555,7 @@ async function fetchExercisesByBodyPart(bodyPart) {
     }
   } catch (error) {
     console.error("Error fetching exercises by body part:", error)
-    showErrorState("Failed to load exercises for this body part.")
+    showToast("Failed to load exercises for this body part", "error")
   } finally {
     showLoading(false)
   }
@@ -340,12 +568,10 @@ function handleSearch() {
   if (searchTerm === "") {
     if (searchClear) {
       searchClear.style.opacity = "0"
-      searchClear.style.pointerEvents = "none"
     }
   } else {
     if (searchClear) {
       searchClear.style.opacity = "1"
-      searchClear.style.pointerEvents = "auto"
     }
   }
 
@@ -358,7 +584,6 @@ function clearSearch() {
   }
   if (searchClear) {
     searchClear.style.opacity = "0"
-    searchClear.style.pointerEvents = "none"
   }
   applyCurrentFilters()
 }
@@ -366,6 +591,11 @@ function clearSearch() {
 function toggleFilterPanel() {
   if (filterPanel) {
     filterPanel.classList.toggle("active")
+
+    // Close AI chat if open
+    if (filterPanel.classList.contains("active") && aiChatPanel) {
+      aiChatPanel.classList.remove("active")
+    }
   }
 }
 
@@ -405,11 +635,6 @@ function applyCurrentFilters() {
     (input) => input.value,
   )
 
-  // Get selected difficulty levels
-  const selectedDifficulty = Array.from(document.querySelectorAll(".difficulty-options input:checked")).map(
-    (input) => input.value,
-  )
-
   // Get search term
   const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : ""
 
@@ -434,14 +659,6 @@ function applyCurrentFilters() {
     // Filter by equipment
     if (selectedEquipment.length > 0 && !selectedEquipment.includes(exercise.equipment.toLowerCase())) {
       return false
-    }
-
-    // Filter by difficulty
-    if (selectedDifficulty.length > 0) {
-      const difficulty = exercise.difficulty || "beginner"
-      if (!selectedDifficulty.includes(difficulty)) {
-        return false
-      }
     }
 
     return true
@@ -482,19 +699,6 @@ function handleQuickFilter(target, btn) {
   }
 }
 
-function handleCategoryFilter(category) {
-  // Reset all quick filter buttons
-  quickFilterBtns.forEach((btn) => btn.classList.remove("active"))
-
-  // Find and activate the corresponding quick filter
-  const targetBtn = document.querySelector(`.quick-filter-btn[data-target="${category}"]`)
-  if (targetBtn) {
-    targetBtn.classList.add("active")
-  }
-
-  handleQuickFilter(category, targetBtn || quickFilterBtns[0])
-}
-
 function clearAllFilters() {
   resetAllFilters()
 }
@@ -511,17 +715,27 @@ function sortExercises() {
       case "name-desc":
         return b.name.localeCompare(a.name)
       case "difficulty-asc":
-        const difficultyOrder = { beginner: 1, intermediate: 2, advanced: 3 }
-        return (difficultyOrder[a.difficulty] || 1) - (difficultyOrder[b.difficulty] || 1)
+        return getEquipmentDifficulty(a.equipment) - getEquipmentDifficulty(b.equipment)
       case "difficulty-desc":
-        const difficultyOrderDesc = { beginner: 1, intermediate: 2, advanced: 3 }
-        return (difficultyOrderDesc[b.difficulty] || 1) - (difficultyOrderDesc[a.difficulty] || 1)
+        return getEquipmentDifficulty(b.equipment) - getEquipmentDifficulty(a.equipment)
       default:
         return 0
     }
   })
 
   renderExercises()
+}
+
+function getEquipmentDifficulty(equipment) {
+  const difficultyMap = {
+    "body weight": 1,
+    dumbbell: 2,
+    kettlebell: 2,
+    cable: 3,
+    barbell: 3,
+    machine: 3,
+  }
+  return difficultyMap[equipment.toLowerCase()] || 2
 }
 
 function setViewMode(mode) {
@@ -554,7 +768,6 @@ function createExerciseCard(exercise, index) {
   card.onclick = () => openExerciseModal(exercise)
 
   const isFavorite = favorites.includes(exercise.id)
-  const difficulty = exercise.difficulty || "beginner"
 
   // Add entrance animation
   card.style.opacity = "0"
@@ -562,14 +775,11 @@ function createExerciseCard(exercise, index) {
 
   card.innerHTML = `
     <div class="exercise-image-container">
-      <img src="${exercise.gifUrl || "/placeholder.svg?height=220&width=300"}" 
-           alt="${exercise.name}" 
-           class="exercise-image" 
+      <img src="${exercise.gifUrl || "/placeholder.svg?height=200&width=320"}"
+           alt="${exercise.name}"
+           class="exercise-image"
            loading="lazy"
-           onerror="this.src='/placeholder.svg?height=220&width=300'">
-      <div class="exercise-difficulty-badge ${difficulty}">
-        ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
-      </div>
+           onerror="this.src='/placeholder.svg?height=200&width=320'">
     </div>
     <div class="exercise-card-content">
       <h3 class="exercise-title">${exercise.name}</h3>
@@ -587,12 +797,12 @@ function createExerciseCard(exercise, index) {
         <span class="exercise-tag">${exercise.bodyPart}</span>
       </div>
       <div class="exercise-actions">
-        <button class="action-btn favorite-btn ${isFavorite ? "active" : ""}" 
+        <button class="action-btn favorite-btn ${isFavorite ? "active" : ""}"
                 onclick="event.stopPropagation(); toggleFavorite('${exercise.id}')"
                 title="${isFavorite ? "Remove from favorites" : "Add to favorites"}">
           <i class="material-icons">${isFavorite ? "favorite" : "favorite_border"}</i>
         </button>
-        <button class="action-btn view-btn" 
+        <button class="action-btn view-btn"
                 onclick="event.stopPropagation(); openExerciseModal('${exercise.id}')"
                 title="View exercise details">
           <i class="material-icons">visibility</i>
@@ -618,16 +828,9 @@ function updateExerciseCount() {
   }
 }
 
-function updateTotalExercisesCount() {
-  if (totalExercisesCount) {
-    totalExercisesCount.textContent = `${totalExercises}+`
-  }
-}
-
 // ===== Modal Functions =====
 function openExerciseModal(exerciseOrId) {
   let exercise
-
   if (typeof exerciseOrId === "string") {
     exercise = exercises.find((ex) => ex.id === exerciseOrId)
   } else {
@@ -647,33 +850,15 @@ function openExerciseModal(exerciseOrId) {
   if (modalTarget) modalTarget.textContent = exercise.target
   if (modalEquipment) modalEquipment.textContent = exercise.equipment
   if (modalBodyPart) modalBodyPart.textContent = exercise.bodyPart
-  if (modalDifficulty) {
-    const difficulty = exercise.difficulty || "beginner"
-    modalDifficulty.textContent = difficulty
-    modalDifficulty.className = `detail-value difficulty-badge ${difficulty}`
-  }
 
   // Update instructions
   if (modalInstructions && exercise.instructions) {
     modalInstructions.innerHTML = ""
-    exercise.instructions.forEach((instruction, index) => {
+    exercise.instructions.forEach((instruction) => {
       const li = document.createElement("li")
       li.textContent = instruction
       modalInstructions.appendChild(li)
     })
-  }
-
-  // Update secondary muscles
-  if (modalSecondaryMuscles && exercise.secondaryMuscles) {
-    modalSecondaryMuscles.innerHTML = ""
-    if (exercise.secondaryMuscles.length > 0) {
-      exercise.secondaryMuscles.forEach((muscle) => {
-        const tag = document.createElement("span")
-        tag.className = "muscle-tag"
-        tag.textContent = muscle
-        modalSecondaryMuscles.appendChild(tag)
-      })
-    }
   }
 
   updateModalFavoriteButton()
@@ -771,7 +956,6 @@ function showLoading(show) {
   } else if (exerciseGrid && !show) {
     exerciseGrid.style.display = "grid"
   }
-
   updateLoadMoreButton()
 }
 
@@ -787,28 +971,6 @@ function showEmptyState() {
 function hideEmptyState() {
   if (emptyState) {
     emptyState.classList.add("hidden")
-  }
-  if (exerciseGrid) {
-    exerciseGrid.style.display = "grid"
-  }
-}
-
-function showErrorState(message) {
-  if (errorState) {
-    errorState.classList.remove("hidden")
-    const errorMessage = document.getElementById("error-message")
-    if (errorMessage) {
-      errorMessage.textContent = message
-    }
-  }
-  if (exerciseGrid) {
-    exerciseGrid.style.display = "none"
-  }
-}
-
-function hideErrorState() {
-  if (errorState) {
-    errorState.classList.add("hidden")
   }
   if (exerciseGrid) {
     exerciseGrid.style.display = "grid"
@@ -906,3 +1068,39 @@ window.addEventListener("unhandledrejection", (event) => {
   console.error("Unhandled promise rejection:", event.reason)
   showToast("An unexpected error occurred", "error")
 })
+
+// Add CSS for typing indicator
+const typingCSS = `
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+`
+
+// Inject typing CSS
+const style = document.createElement("style")
+style.textContent = typingCSS
+document.head.appendChild(style)

@@ -127,6 +127,9 @@ function initializeUI() {
   
   // Chat functionality
   initializeChatbot()
+  
+  // Theme toggle
+  initializeThemeToggle()
 }
 
 /**
@@ -1126,6 +1129,45 @@ async function handleLogout() {
     console.error('Error signing out:', error)
     showMessage('Error signing out: ' + error.message, 'error')
   }
+}
+
+/**
+ * Initialize theme toggle functionality
+ */
+function initializeThemeToggle() {
+  const themeToggleBtn = document.getElementById('theme-toggle-btn')
+  const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null
+
+  // Load theme from localStorage
+  function applyTheme(mode) {
+    if (mode === 'light') {
+      document.body.classList.add('light-mode')
+      if (themeIcon) themeIcon.textContent = 'light_mode'
+    } else {
+      document.body.classList.remove('light-mode')
+      if (themeIcon) themeIcon.textContent = 'dark_mode'
+    }
+  }
+
+  function getSavedTheme() {
+    return localStorage.getItem('fj-theme') || 'dark'
+  }
+
+  function saveTheme(mode) {
+    localStorage.setItem('fj-theme', mode)
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const isLight = document.body.classList.toggle('light-mode')
+      const mode = isLight ? 'light' : 'dark'
+      applyTheme(mode)
+      saveTheme(mode)
+    })
+  }
+
+  // On load, apply saved theme
+  applyTheme(getSavedTheme())
 }
 
 /* =================================================================
