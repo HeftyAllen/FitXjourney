@@ -1,7 +1,7 @@
-// Import Firebase auth
-import { auth } from "./user-auth.js"
+// Import Firebase auth and Leaflet
+import { auth } from "./user-auth-Jdlamini351.js"
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"
-import L from "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" // Declare the L variable
+import L from "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 
 class EnhancedRunningTracker {
   constructor() {
