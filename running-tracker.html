@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitXjourney - Smart Running Tracker</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/components/styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-gradient"></div>
+        <div class="floating-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-running"></i>
+                </div>
+                <span class="brand-text">FitXjourney</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="workout-planner-Jdlamini351.html" class="nav-link">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Workouts</span>
+                </a>
+                <a href="running-tracker.html" class="nav-link active">
+                    <i class="fas fa-route"></i>
+                    <span>Running</span>
+                </a>
+                <a href="progress-Jdlamini351.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="notification-bell" id="notificationBell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+                
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Guest</span>
+                        <span class="user-status" id="userStatus">Not signed in</span>
+                    </div>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    
+                    <!-- User Dropdown -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-guest" id="dropdownGuest">
+                            <div class="guest-welcome">
+                                <i class="fas fa-user-circle"></i>
+                                <div>
+                                    <h4>Welcome, Guest!</h4>
+                                    <p>Sign in to save your progress</p>
+                                </div>
+                            </div>
+                            <div class="guest-actions">
+                                <a href="login.html" class="btn-auth primary">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Sign In
+                                </a>
+                                <a href="register.html" class="btn-auth secondary">
+                                    <i class="fas fa-user-plus"></i>
+                                    Register
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="dropdown-user hidden" id="dropdownUser">
+                            <div class="user-profile-info">
+                                <div class="profile-avatar"></div>
+                                <div class="profile-details">
+                                    <h4 id="profileName">User Name</h4>
+                                    <p id="profileEmail">user@email.com</p>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">
+                                    <i class="fas fa-user-cog"></i>
+                                    Profile Settings
+                                </a>
+                                <a href="history.html" class="dropdown-item">
+                                    <i class="fas fa-history"></i>
+                                    Workout History
+                                </a>
+                                <a href="achievements.html" class="dropdown-item">
+                                    <i class="fas fa-trophy"></i>
+                                    Achievements
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item" id="signOutBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Auth Banner -->
+    <div class="auth-banner" id="authBanner">
+        <div class="banner-content">
+            <i class="fas fa-info-circle"></i>
+            <span>You're using FitXjourney as a guest. <a href="login.html">Sign in</a> to save workouts and unlock premium features!</span>
+            <button class="banner-close" id="bannerClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Goal Setting Section -->
+        <div class="goal-section glass-card">
+            <div class="goal-header">
+                <div class="goal-title">
+                    <i class="fas fa-bullseye"></i>
+                    <h2>Set Your Goal</h2>
+                </div>
+                <button class="goal-settings-btn" id="goalSettingsBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+            
+            <div class="goal-options">
+                <div class="goal-type-selector">
+                    <button class="goal-type-btn active" data-type="distance">
+                        <i class="fas fa-route"></i>
+                        <span>Distance</span>
+                    </button>
+                    <button class="goal-type-btn" data-type="time">
+                        <i class="fas fa-clock"></i>
+                        <span>Time</span>
+                    </button>
+                    <button class="goal-type-btn" data-type="calories">
+                        <i class="fas fa-fire"></i>
+                        <span>Calories</span>
+                    </button>
+                </div>
+                
+                <div class="goal-input-container">
+                    <div class="goal-input-group active" data-goal="distance">
+                        <input type="number" id="distanceGoal" value="5" min="0.1" max="100" step="0.1">
+                        <span class="goal-unit">km</span>
+                        <div class="goal-presets">
+                            <button class="preset-btn" data-value="1">1K</button>
+                            <button class="preset-btn" data-value="5">5K</button>
+                            <button class="preset-btn" data-value="10">10K</button>
+                            <button class="preset-btn" data-value="21.1">Half Marathon</button>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-input-group" data-goal="time">
+                        <input type="number" id="timeGoal" value="30" min="1" max="300" step="1">
+                        <span class="goal-unit">min</span>
+                        <div class="goal-presets">
+                            <button class="preset-btn" data-value="15">15min</button>
+                            <button class="preset-btn" data-value="30">30min</button>
+                            <button class="preset-btn" data-value="45">45min</button>
+                            <button class="preset-btn" data-value="60">1hr</button>
+                        </div>
+                    </div>
+                    
+                    <div class="goal-input-group" data-goal="calories">
+                        <input type="number" id="caloriesGoal" value="300" min="50" max="2000" step="10">
+                        <span class="goal-unit">kcal</span>
+                        <div class="goal-presets">
+                            <button class="preset-btn" data-value="200">200</button>
+                            <button class="preset-btn" data-value="300">300</button>
+                            <button class="preset-btn" data-value="500">500</button>
+                            <button class="preset-btn" data-value="1000">1000</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Goal Progress -->
+            <div class="goal-progress" id="goalProgress">
+                <div class="progress-circle">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-bg" cx="60" cy="60" r="54"></circle>
+                        <circle class="progress-ring-fill" cx="60" cy="60" r="54" id="progressCircle"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <span class="progress-value" id="progressValue">0%</span>
+                        <span class="progress-label" id="progressLabel">of 5km</span>
+                    </div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-stat">
+                        <span class="stat-value" id="currentProgress">0.0</span>
+                        <span class="stat-label">Current</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="stat-value" id="remainingProgress">5.0</span>
+                        <span class="stat-label">Remaining</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Selection -->
+        <div class="activity-section glass-card">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-play-circle"></i>
+                    Choose Activity
+                </h2>
+                <div class="weather-info" id="weatherInfo">
+                    <div class="weather-icon" id="weatherIcon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <div class="weather-details">
+                        <span class="weather-temp" id="weatherTemp">--°</span>
+                        <span class="weather-desc" id="weatherDesc">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activity-grid">
+                <div class="activity-card active" data-activity="walk">
+                    <div class="activity-icon">🚶‍♂️</div>
+                    <div class="activity-info">
+                        <h3>Walking</h3>
+                        <p>Casual pace • 4-6 km/h</p>
+                        <div class="activity-stats">
+                            <span><i class="fas fa-fire"></i> ~50 cal/km</span>
+                            <span><i class="fas fa-heartbeat"></i> Low intensity</span>
+                        </div>
+                    </div>
+                    <div class="activity-glow"></div>
+                </div>
+                
+                <div class="activity-card" data-activity="jog">
+                    <div class="activity-icon">🏃‍♂️</div>
+                    <div class="activity-info">
+                        <h3>Jogging</h3>
+                        <p>Moderate pace • 6-10 km/h</p>
+                        <div class="activity-stats">
+                            <span><i class="fas fa-fire"></i> ~80 cal/km</span>
+                            <span><i class="fas fa-heartbeat"></i> Medium intensity</span>
+                        </div>
+                    </div>
+                    <div class="activity-glow"></div>
+                </div>
+                
+                <div class="activity-card" data-activity="run">
+                    <div class="activity-icon">🏃‍♂️</div>
+                    <div class="activity-info">
+                        <h3>Running</h3>
+                        <p>Fast pace • 10+ km/h</p>
+                        <div class="activity-stats">
+                            <span><i class="fas fa-fire"></i> ~120 cal/km</span>
+                            <span><i class="fas fa-heartbeat"></i> High intensity</span>
+                        </div>
+                    </div>
+                    <div class="activity-glow"></div>
+                </div>
+                
+                <div class="activity-card" data-activity="cycle">
+                    <div class="activity-icon">🚴‍♂️</div>
+                    <div class="activity-info">
+                        <h3>Cycling</h3>
+                        <p>Bike ride • 15+ km/h</p>
+                        <div class="activity-stats">
+                            <span><i class="fas fa-fire"></i> ~40 cal/km</span>
+                            <span><i class="fas fa-heartbeat"></i> Medium intensity</span>
+                        </div>
+                    </div>
+                    <div class="activity-glow"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Stats Dashboard -->
+        <div class="stats-dashboard">
+            <div class="primary-stats">
+                <div class="stat-card primary glass-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="distance">0.00</div>
+                        <div class="stat-label">Distance (km)</div>
+                        <div class="stat-trend" id="distanceTrend">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+0.0</span>
+                        </div>
+                    </div>
+                    <div class="stat-animation">
+                        <div class="pulse-ring"></div>
+                    </div>
+                </div>
+                
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="duration">00:00:00</div>
+                        <div class="stat-label">Duration</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="pace">0:00</div>
+                        <div class="stat-label">Avg Pace</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card glass-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="calories">0</div>
+                        <div class="stat-label">Calories</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Secondary Stats -->
+            <div class="secondary-stats">
+                <div class="mini-stat glass-card">
+                    <i class="fas fa-bolt"></i>
+                    <div class="mini-stat-content">
+                        <span class="mini-stat-value" id="currentSpeed">0.0</span>
+                        <span class="mini-stat-label">km/h</span>
+                    </div>
+                </div>
+                
+                <div class="mini-stat glass-card">
+                    <i class="fas fa-mountain"></i>
+                    <div class="mini-stat-content">
+                        <span class="mini-stat-value" id="elevation">--</span>
+                        <span class="mini-stat-label">elevation</span>
+                    </div>
+                </div>
+                
+                <div class="mini-stat glass-card">
+                    <i class="fas fa-shoe-prints"></i>
+                    <div class="mini-stat-content">
+                        <span class="mini-stat-value" id="steps">0</span>
+                        <span class="mini-stat-label">steps</span>
+                    </div>
+                </div>
+                
+                <div class="mini-stat glass-card">
+                    <i class="fas fa-heartbeat"></i>
+                    <div class="mini-stat-content">
+                        <span class="mini-stat-value" id="heartRate">--</span>
+                        <span class="mini-stat-label">bpm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Map -->
+        <div class="map-section glass-card">
+            <div class="map-header">
+                <div class="map-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Live Route Tracking</h3>
+                    <div class="gps-status" id="gpsStatus">
+                        <div class="gps-indicator"></div>
+                        <span>GPS Ready</span>
+                    </div>
+                </div>
+                <div class="map-controls">
+                    <button class="map-control-btn" id="centerMapBtn" title="Center on location">
+                        <i class="fas fa-crosshairs"></i>
+                    </button>
+                    <button class="map-control-btn" id="layerToggleBtn" title="Toggle map style">
+                        <i class="fas fa-layer-group"></i>
+                    </button>
+                    <button class="map-control-btn" id="fullscreenBtn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <div id="map" class="leaflet-map"></div>
+                <div class="map-overlay" id="mapOverlay">
+                    <div class="map-loading">
+                        <div class="loading-spinner"></div>
+                        <p>Initializing GPS...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel glass-card">
+            <div class="voice-coach-status" id="voiceCoachStatus">
+                <div class="coach-avatar">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <div class="coach-info">
+                    <span class="coach-name">AI Coach</span>
+                    <span class="coach-status" id="coachStatusText">Ready to guide you</span>
+                </div>
+                <button class="coach-toggle" id="coachToggle">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            
+            <div class="control-buttons">
+                <button class="control-btn start-btn" id="startBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="btn-content">
+                        <span class="btn-text">Start Workout</span>
+                        <span class="btn-subtext">Begin tracking</span>
+                    </div>
+                    <div class="btn-glow"></div>
+                </button>
+                
+                <button class="control-btn pause-btn hidden" id="pauseBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-pause"></i>
+                    </div>
+                    <div class="btn-content">
+                        <span class="btn-text">Pause</span>
+                        <span class="btn-subtext">Take a break</span>
+                    </div>
+                </button>
+                
+                <button class="control-btn resume-btn hidden" id="resumeBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="btn-content">
+                        <span class="btn-text">Resume</span>
+                        <span class="btn-subtext">Continue workout</span>
+                    </div>
+                </button>
+                
+                <button class="control-btn stop-btn hidden" id="stopBtn">
+                    <div class="btn-icon">
+                        <i class="fas fa-stop"></i>
+                    </div>
+                    <div class="btn-content">
+                        <span class="btn-text">Finish</span>
+                        <span class="btn-subtext">Complete workout</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Workout Complete Modal -->
+    <div class="modal-overlay" id="workoutModal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <div class="completion-celebration">
+                    <div class="celebration-icon">🎉</div>
+                    <h2>Workout Complete!</h2>
+                    <p>Amazing job! You've crushed your workout.</p>
+                </div>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="workout-summary">
+                    <div class="summary-header">
+                        <div class="activity-badge" id="summaryActivityBadge">
+                            <span class="activity-emoji" id="summaryEmoji">🏃‍♂️</span>
+                            <div class="activity-details">
+                                <h3 id="summaryActivityName">Running</h3>
+                                <p id="summaryDateTime">Today at 2:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="weather-badge" id="summaryWeather">
+                            <i class="fas fa-sun"></i>
+                            <span>22°C, Sunny</span>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-stats">
+                        <div class="summary-stat primary">
+                            <div class="stat-icon">
+                                <i class="fas fa-route"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="summaryDistance">0.00 km</span>
+                                <span class="stat-label">Total Distance</span>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="summaryDuration">00:00:00</span>
+                                <span class="stat-label">Duration</span>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="summaryPace">0:00</span>
+                                <span class="stat-label">Average Pace</span>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="summaryCalories">0</span>
+                                <span class="stat-label">Calories Burned</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Goal Achievement -->
+                    <div class="goal-achievement" id="goalAchievement">
+                        <div class="achievement-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="achievement-text">
+                            <h4>Goal Achieved!</h4>
+                            <p id="achievementDescription">You completed your 5km goal!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Auth-dependent Save Options -->
+                    <div class="save-options">
+                        <div class="guest-save-prompt" id="guestSavePrompt">
+                            <div class="prompt-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="prompt-text">
+                                <h4>Want to save this workout?</h4>
+                                <p>Create an account to track your progress over time</p>
+                            </div>
+                            <div class="prompt-actions">
+                                <a href="about-Jdlamini351.html" class="btn-auth primary">Create Account</a>
+                                <a href="auth-Jdlamini351.html" class="btn-auth secondary">Sign In</a>
+                            </div>
+                        </div>
+                        
+                        <div class="user-save-options hidden" id="userSaveOptions">
+                            <div class="save-preferences">
+                                <label class="save-option">
+                                    <input type="checkbox" id="saveToHistory" checked>
+                                    <span class="checkmark"></span>
+                                    <span>Save to workout history</span>
+                                </label>
+                                <label class="save-option">
+                                    <input type="checkbox" id="shareWorkout">
+                                    <span class="checkmark"></span>
+                                    <span>Share with friends</span>
+                                </label>
+                                <label class="save-option">
+                                    <input type="checkbox" id="addToChallenge">
+                                    <span class="checkmark"></span>
+                                    <span>Add to monthly challenge</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-secondary" id="discardBtn">
+                    <i class="fas fa-trash"></i>
+                    Discard
+                </button>
+                <button class="btn-primary" id="exportBtn">
+                    <i class="fas fa-download"></i>
+                    Export Data
+                </button>
+                <button class="btn-primary hidden" id="saveToCloudBtn">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Save to Cloud
+                </button>
+                <button class="btn-success" id="newWorkoutBtn">
+                    <i class="fas fa-plus"></i>
+                    New Workout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Coach Settings Modal -->
+    <div class="modal-overlay" id="voiceSettingsModal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-microphone-alt"></i>
+                    Voice Coach Settings
+                </h2>
+                <button class="modal-close" id="voiceSettingsClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="voice-settings">
+                    <div class="setting-group">
+                        <h3>Announcement Frequency</h3>
+                        <div class="setting-options">
+                            <label class="setting-option">
+                                <input type="radio" name="frequency" value="0.5" id="freq500m">
+                                <span class="radio-custom"></span>
+                                <span>Every 500m</span>
+                            </label>
+                            <label class="setting-option">
+                                <input type="radio" name="frequency" value="1" id="freq1km" checked>
+                                <span class="radio-custom"></span>
+                                <span>Every 1km</span>
+                            </label>
+                            <label class="setting-option">
+                                <input type="radio" name="frequency" value="2" id="freq2km">
+                                <span class="radio-custom"></span>
+                                <span>Every 2km</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Voice Options</h3>
+                        <div class="setting-controls">
+                            <div class="setting-control">
+                                <label>Voice Volume</label>
+                                <input type="range" id="voiceVolume" min="0" max="1" step="0.1" value="0.8">
+                                <span class="range-value">80%</span>
+                            </div>
+                            <div class="setting-control">
+                                <label>Speech Rate</label>
+                                <input type="range" id="speechRate" min="0.5" max="2" step="0.1" value="1">
+                                <span class="range-value">Normal</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Announcement Content</h3>
+                        <div class="setting-toggles">
+                            <label class="toggle-option">
+                                <input type="checkbox" id="announceDistance" checked>
+                                <span class="toggle-slider"></span>
+                                <span>Distance covered</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="checkbox" id="announceTime" checked>
+                                <span class="toggle-slider"></span>
+                                <span>Elapsed time</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="checkbox" id="announcePace" checked>
+                                <span class="toggle-slider"></span>
+                                <span>Current pace</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="checkbox" id="announceGoalProgress" checked>
+                                <span class="toggle-slider"></span>
+                                <span>Goal progress</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-secondary" id="testVoiceBtn">
+                    <i class="fas fa-play"></i>
+                    Test Voice
+                </button>
+                <button class="btn-primary" id="saveVoiceSettingsBtn">
+                    <i class="fas fa-save"></i>
+                    Save Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Audio Elements -->
+    <audio id="milestoneSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBjiR1/LNeSsFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcB" type="audio/wav">
+    </audio>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script type="module" src="js/modules/user-auth-Jdlamini351.js"></script>
+    <script type="module" src="js/modules/running-tracker.js"></script>
+</body>
+</html>
