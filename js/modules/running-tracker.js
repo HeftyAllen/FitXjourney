@@ -241,10 +241,12 @@ class EnhancedRunningTracker {
 
     // Goal input changes
     Object.keys(this.goalInputs).forEach((type) => {
-      this.goalInputs[type].addEventListener("input", (e) => {
-        this.goals[type] = Number.parseFloat(e.target.value)
-        this.updateGoalProgress()
-      })
+      if (this.goalInputs[type]) {
+        this.goalInputs[type].addEventListener("input", (e) => {
+          this.goals[type] = Number.parseFloat(e.target.value)
+          this.updateGoalProgress()
+        })
+      }
     })
 
     // Preset buttons
@@ -252,10 +254,14 @@ class EnhancedRunningTracker {
       btn.addEventListener("click", (e) => {
         const value = Number.parseFloat(e.target.dataset.value)
         const activeGoalGroup = document.querySelector(".goal-input-group.active")
-        const input = activeGoalGroup.querySelector("input")
-        input.value = value
-        this.goals[this.currentGoalType] = value
-        this.updateGoalProgress()
+        if (activeGoalGroup) {
+          const input = activeGoalGroup.querySelector("input")
+          if (input) {
+            input.value = value
+            this.goals[this.currentGoalType] = value
+            this.updateGoalProgress()
+          }
+        }
       })
     })
 
@@ -267,34 +273,47 @@ class EnhancedRunningTracker {
     })
 
     // Control buttons
-    this.startBtn.addEventListener("click", () => this.startTracking())
-    this.pauseBtn.addEventListener("click", () => this.pauseTracking())
-    this.resumeBtn.addEventListener("click", () => this.resumeTracking())
-    this.stopBtn.addEventListener("click", () => this.stopTracking())
+    if (this.startBtn) this.startBtn.addEventListener("click", () => this.startTracking())
+    if (this.pauseBtn) this.pauseBtn.addEventListener("click", () => this.pauseTracking())
+    if (this.resumeBtn) this.resumeBtn.addEventListener("click", () => this.resumeTracking())
+    if (this.stopBtn) this.stopBtn.addEventListener("click", () => this.stopTracking())
 
     // Voice coach toggle
-    this.coachToggle.addEventListener("click", () => this.toggleVoiceCoach())
+    if (this.coachToggle) this.coachToggle.addEventListener("click", () => this.toggleVoiceCoach())
 
     // Map controls
-    this.centerMapBtn.addEventListener("click", () => this.centerMap())
-    this.layerToggleBtn.addEventListener("click", () => this.toggleMapLayer())
-    this.fullscreenBtn.addEventListener("click", () => this.toggleFullscreen())
+    if (this.centerMapBtn) this.centerMapBtn.addEventListener("click", () => this.centerMap())
+    if (this.layerToggleBtn) this.layerToggleBtn.addEventListener("click", () => this.toggleMapLayer())
+    if (this.fullscreenBtn) this.fullscreenBtn.addEventListener("click", () => this.toggleFullscreen())
 
     // Modal controls
-    document.getElementById("modalClose").addEventListener("click", () => this.closeModal())
-    document.getElementById("voiceSettingsClose").addEventListener("click", () => this.closeVoiceSettings())
-    document.getElementById("exportBtn").addEventListener("click", () => this.exportWorkoutData())
-    document.getElementById("newWorkoutBtn").addEventListener("click", () => this.startNewWorkout())
-    document.getElementById("discardBtn").addEventListener("click", () => this.discardWorkout())
+    const modalClose = document.getElementById("modalClose")
+    const voiceSettingsClose = document.getElementById("voiceSettingsClose")
+    const exportBtn = document.getElementById("exportBtn")
+    const newWorkoutBtn = document.getElementById("newWorkoutBtn")
+    const discardBtn = document.getElementById("discardBtn")
+
+    if (modalClose) modalClose.addEventListener("click", () => this.closeModal())
+    if (voiceSettingsClose) voiceSettingsClose.addEventListener("click", () => this.closeVoiceSettings())
+    if (exportBtn) exportBtn.addEventListener("click", () => this.exportWorkoutData())
+    if (newWorkoutBtn) newWorkoutBtn.addEventListener("click", () => this.startNewWorkout())
+    if (discardBtn) discardBtn.addEventListener("click", () => this.discardWorkout())
 
     // Voice settings
-    document.getElementById("testVoiceBtn").addEventListener("click", () => this.testVoice())
-    document.getElementById("saveVoiceSettingsBtn").addEventListener("click", () => this.saveVoiceSettings())
+    const testVoiceBtn = document.getElementById("testVoiceBtn")
+    const saveVoiceSettingsBtn = document.getElementById("saveVoiceSettingsBtn")
+
+    if (testVoiceBtn) testVoiceBtn.addEventListener("click", () => this.testVoice())
+    if (saveVoiceSettingsBtn) saveVoiceSettingsBtn.addEventListener("click", () => this.saveVoiceSettings())
 
     // Auth banner close
-    document.getElementById("bannerClose").addEventListener("click", () => {
-      document.getElementById("authBanner").classList.add("hidden")
-    })
+    const bannerClose = document.getElementById("bannerClose")
+    if (bannerClose) {
+      bannerClose.addEventListener("click", () => {
+        const authBanner = document.getElementById("authBanner")
+        if (authBanner) authBanner.classList.add("hidden")
+      })
+    }
 
     // Keyboard shortcuts
     document.addEventListener("keydown", (e) => {
@@ -351,6 +370,7 @@ class EnhancedRunningTracker {
     const circumference = 2 * Math.PI * 54 // radius = 54
     const offset = circumference - (progress / 100) * circumference
     if (this.progressCircle) {
+      this.progressCircle.style.strokeDasharray = circumference
       this.progressCircle.style.strokeDashoffset = offset
     }
 
@@ -536,9 +556,9 @@ class EnhancedRunningTracker {
     this.kmSplits = []
 
     // Update UI
-    this.startBtn.classList.add("hidden")
-    this.pauseBtn.classList.remove("hidden")
-    this.stopBtn.classList.remove("hidden")
+    if (this.startBtn) this.startBtn.classList.add("hidden")
+    if (this.pauseBtn) this.pauseBtn.classList.remove("hidden")
+    if (this.stopBtn) this.stopBtn.classList.remove("hidden")
 
     // Add tracking class to body
     document.body.classList.add("tracking-active")
@@ -560,8 +580,8 @@ class EnhancedRunningTracker {
     this.pausedTime = Date.now() - this.startTime
 
     // Update UI
-    this.pauseBtn.classList.add("hidden")
-    this.resumeBtn.classList.remove("hidden")
+    if (this.pauseBtn) this.pauseBtn.classList.add("hidden")
+    if (this.resumeBtn) this.resumeBtn.classList.remove("hidden")
 
     // Stop GPS tracking
     this.stopGPSTracking()
@@ -578,8 +598,8 @@ class EnhancedRunningTracker {
     this.startTime = Date.now() - this.pausedTime
 
     // Update UI
-    this.resumeBtn.classList.add("hidden")
-    this.pauseBtn.classList.remove("hidden")
+    if (this.resumeBtn) this.resumeBtn.classList.add("hidden")
+    if (this.pauseBtn) this.pauseBtn.classList.remove("hidden")
 
     // Resume GPS tracking
     this.startGPSTracking()
@@ -596,10 +616,10 @@ class EnhancedRunningTracker {
     this.isPaused = false
 
     // Update UI
-    this.pauseBtn.classList.add("hidden")
-    this.resumeBtn.classList.add("hidden")
-    this.stopBtn.classList.add("hidden")
-    this.startBtn.classList.remove("hidden")
+    if (this.pauseBtn) this.pauseBtn.classList.add("hidden")
+    if (this.resumeBtn) this.resumeBtn.classList.add("hidden")
+    if (this.stopBtn) this.stopBtn.classList.add("hidden")
+    if (this.startBtn) this.startBtn.classList.remove("hidden")
 
     // Remove tracking class
     document.body.classList.remove("tracking-active")
@@ -1051,21 +1071,32 @@ class EnhancedRunningTracker {
     const pace = this.calculatePace(duration, this.totalDistance)
 
     // Update summary content
-    document.getElementById("summaryEmoji").textContent = config.icon
-    document.getElementById("summaryActivityName").textContent = config.name
-    document.getElementById("summaryDateTime").textContent = new Date().toLocaleString()
+    const summaryEmoji = document.getElementById("summaryEmoji")
+    const summaryActivityName = document.getElementById("summaryActivityName")
+    const summaryDateTime = document.getElementById("summaryDateTime")
+
+    if (summaryEmoji) summaryEmoji.textContent = config.icon
+    if (summaryActivityName) summaryActivityName.textContent = config.name
+    if (summaryDateTime) summaryDateTime.textContent = new Date().toLocaleString()
 
     if (this.weatherData) {
       const temp = Math.round(this.weatherData.main.temp)
       const desc = this.weatherData.weather[0].description
-      document.getElementById("summaryWeather").innerHTML =
-        `<i class="fas fa-thermometer-half"></i> <span>${temp}°C, ${desc}</span>`
+      const summaryWeather = document.getElementById("summaryWeather")
+      if (summaryWeather) {
+        summaryWeather.innerHTML = `<i class="fas fa-thermometer-half"></i> <span>${temp}°C, ${desc}</span>`
+      }
     }
 
-    document.getElementById("summaryDistance").textContent = `${this.totalDistance.toFixed(2)} km`
-    document.getElementById("summaryDuration").textContent = this.formatDuration(duration)
-    document.getElementById("summaryPace").textContent = `${pace} /km`
-    document.getElementById("summaryCalories").textContent = `${this.calories} kcal`
+    const summaryDistance = document.getElementById("summaryDistance")
+    const summaryDuration = document.getElementById("summaryDuration")
+    const summaryPace = document.getElementById("summaryPace")
+    const summaryCalories = document.getElementById("summaryCalories")
+
+    if (summaryDistance) summaryDistance.textContent = `${this.totalDistance.toFixed(2)} km`
+    if (summaryDuration) summaryDuration.textContent = this.formatDuration(duration)
+    if (summaryPace) summaryPace.textContent = `${pace} /km`
+    if (summaryCalories) summaryCalories.textContent = `${this.calories} kcal`
 
     // Check goal achievement
     const goalAchievement = document.getElementById("goalAchievement")
@@ -1088,24 +1119,28 @@ class EnhancedRunningTracker {
         break
     }
 
-    if (achieved) {
-      goalAchievement.classList.remove("hidden")
-      document.getElementById("achievementDescription").textContent =
-        `You completed your ${goalValue} ${this.currentGoalType} goal!`
-    } else {
-      goalAchievement.classList.add("hidden")
+    if (goalAchievement) {
+      if (achieved) {
+        goalAchievement.classList.remove("hidden")
+        const achievementDescription = document.getElementById("achievementDescription")
+        if (achievementDescription) {
+          achievementDescription.textContent = `You completed your ${goalValue} ${this.currentGoalType} goal!`
+        }
+      } else {
+        goalAchievement.classList.add("hidden")
+      }
     }
 
     // Show modal
-    this.workoutModal.classList.add("show")
+    if (this.workoutModal) this.workoutModal.classList.add("show")
   }
 
   closeModal() {
-    this.workoutModal.classList.remove("show")
+    if (this.workoutModal) this.workoutModal.classList.remove("show")
   }
 
   closeVoiceSettings() {
-    this.voiceSettingsModal.classList.remove("show")
+    if (this.voiceSettingsModal) this.voiceSettingsModal.classList.remove("show")
   }
 
   exportWorkoutData() {
@@ -1161,7 +1196,7 @@ class EnhancedRunningTracker {
     this.kmSplits = []
 
     // Clear route from map
-    if (this.routePolyline) {
+    if (this.routePolyline && this.map) {
       this.map.removeLayer(this.routePolyline)
       this.routePolyline = null
     }
@@ -1242,7 +1277,8 @@ class EnhancedRunningTracker {
   showLoading(message) {
     const mapOverlay = document.getElementById("mapOverlay")
     if (mapOverlay) {
-      mapOverlay.querySelector("p").textContent = message
+      const loadingText = mapOverlay.querySelector("p")
+      if (loadingText) loadingText.textContent = message
       mapOverlay.classList.remove("hidden")
     }
   }
@@ -1300,6 +1336,74 @@ const customStyles = `
 @keyframes locationRipple {
     0% { transform: scale(0.8); opacity: 1; }
     100% { transform: scale(2); opacity: 0; }
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10000;
+    animation: slideIn 0.3s ease-out;
+}
+
+.toast.success {
+    border-left: 4px solid #10b981;
+}
+
+.toast.error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.toast.info {
+    border-left: 4px solid #3b82f6;
+}
+
+.toast-icon {
+    font-size: 16px;
+}
+
+.toast.success .toast-icon {
+    color: #10b981;
+}
+
+.toast.error .toast-icon {
+    color: #ef4444;
+}
+
+.toast.warning .toast-icon {
+    color: #f59e0b;
+}
+
+.toast.info .toast-icon {
+    color: #3b82f6;
+}
+
+.toast-message {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 `
 
